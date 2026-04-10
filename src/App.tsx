@@ -78,8 +78,8 @@ const PRODUCTS: Product[] = [
     material: "LINEN / SPANDEX",
     technique: "FUNCTIONAL FINISH",
     status: "INNOVATION",
-    lifestyleImage: "https://images.unsplash.com/photo-1513519245088-0e12902e35ca?auto=format&fit=crop&w=1200&q=80",
-    productImage: "https://images.unsplash.com/photo-1584622781514-f6342191675a?auto=format&fit=crop&w=1200&q=80",
+    lifestyleImage: "https://images.unsplash.com/photo-1554188248-986adbb73be4?auto=format&fit=crop&w=1200&q=80",
+    productImage: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80",
     price: 38.00,
   },
   {
@@ -90,7 +90,7 @@ const PRODUCTS: Product[] = [
     material: "LINEN / COTTON",
     technique: "DIGITAL PRINT",
     status: "CREATIVE LINE",
-    lifestyleImage: "https://images.unsplash.com/photo-1551298370-9d3d53e40c81?auto=format&fit=crop&w=1200&q=80",
+    lifestyleImage: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1200&q=80",
     productImage: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=1200&q=80",
     price: 42.00,
   },
@@ -610,8 +610,8 @@ const Collections: React.FC = () => (
           {[
             { title: "PIECE DYED", desc: "Woven first, dyed later. Offering maximum flexibility in color selection and quick response to fashion trends.", img: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80" },
             { title: "YARN DYED", desc: "Dyeing yarns before weaving for rich, long-lasting colors and intricate patterns like stripes and chambrays.", img: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=1200&q=80" },
-            { title: "PRINTED", desc: "Versatile designs from screen to high-resolution digital printing with minimal environmental impact.", img: "https://images.unsplash.com/photo-1551298370-9d3d53e40c81?auto=format&fit=crop&w=1200&q=80" },
-            { title: "SPECIAL FINISHES", desc: "Dobby, Embroidery, Jacquard, and Functional finishes like Anti-Wrinkle and Anti-UV.", img: "https://images.unsplash.com/photo-1513519245088-0e12902e35ca?auto=format&fit=crop&w=1200&q=80" }
+            { title: "PRINTED", desc: "Versatile designs from screen to high-resolution digital printing with minimal environmental impact.", img: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1200&q=80" },
+            { title: "SPECIAL FINISHES", desc: "Dobby, Embroidery, Jacquard, and Functional finishes like Anti-Wrinkle and Anti-UV.", img: "https://images.unsplash.com/photo-1554188248-986adbb73be4?auto=format&fit=crop&w=1200&q=80" }
           ].map((item, i) => (
             <motion.div 
               key={item.title}
