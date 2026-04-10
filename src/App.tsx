@@ -6,7 +6,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronLeft, ChevronRight, Instagram, Mail, ArrowRight, History, Users, Globe, Award, ShoppingBag, X, Plus, Minus, Menu } from "lucide-react";
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, useParams } from "react-router-dom";
 import { Product } from "./types";
 
 const PRODUCTS: Product[] = [
@@ -565,6 +565,118 @@ const BrandStory: React.FC = () => (
   </div>
 );
 
+const ProductDetail: React.FC<{ onAddToCart: (product: Product) => void }> = ({ onAddToCart }) => {
+  const { id } = useParams<{ id: string }>();
+  const product = PRODUCTS.find(p => p.id === id);
+  const relatedProducts = PRODUCTS.filter(p => p.id !== id).slice(0, 4);
+
+  if (!product) return <div className="pt-32 text-center font-mono uppercase">Product not found</div>;
+
+  return (
+    <div className="pt-24 md:pt-32 pb-16 md:pb-24 px-4 md:px-6">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="max-w-7xl mx-auto"
+      >
+        {/* Breadcrumbs */}
+        <div className="mb-8 md:mb-12">
+          <Link to="/shop" className="font-mono text-[10px] md:text-[12px] uppercase tracking-widest text-gray-400 hover:text-black transition-colors flex items-center gap-2">
+            <ChevronLeft size={14} /> BACK TO SHOP
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 mb-24 md:mb-32">
+          {/* Images Section */}
+          <div className="lg:col-span-7 space-y-6 md:space-y-8">
+            <div className="aspect-[4/5] bg-gray-50 overflow-hidden">
+              <img 
+                src={product.productImage} 
+                alt={product.title} 
+                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            <div className="aspect-[16/9] bg-gray-50 overflow-hidden">
+              <img 
+                src={product.lifestyleImage} 
+                alt={`${product.title} lifestyle`} 
+                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+          </div>
+
+          {/* Info Section */}
+          <div className="lg:col-span-5 lg:sticky lg:top-32 h-fit">
+            <div className="mb-8 md:mb-12">
+              <span className="font-mono text-[10px] md:text-[12px] uppercase tracking-[0.3em] text-gray-400 mb-4 block">
+                {product.status}
+              </span>
+              <h1 className="text-4xl md:text-6xl font-black tracking-tighter uppercase mb-4 leading-[0.9]">
+                {product.title}
+              </h1>
+              <p className="text-2xl md:text-3xl font-black tracking-tighter mb-8">
+                ${product.price.toFixed(2)} <span className="text-[12px] md:text-[14px] font-mono text-gray-400 align-middle uppercase">/ YARD</span>
+              </p>
+              <p className="font-mono text-[12px] md:text-[14px] leading-relaxed uppercase tracking-tight text-gray-600 mb-12">
+                {product.description}
+              </p>
+              
+              <button 
+                onClick={() => onAddToCart(product)}
+                className="w-full bg-black text-white py-5 font-bold text-[11px] md:text-[12px] uppercase tracking-[0.3em] hover:bg-gray-900 transition-colors mb-12"
+              >
+                ADD TO BAG
+              </button>
+
+              {/* Specs */}
+              <div className="border-t border-black pt-8 space-y-6">
+                <div className="flex justify-between items-center">
+                  <span className="font-mono text-[10px] md:text-[11px] uppercase text-gray-400">MATERIAL</span>
+                  <span className="font-mono text-[10px] md:text-[11px] uppercase font-bold">{product.material}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="font-mono text-[10px] md:text-[11px] uppercase text-gray-400">WIDTH</span>
+                  <span className="font-mono text-[10px] md:text-[11px] uppercase font-bold">{product.dimensions}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="font-mono text-[10px] md:text-[11px] uppercase text-gray-400">TECHNIQUE</span>
+                  <span className="font-mono text-[10px] md:text-[11px] uppercase font-bold">{product.technique}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Related Products */}
+        <section>
+          <div className="flex items-center gap-4 mb-12">
+            <h2 className="text-2xl md:text-3xl font-black tracking-tighter uppercase">YOU MAY ALSO LIKE</h2>
+            <div className="h-[1px] flex-grow bg-gray-100" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {relatedProducts.map((item) => (
+              <Link key={item.id} to={`/product/${item.id}`} className="group">
+                <div className="aspect-[3/4] bg-gray-50 overflow-hidden mb-4">
+                  <img 
+                    src={item.productImage} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+                <h4 className="font-bold text-[12px] md:text-[14px] uppercase tracking-tighter mb-1">{item.title}</h4>
+                <p className="font-mono text-[10px] md:text-[11px] font-black tracking-tighter">${item.price.toFixed(2)}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+      </motion.div>
+    </div>
+  );
+};
+
 const Home: React.FC = () => (
   <main>
     <Hero />
@@ -883,12 +995,14 @@ const Shop: React.FC<{ onAddToCart: (product: Product) => void }> = ({ onAddToCa
               className="group"
             >
               <div className="relative aspect-[3/4] bg-gray-50 overflow-hidden mb-4 md:mb-6">
-                <img 
-                  src={product.productImage} 
-                  alt={product.title} 
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
-                />
+                <Link to={`/product/${product.id}`}>
+                  <img 
+                    src={product.productImage} 
+                    alt={product.title} 
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
+                    referrerPolicy="no-referrer"
+                  />
+                </Link>
                 <div className="absolute top-3 left-3 md:top-4 md:left-4">
                   <span className="bg-white px-2 py-1 font-mono text-[7px] md:text-[8px] uppercase tracking-widest font-bold border border-gray-100">
                     {product.status}
@@ -902,10 +1016,10 @@ const Shop: React.FC<{ onAddToCart: (product: Product) => void }> = ({ onAddToCa
                 </button>
               </div>
               <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="font-bold text-[12px] md:text-[14px] uppercase tracking-tighter mb-1">{product.title}</h3>
+                <Link to={`/product/${product.id}`}>
+                  <h3 className="font-bold text-[12px] md:text-[14px] uppercase tracking-tighter mb-1 hover:underline">{product.title}</h3>
                   <p className="font-mono text-[9px] md:text-[10px] text-gray-400 uppercase tracking-tight">{product.material}</p>
-                </div>
+                </Link>
                 <p className="font-mono text-[11px] md:text-[12px] font-black tracking-tighter">${product.price.toFixed(2)}</p>
               </div>
             </motion.div>
@@ -968,6 +1082,7 @@ export default function App() {
           <Route path="/brand-story" element={<BrandStory />} />
           <Route path="/collections" element={<Collections />} />
           <Route path="/shop" element={<Shop onAddToCart={addToCart} />} />
+          <Route path="/product/:id" element={<ProductDetail onAddToCart={addToCart} />} />
         </Routes>
 
         <Footer />
