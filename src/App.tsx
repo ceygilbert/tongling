@@ -416,7 +416,7 @@ const BrandStory: React.FC = () => (
             EXPERTISE AND <br />AGILITY IN ACTION
           </h2>
           <p className="font-mono text-[12px] md:text-[14px] leading-relaxed uppercase tracking-tight text-gray-600 mb-8">
-            Founded by the same team behind Xinhe Dyeing and Printing Co., Ltd. Our team has extensive experience in both production and trade, basing on deep experience and knowledge allows us to quickly address technical challenges, respond efficiently, and R&D to meet the evolving needs of the fashion industry.
+            Founded in 2005 as a dyeing and printing manufacturer, Tongling Sincerity Linen Group has grown into a trusted long-term partner for global brands. Our team has extensive experience in both production and trade, allowing us to quickly address technical challenges and R&D to meet the evolving needs of the fashion industry.
           </p>
           <div className="aspect-square bg-gray-100 overflow-hidden">
             <img 
@@ -449,6 +449,36 @@ const BrandStory: React.FC = () => (
         </motion.div>
       </div>
 
+      {/* Vertically Integrated Production Section */}
+      <section className="mb-24 md:mb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-5 order-2 lg:order-1">
+            <h3 className="text-2xl md:text-3xl font-bold tracking-tighter uppercase mb-6">VERTICALLY INTEGRATED PRODUCTION</h3>
+            <p className="font-mono text-[11px] md:text-[13px] leading-relaxed uppercase tracking-tight text-gray-600 mb-8">
+              We deliver a fully integrated linen supply chain—from yarn spinning through to weaving, dyeing, printing, and finishing. This oversight ensures cost efficiency, shorter delivery timelines, and exceptional quality across all stages.
+            </p>
+            <div className="space-y-4">
+              {['YARN SPINNING', 'WEAVING', 'DYEING & PRINTING', 'FINISHING'].map((step) => (
+                <div key={step} className="flex items-center gap-4 border-b border-gray-100 pb-2">
+                  <div className="w-2 h-2 bg-black" />
+                  <span className="font-mono text-[10px] md:text-[12px] font-bold uppercase tracking-widest">{step}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="lg:col-span-7 order-1 lg:order-2">
+            <div className="aspect-[16/9] bg-gray-100 overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1558051815-0f18e64e6280?auto=format&fit=crop&w=1200&q=80" 
+                alt="Production facility" 
+                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Redesigned Team Section - Single Large Image */}
       <section className="mb-24 md:mb-32">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 border-b border-black pb-4 gap-4">
@@ -471,7 +501,7 @@ const BrandStory: React.FC = () => (
             />
           </motion.div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-end p-4 md:p-8">
-            <p className="text-white font-mono text-[8px] md:text-[10px] uppercase tracking-[0.2em]">Our Sales & Production Team — Shanghai, 2025</p>
+            <p className="text-white font-mono text-[8px] md:text-[10px] uppercase tracking-[0.2em]">Our Sales & Production Team — Shanghai & Sydney, 2025</p>
           </div>
         </div>
 
@@ -516,10 +546,20 @@ const BrandStory: React.FC = () => (
       </div>
 
       <div className="text-center max-w-3xl mx-auto mb-24 md:mb-32">
-        <h2 className="text-3xl md:text-4xl font-black tracking-tighter uppercase mb-6 md:mb-8">ONE THREAD AT A TIME</h2>
-        <p className="font-mono text-[12px] md:text-[14px] leading-relaxed uppercase tracking-tight px-4">
-          It’s a craft we’ve been learning, refining, and passing down for generations. Building trust through lasting partnerships is our core mission. Our integrity and commitment to solving problems ensure customer satisfaction and loyalty.
+        <h2 className="text-3xl md:text-4xl font-black tracking-tighter uppercase mb-6 md:mb-8">CULTURE AS NATURE</h2>
+        <p className="font-mono text-[12px] md:text-[14px] leading-relaxed uppercase tracking-tight px-4 mb-8">
+          Each thread weaves the artistry of nature. Using responsibly sourced linen and advanced eco-friendly techniques, we create fabrics that are as kind to the planet as they are to your designs.
         </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left border-t border-black pt-8">
+          <div>
+            <h4 className="font-bold text-[12px] uppercase tracking-widest mb-4">TRACEABILITY</h4>
+            <p className="font-mono text-[10px] uppercase text-gray-500">Every yarn we use is fully traceable, ensuring transparency and responsibility across all stages of production.</p>
+          </div>
+          <div>
+            <h4 className="font-bold text-[12px] uppercase tracking-widest mb-4">CIRCULARITY</h4>
+            <p className="font-mono text-[10px] uppercase text-gray-500">Residual linen fibres are recycled for secondary applications, including eco-friendly paper, extending the lifecycle of flax.</p>
+          </div>
+        </div>
       </div>
     </motion.div>
   </div>
