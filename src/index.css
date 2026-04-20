@@ -1,13 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@700;900&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-serif: "EB Garamond", serif;
+  --font-mono: "Courier Prime", monospace;
+  --font-display: "Montserrat", sans-serif; /* For a sharp look like Copperplate */
+  --color-bg-base: #FBFBF2;
+  --color-ink: #1A1A1A;
 }
 
 @layer base {
   body {
-    @apply bg-white text-black antialiased;
+    @apply bg-bg-base text-ink antialiased font-serif;
   }
+}
+
+.text-collision {
+  mix-blend-mode: difference;
+}
+
+.overlap-image {
+  box-shadow: 20px 20px 0px rgba(0,0,0,0.05);
 }

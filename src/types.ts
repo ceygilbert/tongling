@@ -9,4 +9,8 @@ export interface Product {
   lifestyleImage: string;
   productImage: string;
   price: number;
+  category?: 'SHIRTING' | 'GARMENT' | 'SUIT' | 'TEXTURE';
+  process?: 'PIECE_DYED' | 'YARN_DYED' | 'PRINTING' | 'SPECIAL_FINISH';
+  availability?: 'IN_STOCK' | 'MAKE_TO_ORDER';
+  composition?: string;
 }
