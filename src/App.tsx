@@ -615,36 +615,36 @@ const BrandStory: React.FC = () => (
       {/* Culture as Nature Section */}
       <section className="pb-32 md:pb-64 border-t border-ink/10 pt-32 relative overflow-hidden">
         <div className="absolute top-1/2 left-0 w-full h-px bg-collision/5 -z-0" />
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-24 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-20 xl:gap-32 relative z-10">
           <div className="md:col-span-12 lg:col-span-5">
             <motion.h2 
               initial={{ x: -20, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
-              className="text-6xl md:text-[8vw] font-serif italic font-black uppercase tracking-[-0.07em] leading-[0.8] text-collision"
+              className="text-5xl md:text-[6vw] xl:text-[110px] font-serif italic font-black uppercase tracking-[-0.07em] leading-[0.85] text-collision"
             >
               CULTURE <br />
-              <span className="text-ink ml-8 md:ml-16">AS</span> <br />
-              <span className="ml-16 md:ml-32">NATURE</span>
+              <span className="text-ink ml-10 lg:ml-20">AS</span> <br />
+              <span className="ml-20 lg:ml-36">NATURE</span>
             </motion.h2>
           </div>
           <div className="md:col-span-12 lg:col-span-7 space-y-16">
             <div className="max-w-2xl">
-              <p className="font-mono text-[16px] md:text-[20px] leading-relaxed uppercase tracking-tight text-ink/70 italic border-l-2 border-collision pl-8">
+              <p className="font-mono text-[16px] md:text-[18px] lg:text-[20px] leading-relaxed uppercase tracking-tight text-ink/70 italic border-l-2 border-collision pl-8">
                 Each thread weaves the artistry of nature. Using responsibly sourced linen and zero-waste technical finishes, we produce textiles that harmonize with the environment.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 border-t border-ink/10 pt-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 lg:gap-20 border-t border-ink/10 pt-16">
               <div className="space-y-6 group">
                  <div className="flex items-center gap-4">
-                    <span className="w-8 h-px bg-collision group-hover:w-24 transition-all duration-700" />
-                    <h4 className="font-serif italic text-3xl uppercase tracking-tighter text-ink">TRACEABILITY</h4>
+                    <span className="w-8 h-px bg-collision group-hover:w-16 transition-all duration-700" />
+                    <h4 className="font-serif italic text-2xl lg:text-3xl uppercase tracking-tighter text-ink">TRACEABILITY</h4>
                  </div>
                  <p className="font-mono text-[12px] uppercase text-ink/50 leading-relaxed italic pl-12">Every yarn in our archive is fully traceable to European fields, ensuring transparency across the entire lifecycle.</p>
               </div>
               <div className="space-y-6 group">
                  <div className="flex items-center gap-4">
-                    <span className="w-8 h-px bg-collision group-hover:w-24 transition-all duration-700" />
-                    <h4 className="font-serif italic text-3xl uppercase tracking-tighter text-ink">CIRCULARITY</h4>
+                    <span className="w-8 h-px bg-collision group-hover:w-16 transition-all duration-700" />
+                    <h4 className="font-serif italic text-2xl lg:text-3xl uppercase tracking-tighter text-ink">CIRCULARITY</h4>
                  </div>
                  <p className="font-mono text-[12px] uppercase text-ink/50 leading-relaxed italic pl-12">Closed-loop manufacturing systems ensure that residual fibers are repurposed, minimizing industrial footprint and waste.</p>
               </div>
