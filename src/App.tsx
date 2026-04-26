@@ -465,9 +465,22 @@ const BrandStory: React.FC = () => (
       animate={{ opacity: 1 }}
       className="max-w-7xl mx-auto"
     >
+      {/* Intro Header */}
+      <section className="mb-48">
+        <motion.h1 
+          initial={{ y: 30, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="text-4xl md:text-7xl font-serif italic text-ink leading-tight tracking-tight mb-12 max-w-5xl"
+        >
+          "Linen Reimagined: <br />
+          <span className="font-mono not-italic text-collision ml-12 md:ml-32">Where Sustainability Meets Refined Elegance"</span>
+        </motion.h1>
+      </section>
+
       <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24 mb-48">
         <div className="md:col-span-1 hidden md:block">
-          <p className="vertical-text text-ink/20 font-mono text-[10px] tracking-[0.5em] whitespace-nowrap">ESTABLISHED IN 1998 — TONGLING & SYDNEY</p>
+          <p className="vertical-text text-ink/20 font-mono text-[10px] tracking-[0.5em] whitespace-nowrap">FOUNDED IN 2005 — TONGLING SINCERITY</p>
         </div>
 
         <div className="md:col-span-11 grid grid-cols-1 lg:grid-cols-2 gap-20">
@@ -483,16 +496,21 @@ const BrandStory: React.FC = () => (
             </div>
             <div className="relative z-10 text-balance">
               <h2 className="text-4xl md:text-7xl font-serif font-black italic leading-[0.9] tracking-[-0.05em] uppercase mb-16 text-ink">
-                EXPERTISE <br />
-                <span className="ml-12 font-mono not-italic text-collision">AGILITY</span>
+                ABOUT <br />
+                <span className="ml-12 font-mono not-italic text-collision">US</span>
               </h2>
-              <p className="font-mono text-[14px] md:text-[16px] leading-relaxed uppercase tracking-tight text-ink/70 mb-12 max-w-sm italic border-l-2 border-collision pl-8">
-                Founded in 1998 as a specialized dyeing and printing factory, Tongling Sincerity Linen Group has evolved into a global benchmark for linen excellence and agile manufacturing.
-              </p>
+              <div className="space-y-8 mb-12 border-l-2 border-collision pl-8">
+                <p className="font-mono text-[14px] md:text-[16px] leading-relaxed uppercase tracking-tight text-ink/70 italic">
+                  Founded in 2005 as a dyeing and printing manufacturer, Tongling Sincerity Linen Group has grown from a dedicated production facility into a trusted long-term partner for global brands.
+                </p>
+                <p className="font-mono text-[12px] md:text-[14px] leading-relaxed uppercase tracking-tight text-ink/50 italic">
+                  Committed to sustainability, we develop innovative eco-friendly processing techniques. Surplus and residual linen fibres are carefully collected and recycled for secondary applications, extending the lifecycle of flax beyond textiles.
+                </p>
+              </div>
               <div className="aspect-[4/3] bg-gray-100 overflow-hidden overlap-image transform rotate-1 shadow-xl">
                 <img 
                   src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&w=1200&q=80" 
-                  alt="Artisan Expertise" 
+                  alt="Tongling Facility" 
                   className="w-full h-full object-cover grayscale brightness-90 hover:grayscale-0 transition-all duration-1000"
                   referrerPolicy="no-referrer"
                 />
@@ -531,53 +549,127 @@ const BrandStory: React.FC = () => (
         </div>
       </div>
     
-      {/* Vertically Integrated Production Section */}
-      <section className="mb-64 border-y border-ink/10 py-32 md:py-48 bg-ink/[0.02]">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-24 items-center">
+      {/* Production & R&D Dual Grid */}
+      <section className="mb-64 border-t border-ink/10 pt-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 mb-32">
           <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            className="lg:col-span-12 mb-8 md:mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="space-y-12"
           >
-            <h2 className="text-5xl md:text-8xl font-serif font-black italic tracking-[-0.05em] leading-none uppercase">
-              PURE <br />
-              <span className="font-mono not-italic text-collision ml-12 md:ml-32">CONTINUITY</span>
-            </h2>
-          </motion.div>
-          <div className="lg:col-span-5 space-y-12 order-2 lg:order-1">
-            <p className="font-mono text-[14px] md:text-[16px] leading-relaxed uppercase tracking-tight text-ink/70 italic border-l-2 border-ink pl-8">
-              We deliver a fully integrated linen supply chain—from the selection of raw flax to spinning, weaving, and the intricate arts of dyeing and finishing. Absolute control over every stage yields absolute sincerity in the final article.
-            </p>
-            <div className="grid grid-cols-1 gap-4 pt-12">
-              {['YARN SPINNING', 'TECHNICAL WEAVING', 'ARTISAN DYEING', 'DIGITAL PRINTING', 'SPECIALIZED FINISHING'].map((step, i) => (
-                <motion.div 
-                  key={step} 
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="flex items-center justify-between border-b border-ink/5 pb-4 group"
-                >
-                  <span className="font-mono text-[11px] md:text-[13px] font-bold uppercase tracking-[0.4em] group-hover:text-collision transition-all italic">{step}</span>
-                  <div className="h-px w-0 group-hover:w-24 bg-ink/10 transition-all duration-700" />
-                  <span className="text-ink/20 group-hover:text-ink transition-colors font-serif italic text-xs">ARCHIVE-VERIFIED</span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            className="lg:col-span-7 order-1 lg:order-2"
-          >
-            <div className="aspect-[16/9] bg-gray-100 overflow-hidden transform rotate-1 overlap-image shadow-2xl">
+            <div className="aspect-[4/5] bg-gray-100 overflow-hidden shadow-2xl">
               <img 
-                src="https://images.unsplash.com/photo-1558051815-0f18e64e6280?auto=format&fit=crop&w=1200&q=80" 
-                alt="Integrated Production" 
-                className="w-full h-full object-cover grayscale brightness-90 hover:grayscale-0 transition-all duration-1000"
+                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80" 
+                alt="Production" 
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000 grayscale brightness-75"
                 referrerPolicy="no-referrer"
               />
             </div>
+            <div>
+              <h3 className="font-serif italic text-3xl uppercase tracking-tighter text-ink mb-6">Vertically Integrated Production Chain</h3>
+              <p className="font-mono text-[14px] leading-relaxed uppercase tracking-tight text-ink/70 italic">
+                From spinning to weaving and dyeing, we oversee every step of production to ensure cost efficiency, shorter delivery timelines, and exceptional quality.
+              </p>
+            </div>
           </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="space-y-12 md:mt-48"
+          >
+            <div className="aspect-[4/5] bg-[#F4D03F] overflow-hidden shadow-2xl relative">
+               <img 
+                src="https://images.unsplash.com/photo-1542332213-91590de449df?auto=format&fit=crop&w=1200&q=80" 
+                alt="R&D" 
+                className="w-full h-full object-cover mix-blend-multiply opacity-80"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#F4D03F]/40 to-transparent" />
+            </div>
+            <div>
+              <h3 className="font-serif italic text-3xl uppercase tracking-tighter text-ink mb-6">Research and Development Excellence</h3>
+              <p className="font-mono text-[14px] leading-relaxed uppercase tracking-tight text-ink/70 italic">
+                We continuously explore new ways to R&D, enhancing the functionality and versatility of linen fabrics to meet diverse market demands.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Vertically Integrated Production Section (Detailed) */}
+        <section className="mb-64 border-b border-ink/10 pb-32 md:pb-48 bg-ink/[0.02] -mx-4 md:-mx-12 px-4 md:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-24 items-center max-w-7xl mx-auto">
+            <motion.div 
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="lg:col-span-12"
+            >
+              <h2 className="text-5xl md:text-8xl font-serif font-black italic tracking-[-0.05em] leading-none uppercase mb-16">
+                VERTICAL <br />
+                <span className="font-mono not-italic text-collision ml-12 md:ml-32">INTEGRATION</span>
+              </h2>
+            </motion.div>
+            <div className="lg:col-span-5 space-y-12">
+              <p className="font-mono text-[14px] md:text-[16px] leading-relaxed uppercase tracking-tight text-ink border-l-2 border-collision pl-8 italic">
+                Tongling Sincerity Linen Group delivers a fully vertically integrated linen supply chain, from yarn spinning through to weaving, dyeing, printing, and finishing. Full yarn traceability underpins our commitment to transparency, quality assurance, and responsible manufacturing at every stage.
+              </p>
+              <div className="grid grid-cols-1 gap-4 pt-12">
+                {['SPINNING', 'WEAVING', 'DYEING', 'PRINTING', 'FINISHING'].map((step, i) => (
+                  <motion.div 
+                    key={step} 
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    className="flex items-center justify-between border-b border-ink/5 pb-4 group"
+                  >
+                    <span className="font-mono text-[11px] md:text-[13px] font-bold uppercase tracking-[0.4em] group-hover:text-collision transition-all italic">{step}</span>
+                    <div className="h-px grow mx-8 bg-ink/10 group-hover:bg-collision/20 transition-all duration-700" />
+                    <span className="text-ink/20 group-hover:text-ink transition-colors font-serif italic text-xs uppercase tracking-widest">TRACEABLE</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              className="lg:col-span-7"
+            >
+              <div className="aspect-[16/9] bg-gray-100 overflow-hidden transform rotate-1 overlap-image shadow-2xl">
+                <img 
+                  src="https://images.unsplash.com/photo-1558051815-0f18e64e6280?auto=format&fit=crop&w=1200&q=80" 
+                  alt="Integrated Production Flow" 
+                  className="w-full h-full object-cover grayscale brightness-90 hover:grayscale-0 transition-all duration-1000"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      </section>
+
+      {/* International Branding Supplier Section */}
+      <section className="mb-64 border-t border-ink/10 pt-32 text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="mb-24"
+        >
+          <h2 className="text-4xl md:text-7xl font-serif italic font-black uppercase tracking-tight text-ink mb-8">International Branding Supplier</h2>
+          <p className="max-w-2xl mx-auto font-mono text-[12px] md:text-[14px] uppercase tracking-tight text-ink/50 leading-relaxed italic">
+            Trusted by global brands, we deliver premium fabrics that reflect your brand’s values, ensuring consistency, reliability, and sophistication.
+          </p>
+        </motion.div>
+        
+        <div className="bg-[#f2f1ed] py-24 px-8 md:px-24">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-16 md:gap-24 items-center grayscale opacity-70 hover:opacity-100 transition-all duration-500">
+             {/* Note: In a real app we'd use local assets for these common logos */}
+             {['LC WAIKIKI', 'SUSSAN', 'SPORTSGIRL', 'TARGET', 'ZARA', 'COSTCO', 'NEXT', 'MO&CO.', 'INDITEX', 'UNTUCKIT', 'MUJI', 'CIA.HERING', 'SUBURBIA', 'SAINSBURY\'S', 'YD.'].map((brand) => (
+                <div key={brand} className="text-xl font-black font-sans tracking-tight text-ink/80 hover:text-ink transition-colors select-none">
+                  {brand}
+                </div>
+             ))}
+          </div>
         </div>
       </section>
 
@@ -613,43 +705,40 @@ const BrandStory: React.FC = () => (
       </section>
 
       {/* Culture as Nature Section */}
-      <section className="pb-32 md:pb-64 border-t border-ink/10 pt-32 relative overflow-hidden">
-        <div className="absolute top-1/2 left-0 w-full h-px bg-collision/5 -z-0" />
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-20 xl:gap-32 relative z-10">
-          <div className="md:col-span-12 lg:col-span-5">
-            <motion.h2 
-              initial={{ x: -20, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              className="text-5xl md:text-[6vw] xl:text-[110px] font-serif italic font-black uppercase tracking-[-0.07em] leading-[0.85] text-collision"
-            >
-              CULTURE <br />
-              <span className="text-ink ml-10 lg:ml-20">AS</span> <br />
-              <span className="ml-20 lg:ml-36">NATURE</span>
-            </motion.h2>
+      <section className="pb-32 md:pb-64 border-t border-ink/10 pt-32 relative overflow-hidden flex flex-col items-center text-center">
+        <motion.h2 
+          initial={{ y: 20, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          className="text-6xl md:text-[100px] font-serif italic font-black uppercase tracking-[-0.05em] leading-tight text-ink mb-16"
+        >
+          CULTURE <br />
+          <span className="font-mono not-italic text-collision">AS NATURE</span>
+        </motion.h2>
+
+        <motion.div 
+          initial={{ scale: 0.8, opacity: 0 }}
+          whileInView={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.2 }}
+          className="relative w-full max-w-md aspect-square mb-24 grayscale brightness-110 hover:grayscale-0 transition-all duration-1000 rotate-3 p-4"
+        >
+          <div className="w-full h-full rounded-full overflow-hidden border-8 border-ink shadow-2xl shadow-collision/20">
+            <img 
+              src="https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=1200&q=80" 
+              alt="Linen Texture" 
+              className="w-full h-full object-cover scale-110"
+              referrerPolicy="no-referrer"
+            />
           </div>
-          <div className="md:col-span-12 lg:col-span-7 space-y-16">
-            <div className="max-w-2xl">
-              <p className="font-mono text-[16px] md:text-[18px] lg:text-[20px] leading-relaxed uppercase tracking-tight text-ink/70 italic border-l-2 border-collision pl-8">
-                Each thread weaves the artistry of nature. Using responsibly sourced linen and zero-waste technical finishes, we produce textiles that harmonize with the environment.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 lg:gap-20 border-t border-ink/10 pt-16">
-              <div className="space-y-6 group">
-                 <div className="flex items-center gap-4">
-                    <span className="w-8 h-px bg-collision group-hover:w-16 transition-all duration-700" />
-                    <h4 className="font-serif italic text-2xl lg:text-3xl uppercase tracking-tighter text-ink">TRACEABILITY</h4>
-                 </div>
-                 <p className="font-mono text-[12px] uppercase text-ink/50 leading-relaxed italic pl-12">Every yarn in our archive is fully traceable to European fields, ensuring transparency across the entire lifecycle.</p>
-              </div>
-              <div className="space-y-6 group">
-                 <div className="flex items-center gap-4">
-                    <span className="w-8 h-px bg-collision group-hover:w-16 transition-all duration-700" />
-                    <h4 className="font-serif italic text-2xl lg:text-3xl uppercase tracking-tighter text-ink">CIRCULARITY</h4>
-                 </div>
-                 <p className="font-mono text-[12px] uppercase text-ink/50 leading-relaxed italic pl-12">Closed-loop manufacturing systems ensure that residual fibers are repurposed, minimizing industrial footprint and waste.</p>
-              </div>
-            </div>
-          </div>
+        </motion.div>
+
+        <div className="max-w-3xl space-y-12">
+          <p className="font-mono text-[16px] md:text-[22px] leading-relaxed uppercase tracking-tight text-ink italic">
+             Each thread weaves the artistry of nature. <br />
+             Using responsibly sourced linen and advanced eco-friendly techniques, we create fabrics that are as kind to the planet as they are to your designs. Join us in weaving a more sustainable future.
+          </p>
+          <Link to="/shop" className="inline-block border-b border-collision text-collision font-mono text-sm tracking-[0.3em] uppercase italic hover:tracking-[0.5em] transition-all pb-2">
+            More
+          </Link>
         </div>
       </section>
     </motion.div>
