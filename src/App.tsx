@@ -663,10 +663,34 @@ const BrandStory: React.FC = () => (
         
         <div className="bg-[#f2f1ed] py-24 px-8 md:px-24">
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-16 md:gap-24 items-center grayscale opacity-70 hover:opacity-100 transition-all duration-500">
-             {/* Note: In a real app we'd use local assets for these common logos */}
-             {['LC WAIKIKI', 'SUSSAN', 'SPORTSGIRL', 'TARGET', 'ZARA', 'COSTCO', 'NEXT', 'MO&CO.', 'INDITEX', 'UNTUCKIT', 'MUJI', 'CIA.HERING', 'SUBURBIA', 'SAINSBURY\'S', 'YD.'].map((brand) => (
-                <div key={brand} className="text-xl font-black font-sans tracking-tight text-ink/80 hover:text-ink transition-colors select-none">
-                  {brand}
+             {[
+               { name: 'LC WAIKIKI', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/lc_waikiki_logo.svg' },
+               { name: 'SUSSAN', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/sussan_logo.svg' },
+               { name: 'SPORTSGIRL', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/sportsgirl_logo.svg' },
+               { name: 'TARGET', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/target_logo.svg' },
+               { name: 'ZARA', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/Zara_logo.svg' }, 
+               { name: 'COSTCO', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/costco_logo.jpeg' }, 
+               { name: 'NEXT', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/next_logo.svg' }, 
+               { name: 'INDITEX', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/inditex_logo.svg' }, 
+               { name: 'UNTUCKIT', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/untuckit_logo.png' }, 
+               { name: 'MUJI', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/muji_logo.svg' }, 
+               { name: 'SUBURBIA', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/suburbia_logo.svg' }, 
+               { name: 'SAINSBURY\'S', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/sainsbury_logo.png' }, 
+               { name: 'YD.', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/mo_co_logo.png' }
+             ].map((brand) => (
+                <div key={brand.name} className="flex items-center justify-center p-4">
+                  {brand.logoUrl ? (
+                    <img 
+                      src={brand.logoUrl} 
+                      alt={brand.name} 
+                      className="max-h-8 md:max-h-12 w-auto object-contain"
+                      referrerPolicy="no-referrer"
+                    />
+                  ) : (
+                    <span className="text-xl font-black font-sans tracking-tight text-ink/80 hover:text-ink transition-colors select-none">
+                      {brand.name}
+                    </span>
+                  )}
                 </div>
              ))}
           </div>
