@@ -581,7 +581,7 @@ const BrandStory: React.FC = () => (
           >
             <div className="aspect-[4/5] bg-[#F4D03F] overflow-hidden shadow-2xl relative">
                <img 
-                src="https://images.unsplash.com/photo-1542332213-91590de449df?auto=format&fit=crop&w=1200&q=80" 
+                src="https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=1200&q=80" 
                 alt="R&D" 
                 className="w-full h-full object-cover mix-blend-multiply opacity-80"
                 referrerPolicy="no-referrer"
