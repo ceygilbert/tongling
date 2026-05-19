@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ChevronLeft, ChevronRight, Instagram, Mail, ArrowRight, ArrowLeft, History, Users, Globe, Award, ShoppingBag, X, Plus, Minus, Menu } from "lucide-react";
+import { ChevronLeft, ChevronRight, Instagram, Mail, ArrowRight, ArrowLeft, History, Users, Globe, Award, ShoppingBag, X, Plus, Minus, Menu, Heart } from "lucide-react";
 import { BrowserRouter as Router, Routes, Route, Link, useLocation, useParams } from "react-router-dom";
 import { Product } from "./types";
 
@@ -458,314 +458,248 @@ const ProductSlider: React.FC = () => {
   );
 };
 
+const BRANDS = [
+  { name: 'LC WAIKIKI', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/lc_waikiki_logo.svg' },
+  { name: 'SUSSAN', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/sussan_logo.svg' },
+  { name: 'SPORTSGIRL', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/sportsgirl_logo.svg' },
+  { name: 'TARGET', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/target_logo.svg' },
+  { name: 'ZARA', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/Zara_logo.svg' }, 
+  { name: 'COSTCO', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/costco_logo.jpeg' }, 
+  { name: 'NEXT', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/next_logo.svg' }, 
+  { name: 'INDITEX', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/inditex_logo.svg' }, 
+  { name: 'UNTUCKIT', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/untuckit_logo.png' }, 
+  { name: 'MUJI', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/muji_logo.svg' }, 
+  { name: 'SUBURBIA', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/suburbia_logo.svg' }, 
+  { name: 'SAINSBURY\'S', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/sainsbury_logo.png' }, 
+  { name: 'YD.', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/mo_co_logo.png' }
+];
+
 const BrandStory: React.FC = () => (
-  <div className="pt-32 md:pt-48 pb-32 px-4 md:px-12 bg-bg-base overflow-x-hidden">
-    <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="max-w-7xl mx-auto"
-    >
-      {/* Intro Header */}
-      <section className="mb-48">
-        <motion.h1 
-          initial={{ y: 30, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="text-4xl md:text-7xl font-serif italic text-ink leading-tight tracking-tight mb-12 max-w-5xl"
+  <div className="bg-bg-base overflow-x-hidden">
+    {/* Luxury Hero Section */}
+    <section className="relative h-[90vh] flex items-center justify-center overflow-hidden border-b border-ink/5">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 2 }}
+        className="absolute inset-0 z-0"
+      >
+        <video 
+          autoPlay 
+          muted 
+          loop 
+          playsInline
+          className="w-full h-full object-cover grayscale brightness-75 contrast-125"
         >
-          "Linen Reimagined: <br />
-          <span className="font-mono not-italic text-collision ml-12 md:ml-32">Where Sustainability Meets Refined Elegance"</span>
-        </motion.h1>
-      </section>
-
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24 mb-48">
-        <div className="md:col-span-1 hidden md:block">
-          <p className="vertical-text text-ink/20 font-mono text-[10px] tracking-[0.5em] whitespace-nowrap">FOUNDED IN 2005 — TONGLING SINCERITY</p>
-        </div>
-
-        <div className="md:col-span-11 grid grid-cols-1 lg:grid-cols-2 gap-20">
-          <motion.section
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="relative"
-          >
-            <div className="absolute -top-12 -left-6 z-0 pointer-events-none">
-              <span className="font-serif italic text-9xl text-ink/5 select-none font-black">01</span>
-            </div>
-            <div className="relative z-10 text-balance">
-              <h2 className="text-4xl md:text-7xl font-serif font-black italic leading-[0.9] tracking-[-0.05em] uppercase mb-16 text-ink">
-                ABOUT <br />
-                <span className="ml-12 font-mono not-italic text-collision">US</span>
-              </h2>
-              <div className="space-y-8 mb-12 border-l-2 border-collision pl-8">
-                <p className="font-mono text-[14px] md:text-[16px] leading-relaxed uppercase tracking-tight text-ink/70 italic">
-                  Founded in 2005 as a dyeing and printing manufacturer, Tongling Sincerity Linen Group has grown from a dedicated production facility into a trusted long-term partner for global brands.
-                </p>
-                <p className="font-mono text-[12px] md:text-[14px] leading-relaxed uppercase tracking-tight text-ink/50 italic">
-                  Committed to sustainability, we develop innovative eco-friendly processing techniques. Surplus and residual linen fibres are carefully collected and recycled for secondary applications, extending the lifecycle of flax beyond textiles.
-                </p>
-              </div>
-              <div className="aspect-[4/3] bg-gray-100 overflow-hidden overlap-image transform rotate-1 shadow-xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&w=1200&q=80" 
-                  alt="Tongling Facility" 
-                  className="w-full h-full object-cover grayscale brightness-90 hover:grayscale-0 transition-all duration-1000"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-            </div>
-          </motion.section>
-
-          <motion.section
-            initial={{ y: 100, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="lg:pt-64 relative"
-          >
-            <div className="absolute top-12 -right-6 z-0 pointer-events-none">
-              <span className="font-serif italic text-9xl text-ink/5 select-none font-black">02</span>
-            </div>
-            <div className="relative z-10 text-balance">
-              <div className="aspect-[3/4] bg-gray-100 overflow-hidden overlap-image transform -rotate-2 mb-16 shadow-2xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1574634534894-89d7576c8259?auto=format&fit=crop&w=1200&q=80" 
-                  alt="Sensitivity of Material" 
-                  className="w-full h-full object-cover grayscale brightness-110"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-              <h3 className="text-3xl md:text-5xl font-serif italic font-black tracking-[-0.03em] uppercase mb-8 leading-none">
-                SENSITIVITY <br />
-                <span className="font-mono not-italic text-collision ml-12">OF TOUCH</span>
-              </h3>
-              <p className="font-mono text-[12px] md:text-[14px] leading-relaxed uppercase tracking-tight text-ink/60 max-w-sm italic">
-                Working with linen is a dialogue between human instinct and natural fiber—a delicate management of tension, moisture, and time that only decades of practice can perfect.
-              </p>
-            </div>
-          </motion.section>
-        </div>
-      </div>
-    
-      {/* Production & R&D Dual Grid */}
-      <section className="mb-64 border-t border-ink/10 pt-32">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 mb-32">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="space-y-12"
-          >
-            <div className="aspect-[4/5] bg-gray-100 overflow-hidden shadow-2xl">
-              <img 
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80" 
-                alt="Production" 
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000 grayscale brightness-75"
-                referrerPolicy="no-referrer"
-              />
-            </div>
-            <div>
-              <h3 className="font-serif italic text-3xl uppercase tracking-tighter text-ink mb-6">Vertically Integrated Production Chain</h3>
-              <p className="font-mono text-[14px] leading-relaxed uppercase tracking-tight text-ink/70 italic">
-                From spinning to weaving and dyeing, we oversee every step of production to ensure cost efficiency, shorter delivery timelines, and exceptional quality.
-              </p>
-            </div>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="space-y-12 md:mt-48"
-          >
-            <div className="aspect-[4/5] bg-[#F4D03F] overflow-hidden shadow-2xl relative">
-               <img 
-                src="https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=1200&q=80" 
-                alt="R&D" 
-                className="w-full h-full object-cover mix-blend-multiply opacity-80"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#F4D03F]/40 to-transparent" />
-            </div>
-            <div>
-              <h3 className="font-serif italic text-3xl uppercase tracking-tighter text-ink mb-6">Research and Development Excellence</h3>
-              <p className="font-mono text-[14px] leading-relaxed uppercase tracking-tight text-ink/70 italic">
-                We continuously explore new ways to R&D, enhancing the functionality and versatility of linen fabrics to meet diverse market demands.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Vertically Integrated Production Section (Detailed) */}
-        <section className="mb-64 border-b border-ink/10 pb-32 md:pb-48 bg-ink/[0.02] -mx-4 md:-mx-12 px-4 md:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-24 items-center max-w-7xl mx-auto">
-            <motion.div 
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="lg:col-span-12"
-            >
-              <h2 className="text-5xl md:text-8xl font-serif font-black italic tracking-[-0.05em] leading-none uppercase mb-16">
-                VERTICAL <br />
-                <span className="font-mono not-italic text-collision ml-12 md:ml-32">INTEGRATION</span>
-              </h2>
-            </motion.div>
-            <div className="lg:col-span-5 space-y-12">
-              <p className="font-mono text-[14px] md:text-[16px] leading-relaxed uppercase tracking-tight text-ink border-l-2 border-collision pl-8 italic">
-                Tongling Sincerity Linen Group delivers a fully vertically integrated linen supply chain, from yarn spinning through to weaving, dyeing, printing, and finishing. Full yarn traceability underpins our commitment to transparency, quality assurance, and responsible manufacturing at every stage.
-              </p>
-              <div className="grid grid-cols-1 gap-4 pt-12">
-                {['SPINNING', 'WEAVING', 'DYEING', 'PRINTING', 'FINISHING'].map((step, i) => (
-                  <motion.div 
-                    key={step} 
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    className="flex items-center justify-between border-b border-ink/5 pb-4 group"
-                  >
-                    <span className="font-mono text-[11px] md:text-[13px] font-bold uppercase tracking-[0.4em] group-hover:text-collision transition-all italic">{step}</span>
-                    <div className="h-px grow mx-8 bg-ink/10 group-hover:bg-collision/20 transition-all duration-700" />
-                    <span className="text-ink/20 group-hover:text-ink transition-colors font-serif italic text-xs uppercase tracking-widest">TRACEABLE</span>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              className="lg:col-span-7"
-            >
-              <div className="aspect-[16/9] bg-gray-100 overflow-hidden transform rotate-1 overlap-image shadow-2xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1558051815-0f18e64e6280?auto=format&fit=crop&w=1200&q=80" 
-                  alt="Integrated Production Flow" 
-                  className="w-full h-full object-cover grayscale brightness-90 hover:grayscale-0 transition-all duration-1000"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-            </motion.div>
-          </div>
-        </section>
-      </section>
-
-      {/* International Branding Supplier Section */}
-      <section className="mb-64 border-t border-ink/10 pt-32 text-center">
-        <motion.div 
+          <source src="https://joqedqcltiyvzgenbmsu.supabase.co/storage/v1/object/public/TongLing/linen_brandstory.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-ink/20" />
+      </motion.div>
+      
+      <div className="relative z-10 text-center px-4">
+        <motion.span 
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="mb-24"
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+          className="font-mono text-[10px] md:text-[12px] uppercase tracking-[0.6em] text-bg-base/60 block mb-6"
         >
-          <h2 className="text-4xl md:text-7xl font-serif italic font-black uppercase tracking-tight text-ink mb-8">International Branding Supplier</h2>
-          <p className="max-w-2xl mx-auto font-mono text-[12px] md:text-[14px] uppercase tracking-tight text-ink/50 leading-relaxed italic">
-            Trusted by global brands, we deliver premium fabrics that reflect your brand’s values, ensuring consistency, reliability, and sophistication.
-          </p>
-        </motion.div>
-        
-        <div className="bg-[#f2f1ed] py-24 px-8 md:px-24">
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-16 md:gap-24 items-center grayscale opacity-70 hover:opacity-100 transition-all duration-500">
-             {[
-               { name: 'LC WAIKIKI', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/lc_waikiki_logo.svg' },
-               { name: 'SUSSAN', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/sussan_logo.svg' },
-               { name: 'SPORTSGIRL', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/sportsgirl_logo.svg' },
-               { name: 'TARGET', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/target_logo.svg' },
-               { name: 'ZARA', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/Zara_logo.svg' }, 
-               { name: 'COSTCO', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/costco_logo.jpeg' }, 
-               { name: 'NEXT', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/next_logo.svg' }, 
-               { name: 'INDITEX', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/inditex_logo.svg' }, 
-               { name: 'UNTUCKIT', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/untuckit_logo.png' }, 
-               { name: 'MUJI', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/muji_logo.svg' }, 
-               { name: 'SUBURBIA', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/suburbia_logo.svg' }, 
-               { name: 'SAINSBURY\'S', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/sainsbury_logo.png' }, 
-               { name: 'YD.', logoUrl: 'https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/thirdparty/mo_co_logo.png' }
-             ].map((brand) => (
-                <div key={brand.name} className="flex items-center justify-center p-4">
-                  {brand.logoUrl ? (
-                    <img 
-                      src={brand.logoUrl} 
-                      alt={brand.name} 
-                      className="max-h-8 md:max-h-12 w-auto object-contain"
-                      referrerPolicy="no-referrer"
-                    />
-                  ) : (
-                    <span className="text-xl font-black font-sans tracking-tight text-ink/80 hover:text-ink transition-colors select-none">
-                      {brand.name}
-                    </span>
-                  )}
-                </div>
-             ))}
-          </div>
-        </div>
-      </section>
+          MAISON DE TEXTILE — EST. 2005
+        </motion.span>
+        <motion.h1 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="text-6xl md:text-[12vw] font-serif italic text-bg-base leading-[0.8] tracking-[-0.04em] uppercase"
+        >
+          The Living <br />Fabric
+        </motion.h1>
+      </div>
+    </section>
 
-      {/* Team Section */}
-      <section className="mb-64 relative">
-        <div className="absolute top-0 right-0 pointer-events-none -translate-y-32 z-0 opacity-[0.03]">
-          <span className="text-[30vw] font-serif italic text-ink select-none font-black leading-none uppercase">Archive</span>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-end mb-24 relative z-10">
-          <div className="md:col-span-8">
-            <h2 className="text-5xl md:text-8xl font-serif font-black italic tracking-[-0.05em] uppercase leading-none mb-12">THE <br /><span className="font-mono not-italic text-collision ml-12 md:ml-32">ARCHIVISTS</span></h2>
-            <p className="font-mono text-[16px] md:text-[20px] leading-relaxed uppercase tracking-tight text-ink italic border-b border-collision/20 pb-8 max-w-3xl">
-              FOUNDED BY PETER HU AND SUSTAINED BY THE ARTISANAL WISDOM OF AUNT SUN (33YRS), AUNT CUI (28YRS), AND UNCLE LU (28YRS).
+    <div className="max-w-7xl mx-auto px-4 md:px-12">
+      {/* Chapter 1: Heritage */}
+      <section className="py-20 md:py-24 flex flex-col lg:flex-row items-center gap-16 md:gap-32">
+        <motion.div 
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1 }}
+          viewport={{ once: true }}
+          className="lg:w-1/2 space-y-12"
+        >
+          <div className="space-y-4">
+            <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-collision font-bold italic">CHAPTER I</span>
+            <h2 className="text-5xl md:text-7xl font-serif italic uppercase tracking-tight text-ink">A Legacy of <br />Sincerity</h2>
+          </div>
+          <div className="space-y-8 border-l border-ink/10 pl-8">
+            <p className="font-serif text-xl md:text-2xl leading-relaxed text-ink/80 italic">
+              Founded in 2005, Tongling Sincerity Linen Group was built upon a singular philosophy: that the most extraordinary textiles are born from an honest dialogue between human hands and nature's raw fiber.
+            </p>
+            <p className="font-mono text-[12px] md:text-[14px] leading-relaxed uppercase tracking-[0.1em] text-ink/50 max-w-md">
+              What began as a specialized dyeing house in Tongling has evolved into a global benchmark for luxury linen production, serving as a silent architect behind the world's most prestigious fashion houses.
             </p>
           </div>
-          <div className="md:col-span-4 border-l-2 border-collision pl-8 mb-4">
-             <p className="font-mono text-[10px] md:text-[12px] uppercase tracking-[0.4em] text-ink/40 mb-2 italic">COLLECTIVE EXPERIENCE</p>
-             <p className="text-6xl md:text-[6vw] font-serif italic font-black text-ink leading-none">120<span className="text-xl not-italic font-mono text-collision">+ YEARS</span></p>
-          </div>
-        </div>
-
-        <div className="relative group overflow-hidden mb-24 aspect-[21/9] shadow-2xl">
-          <div className="w-full h-full bg-gray-100 grayscale hover:grayscale-0 transition-all duration-1000 transform group-hover:scale-105">
-            <img 
-              src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2000&q=80" 
-              alt="The Sincerity Team" 
-              className="w-full h-full object-cover opacity-80"
-              referrerPolicy="no-referrer"
-            />
-          </div>
-          <div className="absolute inset-0 bg-ink/10 group-hover:bg-transparent transition-colors" />
-        </div>
-      </section>
-
-      {/* Culture as Nature Section */}
-      <section className="pb-32 md:pb-64 border-t border-ink/10 pt-32 relative overflow-hidden flex flex-col items-center text-center">
-        <motion.h2 
-          initial={{ y: 20, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          className="text-6xl md:text-[100px] font-serif italic font-black uppercase tracking-[-0.05em] leading-tight text-ink mb-16"
-        >
-          CULTURE <br />
-          <span className="font-mono not-italic text-collision">AS NATURE</span>
-        </motion.h2>
-
+        </motion.div>
+        
         <motion.div 
-          initial={{ scale: 0.8, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2 }}
-          className="relative w-full max-w-md aspect-square mb-24 grayscale brightness-110 hover:grayscale-0 transition-all duration-1000 rotate-3 p-4"
+          viewport={{ once: true }}
+          className="lg:w-1/2 relative"
         >
-          <div className="w-full h-full rounded-full overflow-hidden border-8 border-ink shadow-2xl shadow-collision/20">
+          <div className="aspect-[4/5] overflow-hidden bg-gray-50 shadow-2xl skew-x-1" 
+               style={{ clipPath: "polygon(0% 0%, 100% 0%, 100% 95%, 0% 100%)" }}>
             <img 
-              src="https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=1200&q=80" 
-              alt="Linen Texture" 
-              className="w-full h-full object-cover scale-110"
+              src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&w=1200&q=80" 
+              alt="Tongling Workshop" 
+              className="w-full h-full object-cover grayscale brightness-90 hover:grayscale-0 transition-all duration-1000"
               referrerPolicy="no-referrer"
             />
+          </div>
+          <div className="absolute -bottom-12 -right-12 hidden md:block w-48 h-48 border border-ink/5 p-4 bg-bg-base/80 backdrop-blur-sm">
+            <div className="w-full h-full border border-ink/10 flex items-center justify-center text-center p-4">
+              <span className="font-serif italic text-xs uppercase tracking-widest text-ink/40 leading-relaxed">Crafted with <br />Uncompromising <br />Standard</span>
+            </div>
           </div>
         </motion.div>
+      </section>
 
-        <div className="max-w-3xl space-y-12">
-          <p className="font-mono text-[16px] md:text-[22px] leading-relaxed uppercase tracking-tight text-ink italic">
-             Each thread weaves the artistry of nature. <br />
-             Using responsibly sourced linen and advanced eco-friendly techniques, we create fabrics that are as kind to the planet as they are to your designs. Join us in weaving a more sustainable future.
-          </p>
-          <Link to="/shop" className="inline-block border-b border-collision text-collision font-mono text-sm tracking-[0.3em] uppercase italic hover:tracking-[0.5em] transition-all pb-2">
-            More
-          </Link>
+      {/* Chapter 2: The Philosophy of Touch (Immersive Row) */}
+      <section className="py-16 border-y border-ink/5 my-16 md:my-24">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-end">
+          <div className="md:col-span-1">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="aspect-square bg-gray-100 mb-8 overflow-hidden"
+              style={{ clipPath: "polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)" }}
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80" 
+                alt="Production Detail" 
+                className="w-full h-full object-cover grayscale brightness-75"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+          </div>
+          <div className="md:col-span-2 space-y-16">
+            <div className="max-w-2xl">
+              <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-ink/30 block mb-6">CHAPTER II</span>
+              <h2 className="text-4xl md:text-6xl font-serif italic uppercase text-ink leading-none mb-12">The Sensitivity <br />of Touch</h2>
+              <p className="font-mono text-[13px] md:text-[15px] leading-loose uppercase tracking-[0.1em] text-ink/70">
+                Linen is a living organism. It breathes, reacts to humidity, and holds the memory of the hands that guide it. Our master weavers spend decades mastering the tension required to transform flax into a fabric that feels cooling to the skin and weightless to the spirit.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 border-t border-ink/5 pt-12">
+               <div>
+                 <h4 className="font-mono text-[10px] font-bold uppercase tracking-widest mb-4">Vertical Control</h4>
+                 <p className="font-mono text-[11px] text-ink/40 uppercase leading-relaxed">Total yarn traceability. We oversee every stage from spinning to the final finish.</p>
+               </div>
+               <div>
+                 <h4 className="font-mono text-[10px] font-bold uppercase tracking-widest mb-4">Artisanal Scale</h4>
+                 <p className="font-mono text-[11px] text-ink/40 uppercase leading-relaxed">Production volume balanced with meticulous individual inspection protocols.</p>
+               </div>
+            </div>
+          </div>
         </div>
       </section>
-    </motion.div>
+
+      {/* Chapter 3: Innovation (Full Width Visual) */}
+      <section className="py-16 md:py-24">
+        <div className="relative mb-16 md:mb-24 h-[60vh] md:h-[80vh] overflow-hidden group">
+          <motion.div 
+            initial={{ scale: 1.2 }}
+            whileInView={{ scale: 1 }}
+            transition={{ duration: 1.5 }}
+            className="w-full h-full"
+          >
+            <img 
+              src="https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=2000&q=80" 
+              alt="Lab Research" 
+              className="w-full h-full object-cover grayscale brightness-75 group-hover:scale-105 transition-all duration-[2s]"
+              referrerPolicy="no-referrer"
+            />
+          </motion.div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full px-4">
+             <span className="font-mono text-[10px] uppercase tracking-[0.6em] text-bg-base/40 mb-8 block font-bold">CHAPTER III</span>
+             <h2 className="text-5xl md:text-[8vw] font-serif italic uppercase text-bg-base tracking-tight leading-none pointer-events-none">
+               Quiet <br />Innovation
+             </h2>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-16">
+          <div className="md:col-span-4">
+            <h3 className="text-3xl font-serif italic text-ink uppercase mb-8">R&D Laboratory</h3>
+          </div>
+          <div className="md:col-span-8">
+            <p className="font-mono text-[14px] md:text-[18px] leading-relaxed uppercase italic text-ink/80 mb-12">
+              Beyond the loom, our laboratory focuses on the molecular future of linen. Through proprietary technical developments, we have enhanced the natural properties of flax—increasing wrinkle resistance while maintaining breathability.
+            </p>
+            <div className="h-px bg-ink/10 w-full mb-12"></div>
+            <div className="flex flex-wrap gap-x-20 gap-y-8">
+              <div className="space-y-2">
+                <span className="block font-mono text-[10px] text-ink/30 uppercase tracking-widest">Efficiency</span>
+                <span className="text-3xl font-serif italic text-ink">98.4%</span>
+              </div>
+              <div className="space-y-2">
+                <span className="block font-mono text-[10px] text-ink/30 uppercase tracking-widest">Sustainability</span>
+                <span className="text-3xl font-serif italic text-ink">Zero Waste</span>
+              </div>
+              <div className="space-y-2">
+                <span className="block font-mono text-[10px] text-ink/30 uppercase tracking-widest">Partners</span>
+                <span className="text-3xl font-serif italic text-ink">Global Reach</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Partners Marquee Section */}
+      <section className="py-16 md:py-20 border-t border-ink/5 -mx-4 md:-mx-12 overflow-hidden bg-[#f9f8f4]">
+        <div className="px-4 md:px-12 mb-12 flex justify-between items-end">
+          <div>
+            <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-ink/30 block mb-2 font-bold">GLOBAL TRUST</span>
+            <h3 className="text-2xl font-serif italic text-ink uppercase">Selected Partners</h3>
+          </div>
+          <p className="hidden md:block font-mono text-[10px] text-ink/40 uppercase tracking-widest">ESTABLISHED RELATIONS SINCE 2005</p>
+        </div>
+        
+        <div className="relative flex">
+          <motion.div 
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+            className="flex gap-24 items-center whitespace-nowrap"
+          >
+            {[...BRANDS, ...BRANDS].map((brand, i) => (
+              <div key={`${brand.name}-${i}`} className="flex-shrink-0 flex items-center justify-center grayscale opacity-40 hover:opacity-100 hover:grayscale-0 transition-all duration-500">
+                {brand.logoUrl ? (
+                  <img src={brand.logoUrl} alt={brand.name} className="h-6 md:h-8 w-auto object-contain" referrerPolicy="no-referrer" />
+                ) : (
+                  <span className="font-serif italic font-bold text-xl text-ink">{brand.name}</span>
+                )}
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Final Quote Section */}
+      <section className="py-24 md:py-32 text-center border-t border-ink/5">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <img src="https://images.unsplash.com/photo-1558051815-0f18e64e6280?auto=format&fit=crop&w=400&q=80" alt="Detail" className="w-24 h-24 rounded-full object-cover mx-auto mb-16 grayscale" referrerPolicy="no-referrer" />
+          <p className="text-2xl md:text-4xl font-serif italic text-ink/60 leading-relaxed max-w-4xl mx-auto mb-12">
+            "We do not merely sell fabric; we provide the catalyst for creation. Every bolt that leaves our facility carries the legacy of Tongling and the future of sustainable luxury."
+          </p>
+          <div className="w-12 h-[1px] bg-collision mx-auto mb-6"></div>
+          <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-ink">AUTHENTICITY GUARANTEED</span>
+        </motion.div>
+      </section>
+    </div>
   </div>
 );
 
@@ -1148,43 +1082,57 @@ const Collections: React.FC = () => {
   ];
 
   return (
-    <div className="pt-32 md:pt-48 pb-32 px-4 md:px-12 relative overflow-hidden">
+    <div className="pt-24 md:pt-32 pb-32 px-4 md:px-12 relative bg-bg-base min-h-screen">
       <div className="max-w-7xl mx-auto">
-        <header className="mb-32 md:mb-64 flex flex-col md:flex-row justify-between items-end gap-12 border-b border-ink pb-12">
-          <motion.h2 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            className="text-6xl md:text-[10vw] font-serif font-black italic tracking-[-0.05em] leading-none uppercase"
+        <div className="mb-16 md:mb-24 pt-12 border-b border-ink/5 pb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-col md:flex-row md:items-end justify-between gap-8"
           >
-            THE <br /><span className="font-mono not-italic text-collision ml-12 md:ml-24">ARCHIVE</span>
-          </motion.h2>
-          <div className="md:w-1/3">
-            <p className="font-mono text-[10px] md:text-[12px] uppercase tracking-widest leading-relaxed italic opacity-60">
-              A curated selection of our most significant fabric developments, spanning three decades of weaving excellence.
-            </p>
-          </div>
-        </header>
+            <div className="max-w-2xl">
+              <h2 className="text-4xl md:text-6xl font-serif italic tracking-tight uppercase text-ink mb-4">Collection</h2>
+              <p className="font-mono text-[10px] md:text-[12px] uppercase tracking-[0.2em] text-ink/60 leading-relaxed max-w-lg">
+                A curated selection of our most significant fabric developments, spanning three decades of weaving excellence.
+              </p>
+            </div>
+            <div className="flex items-center gap-4 text-[10px] font-mono uppercase tracking-[0.3em] text-ink/30 italic">
+              <span>SERIES No. 01</span>
+              <span className="w-8 h-[1px] bg-ink/10"></span>
+              <span>2024</span>
+            </div>
+          </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-24 md:gap-48 items-start">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-16 items-start">
           {archives.map((item, i) => (
             <motion.div 
               key={item.title}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: i * 0.1 }}
-              className={`relative ${i % 2 === 1 ? 'md:mt-48' : ''}`}
+              viewport={{ once: true }}
+              className={`group ${i % 2 === 1 ? 'mt-12 md:mt-0' : ''} ${i % 3 === 1 ? 'md:mt-24 lg:mt-0' : i % 3 === 2 ? 'md:mt-12 lg:mt-0' : ''} ${i % 4 === 1 ? 'lg:mt-20' : i % 4 === 2 ? 'lg:mt-8' : i % 4 === 3 ? 'lg:mt-32' : ''}`}
             >
-              <div className="aspect-[4/5] overflow-hidden overlap-image grayscale brightness-105 group relative">
-                <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
-                <div className="absolute inset-0 bg-ink/10 group-hover:bg-transparent transition-all" />
+              <div className="relative aspect-[3/4] bg-gray-50 overflow-hidden mb-6 transform group-hover:-rotate-0.5 transition-transform duration-700 bg-bg-white shadow-sm"
+                   style={{ 
+                     clipPath: "polygon(0% 0%, 100% 0%, 100% 98%, 98.75% 100%, 97.5% 98%, 96.25% 100%, 95% 98%, 93.75% 100%, 92.5% 98%, 91.25% 100%, 90% 98%, 88.75% 100%, 87.5% 98%, 86.25% 100%, 85% 98%, 83.75% 100%, 82.5% 98%, 81.25% 100%, 80% 98%, 78.75% 100%, 77.5% 98%, 76.25% 100%, 75% 98%, 73.75% 100%, 72.5% 98%, 71.25% 100%, 70% 98%, 68.75% 100%, 67.5% 98%, 66.25% 100%, 65% 98%, 63.75% 100%, 62.5% 98%, 61.25% 100%, 60% 98%, 58.75% 100%, 57.5% 98%, 56.25% 100%, 55% 98%, 53.75% 100%, 52.5% 98%, 51.25% 100%, 50% 98%, 48.75% 100%, 47.5% 98%, 46.25% 100%, 45% 98%, 43.75% 100%, 42.5% 98%, 41.25% 100%, 40% 98%, 38.75% 100%, 37.5% 98%, 36.25% 100%, 35% 98%, 33.75% 100%, 32.5% 98%, 31.25% 100%, 30% 98%, 28.75% 100%, 27.5% 98%, 26.25% 100%, 25% 98%, 23.75% 100%, 22.5% 98%, 21.25% 100%, 20% 98%, 18.75% 100%, 17.5% 98%, 16.25% 100%, 15% 98%, 13.75% 100%, 12.5% 98%, 11.25% 100%, 10% 98%, 8.75% 100%, 7.5% 98%, 6.25% 100%, 5% 98%, 3.75% 100%, 2.5% 98%, 1.25% 100%, 0% 98%)"
+                   }}>
+                <img 
+                  src={item.img} 
+                  alt={item.title} 
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105" 
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute top-4 left-4 bg-ink/90 text-bg-base font-mono text-[9px] px-2 py-1 uppercase tracking-widest italic">{item.count}</div>
               </div>
-              <div className="mt-12 flex items-start gap-8">
-                <span className="font-serif italic text-4xl text-ink/20">{item.count}</span>
-                <div>
-                  <h3 className="text-3xl md:text-5xl font-serif italic mb-4 uppercase tracking-[-0.02em]">{item.title}</h3>
-                  <div className="h-0.5 w-12 bg-ink mb-6" />
-                  <Link to="/shop" className="font-mono text-[10px] md:text-[12px] font-bold tracking-[0.3em] uppercase underline underline-offset-8">VIEW SERIE</Link>
-                </div>
+              <div className="space-y-4">
+                <h3 className="text-xl md:text-2xl font-serif italic uppercase tracking-tight text-ink group-hover:underline underline-offset-4 decoration-1">{item.title}</h3>
+                <Link to="/shop" className="inline-flex items-center gap-2 group/link">
+                  <span className="font-mono text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase text-ink/40 group-hover/link:text-collision transition-colors">EXPLORE SERIES</span>
+                  <div className="w-4 h-[1px] bg-ink/20 group-hover/link:w-8 group-hover/link:bg-collision transition-all"></div>
+                </Link>
               </div>
             </motion.div>
           ))}
@@ -1348,105 +1296,124 @@ const Shop: React.FC<{ onAddToCart: (product: Product) => void }> = ({ onAddToCa
   };
 
   return (
-    <div className="pt-32 md:pt-48 pb-32 px-4 md:px-12 relative bg-bg-base min-h-screen">
+    <div className="pt-24 md:pt-32 pb-32 px-4 md:px-12 relative bg-bg-base min-h-screen">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col mb-24 md:mb-32 gap-12 border-b border-ink/10 pb-12">
+        <div className="mb-16 md:mb-24 pt-12 border-b border-ink/5 pb-12">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-col md:flex-row md:items-end justify-between gap-8"
           >
-            <h2 className="text-6xl md:text-[8vw] font-serif font-black italic tracking-[-0.05em] leading-none uppercase">SHOP <br /><span className="font-mono not-italic text-collision ml-12">ONLINE</span></h2>
-            <p className="font-mono text-[10px] md:text-[12px] uppercase tracking-[0.4em] text-ink/40 mt-6 italic">ARCHIVAL FABRICS & TECHNICAL DEVELOPMENTS</p>
+            <div className="max-w-2xl">
+              <h2 className="text-4xl md:text-6xl font-serif italic tracking-tight uppercase text-ink mb-4">Shop All</h2>
+              <p className="font-mono text-[10px] md:text-[12px] uppercase tracking-[0.2em] text-ink/60 leading-relaxed max-w-lg">
+                Archival fabrics & textile developments from the Collision technical laboratory.
+              </p>
+            </div>
+            <div className="flex items-center gap-4 text-[10px] font-mono uppercase tracking-[0.3em] text-ink/30 italic">
+              <span>SERIES No. 01</span>
+              <span className="w-8 h-[1px] bg-ink/10"></span>
+              <span>2024</span>
+            </div>
           </motion.div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mt-12">
-            {(Object.keys(filterConfig) as Array<keyof typeof filterConfig>).map((key) => (
-              <div key={key} className="space-y-4">
-                <h5 className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-ink/30 border-b border-ink/5 pb-2 italic">{key}</h5>
-                <div className="flex flex-col gap-2">
-                  {filterConfig[key].map((val) => (
-                    <button
-                      key={val}
-                      onClick={() => updateFilter(key, val)}
-                      className={`font-mono text-[10px] uppercase tracking-widest text-left transition-all hover:pl-2 ${
-                        activeFilters[key] === val ? "text-collision font-bold" : "text-ink/50 hover:text-ink"
-                      }`}
-                    >
-                      {filterLabels[val] || val}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
 
-        <div className="flex justify-between items-center mb-12">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-ink/40 italic">SHOWING {filteredProducts.length} ARTICLES</p>
-          {(activeFilters.category !== "ALL" || activeFilters.process !== "ALL" || activeFilters.availability !== "ALL" || activeFilters.composition !== "ALL") && (
-            <button 
-              onClick={() => setActiveFilters({ category: "ALL", process: "ALL", availability: "ALL", composition: "ALL" })}
-              className="font-mono text-[10px] uppercase tracking-widest text-collision underline underline-offset-4"
-            >
-              CLEAR ALL
-            </button>
-          )}
-        </div>
-
-        {filteredProducts.length === 0 ? (
-          <div className="py-24 text-center">
-            <p className="font-mono text-[12px] uppercase tracking-[0.5em] text-ink/20 italic">No articles match your specific archive query.</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 md:gap-x-20 gap-y-32">
-            {filteredProducts.map((product, i) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className={`group ${i % 3 === 1 ? 'md:mt-32' : i % 3 === 2 ? 'md:mt-64' : ''}`}
-              >
-                <div className="relative aspect-[3/4] bg-gray-50 overflow-hidden mb-12 transform group-hover:-rotate-1 transition-transform duration-700 bg-bg-white shadow-sm">
-                  <Link to={`/product/${product.id}`}>
-                    <img 
-                      src={product.productImage} 
-                      alt={product.title} 
-                      className="w-full h-full object-cover grayscale brightness-105 group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
-                      referrerPolicy="no-referrer"
-                    />
-                  </Link>
-                  <div className="absolute top-6 left-6 flex flex-col gap-2">
-                    <span className="bg-bg-base/80 backdrop-blur-sm self-start px-3 py-1 font-mono text-[8px] uppercase tracking-[0.3em] font-bold text-ink italic shadow-sm">
-                      {product.availability === 'MAKE_TO_ORDER' ? 'PRE-ORDER' : 'IN STOCK'}
-                    </span>
-                    <span className="bg-collision/10 backdrop-blur-sm self-start px-3 py-1 font-mono text-[8px] uppercase tracking-[0.3em] font-bold text-collision italic shadow-sm">
-                      {product.process?.replace('_', ' ')}
-                    </span>
-                  </div>
+        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 relative">
+          {/* Sticky Sidebar */}
+          <aside className="lg:w-64 flex-shrink-0">
+            <div className="lg:sticky lg:top-40 space-y-12">
+              <div className="flex justify-between items-end pb-4 border-b border-ink/10">
+                <h4 className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-ink italic">FILTERS</h4>
+                {(activeFilters.category !== "ALL" || activeFilters.process !== "ALL" || activeFilters.availability !== "ALL" || activeFilters.composition !== "ALL") && (
                   <button 
-                    onClick={() => onAddToCart(product)}
-                    className="absolute bottom-0 left-0 w-full bg-ink text-bg-base py-6 font-mono font-bold text-[10px] md:text-[11px] uppercase tracking-[0.3em] md:translate-y-full group-hover:translate-y-0 transition-transform duration-500 italic"
+                    onClick={() => setActiveFilters({ category: "ALL", process: "ALL", availability: "ALL", composition: "ALL" })}
+                    className="font-mono text-[9px] uppercase tracking-widest text-collision underline underline-offset-4 font-bold"
                   >
-                    ADD TO BAG — ${product.price.toFixed(2)}
+                    RESET
                   </button>
+                )}
+              </div>
+
+              {(Object.keys(filterConfig) as Array<keyof typeof filterConfig>).map((key) => (
+                <div key={key} className="space-y-4">
+                  <h5 className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-ink border-b border-ink/5 pb-2 italic">{key}</h5>
+                  <div className="flex flex-col gap-2.5">
+                    {filterConfig[key].map((val) => (
+                      <button
+                        key={val}
+                        onClick={() => updateFilter(key, val)}
+                        className={`font-mono text-[10px] uppercase tracking-widest text-left transition-all hover:pl-2 ${
+                          activeFilters[key] === val ? "text-collision font-bold" : "text-ink hover:text-collision"
+                        }`}
+                      >
+                        {filterLabels[val] || val}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex justify-between items-start gap-4">
-                  <Link to={`/product/${product.id}`} className="flex-grow">
-                    <h3 className="font-serif italic text-2xl md:text-3xl uppercase tracking-tight mb-2 group-hover:underline underline-offset-4 decoration-1">{product.title}</h3>
-                    <div className="flex flex-wrap gap-2">
-                       <p className="font-mono text-[10px] text-ink/40 uppercase tracking-widest italic">{product.composition}</p>
-                       <span className="text-ink/20">•</span>
-                       <p className="font-mono text-[10px] text-ink/40 uppercase tracking-widest italic">{filterLabels[product.category || ''] || product.category}</p>
+              ))}
+            </div>
+          </aside>
+
+          {/* Product Grid */}
+          <div className="flex-grow">
+            <div className="flex justify-between items-center mb-12 border-b border-ink/10 pb-4">
+              <p className="font-mono text-[10px] uppercase tracking-widest text-ink/40 italic">SHOWING {filteredProducts.length} ARTICLES</p>
+            </div>
+
+            {filteredProducts.length === 0 ? (
+              <div className="py-24 text-center bg-bg-white border border-dashed border-ink/10">
+                <p className="font-mono text-[12px] uppercase tracking-[0.5em] text-ink/20 italic">No articles match your specific archive query.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 gap-y-16">
+                {filteredProducts.map((product) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                    viewport={{ once: true }}
+                    className="group w-full max-w-[240px] mx-auto"
+                  >
+                    <div className="relative aspect-square bg-gray-50 overflow-hidden mb-4 transform group-hover:-rotate-0.5 transition-transform duration-700 bg-bg-white shadow-sm"
+                         style={{ 
+                           clipPath: "polygon(0% 0%, 100% 0%, 100% 98%, 98.75% 100%, 97.5% 98%, 96.25% 100%, 95% 98%, 93.75% 100%, 92.5% 98%, 91.25% 100%, 90% 98%, 88.75% 100%, 87.5% 98%, 86.25% 100%, 85% 98%, 83.75% 100%, 82.5% 98%, 81.25% 100%, 80% 98%, 78.75% 100%, 77.5% 98%, 76.25% 100%, 75% 98%, 73.75% 100%, 72.5% 98%, 71.25% 100%, 70% 98%, 68.75% 100%, 67.5% 98%, 66.25% 100%, 65% 98%, 63.75% 100%, 62.5% 98%, 61.25% 100%, 60% 98%, 58.75% 100%, 57.5% 98%, 56.25% 100%, 55% 98%, 53.75% 100%, 52.5% 98%, 51.25% 100%, 50% 98%, 48.75% 100%, 47.5% 98%, 46.25% 100%, 45% 98%, 43.75% 100%, 42.5% 98%, 41.25% 100%, 40% 98%, 38.75% 100%, 37.5% 98%, 36.25% 100%, 35% 98%, 33.75% 100%, 32.5% 98%, 31.25% 100%, 30% 98%, 28.75% 100%, 27.5% 98%, 26.25% 100%, 25% 98%, 23.75% 100%, 22.5% 98%, 21.25% 100%, 20% 98%, 18.75% 100%, 17.5% 98%, 16.25% 100%, 15% 98%, 13.75% 100%, 12.5% 98%, 11.25% 100%, 10% 98%, 8.75% 100%, 7.5% 98%, 6.25% 100%, 5% 98%, 3.75% 100%, 2.5% 98%, 1.25% 100%, 0% 98%)"
+                         }}>
+                      <Link to={`/product/${product.id}`}>
+                        <img 
+                          src={product.productImage} 
+                          alt={product.title} 
+                          className="w-full h-full object-cover grayscale brightness-105 group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
+                          referrerPolicy="no-referrer"
+                        />
+                      </Link>
+                      <button 
+                        onClick={() => onAddToCart(product)}
+                        className="absolute bottom-0 left-0 w-full bg-ink/90 backdrop-blur-sm text-bg-base py-4 font-mono font-bold text-[9px] uppercase tracking-[0.2em] md:translate-y-full group-hover:translate-y-0 transition-transform duration-500 italic"
+                      >
+                        QUICK ADD — ${product.price.toFixed(2)}
+                      </button>
                     </div>
-                  </Link>
-                  <p className="font-mono text-[16px] font-black tracking-tighter leading-none">${product.price.toFixed(2)}</p>
-                </div>
-              </motion.div>
-            ))}
+                    <div className="flex justify-between items-end gap-2">
+                       <Link to={`/product/${product.id}`} className="flex-grow space-y-1">
+                        <h3 className="font-sans font-medium text-lg md:text-xl tracking-tight text-ink uppercase">{product.title.split(' ')[0]}</h3>
+                        <p className="font-sans text-[11px] md:text-[13px] text-ink/60">{product.composition}</p>
+                        <p className="font-sans text-[10px] md:text-[12px] text-ink/30 uppercase tracking-widest">{product.category === 'TEXTURE' ? 'JAMES DUNLOP' : 'MOKUM'}</p>
+                      </Link>
+                      <div className="flex flex-col items-end gap-4">
+                        <button className="p-2 rounded-full border border-ink/5 hover:bg-ink/5 transition-colors group/heart">
+                          <Heart size={16} strokeWidth={1} className="text-ink/20 group-hover/heart:text-collision transition-colors" />
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
