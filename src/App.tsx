@@ -402,15 +402,7 @@ const ProductSlider: React.FC = () => {
             }}
             className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-24 items-center"
           >
-            <div className="lg:col-span-1 hidden lg:block">
-               <motion.span 
-                 initial={{ opacity: 0 }}
-                 animate={{ opacity: 0.1 }}
-                 className="text-[12vw] font-serif italic font-black leading-none uppercase select-none -rotate-90 origin-center absolute left-[-8vw] top-1/2"
-               >
-                 {product.status.split(' ')[0]}
-               </motion.span>
-            </div>
+            <div className="lg:col-span-1 hidden lg:block" />
 
             <div className="lg:col-span-6 relative">
               <div className="aspect-[3/4] md:aspect-square overflow-hidden bg-gray-100 transform -rotate-1 shadow-2xl">
@@ -432,7 +424,7 @@ const ProductSlider: React.FC = () => {
                     <span className="w-12 h-px bg-collision" />
                     <span className="font-mono text-[10px] uppercase tracking-[0.5em] text-collision italic font-bold">{product.status}</span>
                   </div>
-                  <h4 className="text-5xl md:text-[7vw] font-serif italic font-black tracking-[-0.07em] leading-[0.8] uppercase text-ink">
+                  <h4 className="text-3xl sm:text-4xl md:text-[4.5vw] font-serif italic font-black tracking-[-0.06em] leading-[0.85] uppercase text-ink">
                     {product.title.split(' ')[0]} <br />
                     <span className="md:ml-20 font-mono not-italic text-collision">{product.title.split(' ').slice(1).join(' ')}</span>
                   </h4>
@@ -456,7 +448,7 @@ const ProductSlider: React.FC = () => {
                     to={`/product/${product.id}`}
                     className="inline-flex items-center gap-6 font-serif italic text-2xl uppercase tracking-tighter hover:text-collision transition-colors mt-8"
                   >
-                    <span>VIEW ARCHIVE</span>
+                    <span>VIEW</span>
                     <ArrowRight size={20} />
                   </Link>
                </div>
@@ -1397,15 +1389,14 @@ const InteractiveChain: React.FC = () => {
             <span className="h-[1px] w-12 bg-collision" />
             <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.5em] text-ink/40 italic font-bold">THE IN-HOUSE LOOM INITIATIVE</span>
           </div>
-          <h2 className="text-4xl md:text-[6vw] font-serif font-black italic tracking-[-0.05em] leading-[0.95] uppercase text-ink mb-12">
-            PRODUCTION <br />
-            <span className="font-mono not-italic text-collision md:ml-24">CHAIN EXPERIENCE</span>
+          <h2 className="text-4xl md:text-[6vw] font-serif font-black italic tracking-[-0.05em] leading-[0.95] uppercase text-ink mb-2">
+            PRODUCTION
           </h2>
         </div>
 
         {/* Interactive Steps List */}
-        <div className="lg:col-span-6 space-y-8">
-          <p className="font-serif text-lg md:text-xl leading-relaxed text-ink/80 italic border-l-2 border-ink pl-8 mb-12">
+        <div className="lg:col-span-6 space-y-8 -mt-8 sm:-mt-10 lg:-mt-12">
+          <p className="font-serif text-lg md:text-xl leading-relaxed text-ink/80 italic border-l-2 border-ink pl-8 mb-8">
             We deliver an entirely vertical, high-control supply chain spanning initial fiber combing to bespoke textile finishing, guaranteeing uncompromised authenticity.
           </p>
 
@@ -1497,10 +1488,10 @@ const Home: React.FC = () => (
 
     <AboutSection />
 
-    <section className="py-16 md:py-24">
-      <div className="px-4 md:px-12 mb-12 flex flex-col md:flex-row justify-between items-start md:items-end border-b border-ink pb-8 gap-8">
-         <h2 className="text-4xl md:text-7xl font-serif font-black italic tracking-tighter uppercase leading-none">MAIN <br /><span className="ml-12 md:ml-32">COLLECTION</span></h2>
-         <p className="font-mono text-[10px] md:text-[12px] uppercase tracking-[0.4em] text-ink/40 mb-2 italic">EUROPEAN LINEN — BLENDS — PRINTS — SINCE 1998</p>
+    <section className="pt-6 pb-16 md:pt-10 md:pb-24 animate-fade-in">
+      <div className="px-4 md:px-12 mb-8 flex flex-col md:flex-row justify-between items-start md:items-end border-b border-ink pb-4 gap-6">
+         <h2 className="text-3xl md:text-5xl font-serif font-black italic tracking-tighter uppercase leading-none">MAIN <br /><span className="ml-8 md:ml-16">COLLECTION</span></h2>
+         <p className="font-mono text-[9px] md:text-[11px] uppercase tracking-[0.35em] text-ink/40 mb-1 italic">EUROPEAN LINEN — BLENDS — PRINTS — SINCE 1998</p>
       </div>
       <ProductSlider />
     </section>
