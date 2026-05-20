@@ -244,85 +244,110 @@ const Header: React.FC<{ cartCount: number; onOpenCart: () => void }> = ({ cartC
 };
 
 const Hero: React.FC = () => (
-  <section className="pt-32 md:pt-48 px-4 md:px-12 mb-32 md:mb-48 relative overflow-hidden bg-bg-base">
-    {/* Floating background element */}
-    <div className="absolute top-1/4 -right-24 w-[600px] h-[600px] bg-ink/5 rounded-full blur-3xl -z-0 pointer-events-none" />
-    
-    <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-12 items-start md:items-end">
-      <motion.div 
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        className="md:col-span-8 relative"
-      >
-        <div className="absolute -top-24 -left-12 md:-top-48 md:-left-32 z-0 opacity-10">
-          <h2 className="text-[25vw] font-serif italic text-collision leading-none select-none font-black">Archive</h2>
-        </div>
-        
-        <div className="relative z-10">
-          <div className="mb-8 overflow-hidden">
-            <motion.p 
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="font-mono text-[9px] md:text-[11px] uppercase tracking-[0.5em] text-ink/40 italic"
-            >
-              TONGLING SINCERITY LINEN GROUP — EST. 1998
-            </motion.p>
-          </div>
-          
-          <h1 className="text-6xl md:text-[10vw] font-serif font-black leading-[0.8] tracking-[-0.07em] uppercase italic flex flex-col">
-            <span className="relative">WEAVING</span>
-            <span className="md:ml-24 font-mono not-italic text-collision translate-y-4 md:translate-y-8 flex items-baseline">
-              SINCERITY
-              <span className="text-[10px] md:text-[14px] tracking-widest ml-4 opacity-40 font-bold">● ARCHIVE 01</span>
-            </span>
-          </h1>
-          
-          <div className="mt-24 md:mt-48 max-w-lg md:ml-32 relative">
-            <div className="absolute top-0 left-0 w-px h-full bg-ink/20" />
-            <div className="pl-12 space-y-12">
-              <p className="font-mono text-[13px] md:text-[16px] leading-relaxed uppercase tracking-tight text-ink/80 italic">
-                A RADICAL APPROACH TO TEXTILE ARCHIVING. WE COMBINE THIRTY YEARS OF TECHNICAL EXPERTISE WITH A CONTEMPORARY VISION FOR THE FUTURE OF LINEN.
-              </p>
-              <div className="flex gap-12">
-                <Link to="/shop" className="group relative font-serif italic text-3xl uppercase tracking-tighter">
-                  <span className="relative z-10 group-hover:text-collision transition-colors">GO SHOP</span>
-                  <div className="absolute -bottom-2 left-0 w-full h-1 bg-ink transform scale-x-100 group-hover:scale-x-0 transition-transform origin-left" />
-                </Link>
-                <Link to="/collections" className="group relative font-mono text-[12px] font-bold uppercase tracking-widest flex items-center gap-4">
-                  VIEW INDEX
-                  <ArrowRight size={16} className="group-hover:translate-x-3 transition-transform" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.div>
+  <section className="pt-24 min-h-[92vh] flex flex-col justify-between px-4 md:px-12 relative bg-bg-base border-b border-ink/10">
+    {/* Clean, high-end backdrop */}
+    <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[70vw] h-[40vh] bg-[#f4ebd9]/30 rounded-full blur-3xl -z-0 pointer-events-none" />
 
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.5, delay: 0.3 }}
-        className="md:col-span-4 relative mt-24 md:mt-0"
-      >
-        <div className="aspect-[2/3] overflow-hidden overlap-image transform skew-y-3 rotate-6 shadow-[40px_40px_80px_rgba(0,0,0,0.1)]">
+    <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 pt-16 pb-12 items-center my-auto">
+      {/* Editorial Text Column */}
+      <div className="lg:col-span-7 space-y-16">
+        <div className="space-y-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="flex items-center gap-4 text-[10px] md:text-[11px] font-mono uppercase tracking-[0.55em] text-ink/50"
+          >
+            <span>TONGLING SINCERITY LINEN</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-ink/30" />
+            <span className="italic font-bold">EST. 1998</span>
+          </motion.div>
+          
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="text-5xl md:text-[7vw] font-serif font-black leading-[0.9] tracking-[-0.05em] uppercase italic text-ink"
+          >
+            The Art Of <br />
+            <span className="font-mono not-italic text-collision md:ml-16 tracking-tight">CRAFTED</span> <br />
+            <span className="md:ml-32">TEXTURES</span>
+          </motion.h1>
+        </div>
+
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.5, delay: 0.4 }}
+          className="max-w-xl md:ml-24 relative pl-8 border-l border-ink/10 space-y-8"
+        >
+          <p className="font-serif text-lg md:text-xl lg:text-2xl leading-relaxed text-ink/75 italic">
+            "A quiet dialogue between raw organic flax and decades of technical precision. We compose linen textiles that resonate with silent luxury and natural expression."
+          </p>
+          <div className="flex flex-wrap gap-8 items-center pt-4">
+            <Link 
+              to="/shop" 
+              className="px-10 py-5 bg-ink text-bg-base font-mono text-[11px] font-bold tracking-[0.3em] uppercase hover:bg-ink/90 transition-all shadow-xl hover:-translate-y-0.5 active:translate-y-0"
+            >
+              CHOOSE FABRIC
+            </Link>
+            <Link 
+              to="/brand-story" 
+              className="group font-mono text-[11px] font-bold uppercase tracking-widest flex items-center gap-3 py-3"
+            >
+              <span>THE BRAND JOURNEY</span>
+              <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
+            </Link>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Hero Exhibition Column */}
+      <div className="lg:col-span-5 relative flex items-center justify-center">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="relative w-full max-w-lg aspect-[4/5] overflow-hidden shadow-[30px_30px_70px_rgba(0,0,0,0.08)] bg-gray-50 border border-ink/5"
+        >
+          {/* Main cover image */}
           <img 
-            src="https://images.unsplash.com/photo-1595853035070-59a39fe84de3?auto=format&fit=crop&w=1200&q=80" 
-            alt="Linen Texture" 
-            className="w-full h-full object-cover grayscale brightness-90 hover:grayscale-0 transition-all duration-1000"
+            src="https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=1200&q=80" 
+            alt="Premium Linen" 
+            className="w-full h-full object-cover grayscale brightness-[0.92] hover:scale-105 duration-[3s] transition-transform ease-out"
             referrerPolicy="no-referrer"
           />
-        </div>
-        <div className="absolute -bottom-16 -left-16 w-48 md:w-64 aspect-square overflow-hidden transform rotate-[-12deg] shadow-2xl z-20 border-[12px] border-bg-base">
-          <img 
-            src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=600&q=80" 
-            alt="Process" 
-            className="w-full h-full object-cover grayscale brightness-110"
-            referrerPolicy="no-referrer"
-          />
-        </div>
-      </motion.div>
+          {/* Premium editorial label */}
+          <div className="absolute bottom-6 left-6 right-6 bg-bg-base/90 backdrop-blur-md p-6 border border-ink/10 flex justify-between items-end">
+            <div className="space-y-1">
+              <span className="font-mono text-[9px] uppercase tracking-widest text-ink/40 block">PRODUCT ARCHIVE NO. 01</span>
+              <h3 className="font-serif text-lg font-bold uppercase italic tracking-tight text-ink">European Flax Fine</h3>
+            </div>
+            <span className="font-mono text-[11px] tracking-wider text-collision font-bold text-ink">100% PURE</span>
+          </div>
+        </motion.div>
+
+        {/* Small floating detail block */}
+        <motion.div 
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.2, delay: 0.6 }}
+          className="absolute -left-12 bottom-12 hidden xl:flex flex-col items-center bg-[#FAF9F6] p-6 border border-ink/5 shadow-xl rotate-[-3deg] w-48"
+        >
+          <span className="font-serif italic text-2xl font-black text-ink mb-1">01/07</span>
+          <span className="font-mono text-[8px] tracking-[0.3em] uppercase text-ink/40 text-center leading-normal">CRAFT ARCHIVE COLLECTIONS</span>
+        </motion.div>
+      </div>
+    </div>
+
+    {/* Elegant Footer Details of Hero Section */}
+    <div className="border-t border-ink/10 py-8 flex flex-wrap gap-8 justify-between items-center text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.25em] text-ink/40">
+      <div className="flex items-center gap-3">
+        <span className="w-2 h-2 rounded-full bg-emerald-700/60 animate-pulse" />
+        <span>CERTIFIED NORMANDY FLAX</span>
+      </div>
+      <div>LOOM CAPACITY: 280,000 M / MONTH</div>
+      <div className="hidden md:block">ISO 9001 & OEKO-TEX COMPLIANCE</div>
     </div>
   </section>
 );
@@ -708,112 +733,359 @@ const ProductDetail: React.FC<{ onAddToCart: (product: Product) => void }> = ({ 
   const product = PRODUCTS.find(p => p.id === id);
   const relatedProducts = PRODUCTS.filter(p => p.id !== id).slice(0, 4);
 
-  if (!product) return <div className="pt-32 text-center font-mono uppercase italic">Product not found</div>;
+  // High-fidelity luxury state
+  const [activeImageTab, setActiveImageTab] = useState<"detail" | "lifestyle">("detail");
+  const [quantity, setQuantity] = useState(1);
+  const [includeSwatch, setIncludeSwatch] = useState(false);
+  const [wishlisted, setWishlisted] = useState(false);
+  const [activeTab, setActiveTab] = useState<"specs" | "origin" | "shipping">("specs");
+
+  if (!product) {
+    return (
+      <div className="pt-48 pb-48 text-center font-mono uppercase italic text-ink/40 tracking-widest">
+        Product not found
+      </div>
+    );
+  }
+
+  const currentImage = activeImageTab === "detail" ? product.productImage : product.lifestyleImage;
+  const currentCaption = activeImageTab === "detail"
+    ? "TECHNICAL SHOT — PURE FILAMENT DENSITY & WEFT RESOLUTION"
+    : "ATMOSPHERIC IN SITU — NATURAL DRAPE, COLOR SATURATION & WEAVE RESPONSE";
+
+  const handleAddToBag = () => {
+    onAddToCart(product);
+  };
 
   return (
-    <div className="pt-32 md:pt-48 pb-32 px-4 md:px-12 bg-bg-base">
+    <div className="pt-28 md:pt-40 pb-32 bg-[#FBFBFA] text-ink selection:bg-ink selection:text-bg-base">
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="max-w-7xl mx-auto"
+        transition={{ duration: 0.8 }}
+        className="max-w-7xl mx-auto px-4 md:px-12"
       >
-        <div className="mb-24 flex items-center gap-6">
-          <Link to="/shop" className="font-mono text-[10px] md:text-[12px] font-bold uppercase tracking-[0.4em] text-ink/40 hover:text-ink transition-colors flex items-center gap-2 group">
-            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> BACK TO ARCHIVE
+        {/* Navigation Breadcrumb */}
+        <div className="mb-12 md:mb-16 flex items-center justify-between border-b border-ink/5 pb-6">
+          <Link 
+            to="/shop" 
+            className="font-mono text-[9px] md:text-[10px] font-bold uppercase tracking-[0.45em] text-ink/40 hover:text-ink transition-colors flex items-center gap-2 group"
+          >
+            <ArrowLeft size={13} className="group-hover:-translate-x-1 transition-transform" /> 
+            BACK TO ARCHIVE RANGE
           </Link>
-          <div className="h-px flex-grow bg-ink/10" />
+          <div className="hidden sm:flex items-center gap-4 font-mono text-[9px] tracking-widest text-ink/40 uppercase">
+            <span>INDEX / APPAREL SYSTEM</span>
+            <span>—</span>
+            <span>SPECIFICATION CODE TL-{product.id}0A</span>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 lg:gap-32 mb-48">
-          {/* Images Section */}
-          <div className="lg:col-span-1 hidden lg:block">
-            <p className="vertical-text text-ink/20 font-mono text-[10px] tracking-[0.5em] whitespace-nowrap uppercase italic">
-              SERIE: {product.status} — MATERIAL: {product.material}
-            </p>
-          </div>
-          <div className="lg:col-span-6 space-y-12 md:space-y-24">
-            <div className="aspect-[4/5] bg-gray-100 overflow-hidden overlap-image transform -rotate-1 grayscale brightness-105 hover:grayscale-0 transition-all duration-1000">
-              <img 
-                src={product.productImage} 
-                alt={product.title} 
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-              />
-            </div>
-            <div className="aspect-[16/9] bg-gray-100 overflow-hidden overlap-image transform rotate-1 grayscale brightness-95 hover:grayscale-0 transition-all duration-1000">
-              <img 
-                src={product.lifestyleImage} 
-                alt={`${product.title} lifestyle`} 
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-              />
-            </div>
-          </div>
+        {/* Hero Section: Gallery & Details Card */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 mb-32 items-start">
+          
+          {/* Gallery Block */}
+          <div className="lg:col-span-7 space-y-8">
+            {/* Main Stage */}
+            <div className="relative aspect-[3/4] bg-white overflow-hidden border border-ink/5 shadow-sm group">
+              <div className="absolute top-4 left-4 z-10 bg-[#FBFBFA]/90 border border-ink/5 px-2.5 py-1 text-[8px] font-mono uppercase tracking-[0.2em] italic text-ink/75">
+                perspective {activeImageTab === "detail" ? "01" : "02"}
+              </div>
+              
+              <AnimatePresence mode="wait">
+                <motion.img 
+                  key={activeImageTab}
+                  src={currentImage} 
+                  alt={product.title} 
+                  initial={{ opacity: 0, scale: 1.02 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="w-full h-full object-cover grayscale brightness-95 group-hover:brightness-100 transition-all duration-1000 ease-out"
+                  referrerPolicy="no-referrer"
+                />
+              </AnimatePresence>
 
-          {/* Info Section */}
-          <div className="lg:col-span-5 lg:sticky lg:top-32 h-fit">
-            <div className="max-w-md">
-              <div className="mb-12">
-                <p className="font-serif italic text-lg text-ink/40 mb-6">{product.status}</p>
-                <h1 className="text-5xl md:text-8xl font-serif font-black italic tracking-[-0.05em] uppercase leading-[0.8] mb-12">
-                  {product.title}
-                </h1>
-                <p className="text-3xl md:text-4xl font-mono font-black tracking-[-0.05em] mb-12 flex items-baseline gap-4">
-                  ${product.price.toFixed(2)} <span className="font-mono text-[12px] md:text-[14px] text-ink/30 italic uppercase tracking-widest font-normal">/ Yard</span>
-                </p>
-                <div className="h-px bg-ink mb-12" />
-                <p className="font-mono text-[12px] md:text-[15px] leading-relaxed uppercase tracking-tight text-ink/60 mb-16 italic">
-                  {product.description}
-                </p>
-                
-                <button 
-                  onClick={() => onAddToCart(product)}
-                  className="w-full bg-ink text-bg-base py-8 font-mono font-bold text-[11px] md:text-[13px] uppercase tracking-[0.4em] hover:bg-ink/90 transition-all mb-20 relative overflow-hidden group shadow-2xl"
+              {/* Decorative Frame */}
+              <div className="absolute inset-0 border border-white/10 pointer-events-none" />
+            </div>
+
+            {/* Captions and Toggle Row */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-2">
+              <span className="font-mono text-[8px] md:text-[9px] tracking-[0.2em] text-[#B2A490] uppercase font-bold leading-none">
+                {currentCaption}
+              </span>
+
+              {/* Toggle controls */}
+              <div className="flex gap-2.5">
+                <button
+                  onClick={() => setActiveImageTab("detail")}
+                  className={`px-4 py-2 text-[9px] font-mono tracking-widest uppercase border transition-all duration-300 rounded-[1px] ${
+                    activeImageTab === "detail"
+                      ? "bg-ink text-bg-base border-ink"
+                      : "bg-transparent border-ink/10 text-ink/40 hover:border-ink/35 hover:text-ink"
+                  }`}
                 >
-                  <span className="relative z-10">ADD TO ARCHIVE BAG</span>
-                  <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                  01 / FILAMENT DETAILED
                 </button>
-
-                {/* Specs */}
-                <div className="space-y-8 border-t border-ink/10 pt-12 font-mono text-[11px] md:text-[13px] uppercase tracking-widest italic text-ink/70">
-                  <div className="flex justify-between items-center border-b border-ink/5 pb-4">
-                    <span>MATERIAL COMPOSITION</span>
-                    <span className="text-ink font-bold not-italic">{product.material}</span>
-                  </div>
-                  <div className="flex justify-between items-center border-b border-ink/5 pb-4">
-                    <span>USABLE WIDTH</span>
-                    <span className="text-ink font-bold not-italic">{product.dimensions}</span>
-                  </div>
-                  <div className="flex justify-between items-center border-b border-ink/5 pb-4">
-                    <span>FINISHING TECHNIQUE</span>
-                    <span className="text-ink font-bold not-italic">{product.technique}</span>
-                  </div>
-                </div>
+                <button
+                  onClick={() => setActiveImageTab("lifestyle")}
+                  className={`px-4 py-2 text-[9px] font-mono tracking-widest uppercase border transition-all duration-300 rounded-[1px] ${
+                    activeImageTab === "lifestyle"
+                      ? "bg-ink text-bg-base border-ink"
+                      : "bg-transparent border-ink/10 text-ink/40 hover:border-ink/35 hover:text-ink"
+                  }`}
+                >
+                  02 / IN SITU COUPLING
+                </button>
               </div>
             </div>
           </div>
+
+          {/* Details / Action Block */}
+          <div className="lg:col-span-5 lg:sticky lg:top-32 space-y-10">
+            {/* Collection Identity */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#B2A490] animate-pulse" />
+                <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-[#B2A490] font-black">
+                  {product.status} — SINCERITY ATELIER
+                </span>
+              </div>
+              
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-black italic tracking-tighter leading-tight uppercase text-ink">
+                {product.title}
+              </h1>
+
+              <div className="flex items-baseline justify-between border-b border-ink/10 pb-6 pt-2">
+                <p className="text-2xl md:text-3xl font-mono text-ink tracking-tight font-light">
+                  ${product.price.toFixed(2)} <span className="font-serif text-[13px] text-ink/40 italic">/ yard</span>
+                </p>
+                <span className="font-mono text-[9px] text-[#B2A490] uppercase tracking-widest border border-[#B2A490]/25 px-2.5 py-1 rounded-[1px] font-bold">
+                  {product.availability === 'IN_STOCK' ? "Immediate dispatch" : "Bespoke craft-to-order"}
+                </span>
+              </div>
+            </div>
+
+            {/* Editorial Description */}
+            <p className="font-serif text-base italic leading-relaxed text-ink/75 py-2 border-l border-[#B2A490] pl-6">
+              "{product.description}"
+            </p>
+
+            {/* Configurator Box */}
+            <div className="bg-[#FAF9F5] border border-ink/5 p-6 md:p-8 space-y-6 rounded-[2px] shadow-[0_4px_24px_rgba(0,0,0,0.01)]">
+              {/* Order Quantity */}
+              <div className="space-y-3">
+                <div className="flex justify-between items-center text-[10px] font-mono tracking-widest uppercase text-ink/50">
+                  <span>SELECT BOLT YARDAGE</span>
+                  <span>Calculated Total: ${(product.price * quantity).toFixed(2)}</span>
+                </div>
+                <div className="flex items-center justify-between border border-ink/10 bg-white p-3.5 rounded-[1px]">
+                  <span className="font-mono text-[11px] text-ink/60 italic uppercase font-medium">Desired Length</span>
+                  <div className="flex items-center gap-4">
+                    <button 
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="p-1 hover:text-[#B2A490] transition-colors"
+                      aria-label="Decrease quantity"
+                    >
+                      <Minus size={13} />
+                    </button>
+                    <span className="font-mono text-[13px] font-bold min-w-8 text-center">{quantity} Yards</span>
+                    <button 
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="p-1 hover:text-[#B2A490] transition-colors"
+                      aria-label="Increase quantity"
+                    >
+                      <Plus size={13} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sample Swatch Check */}
+              <label className="flex items-start gap-4 p-4 mb-2 bg-white border border-ink/5 select-none cursor-pointer hover:bg-[#FAF9F5]/40 transition-all duration-300 rounded-[1px] group">
+                <input 
+                  type="checkbox" 
+                  checked={includeSwatch} 
+                  onChange={(e) => setIncludeSwatch(e.target.checked)}
+                  className="mt-1 accent-ink h-3.5 w-3.5 cursor-pointer rounded-[2px] transition-all"
+                />
+                <div className="space-y-1">
+                  <span className="font-mono text-[10px] uppercase tracking-widest font-bold text-ink block group-hover:text-[#B2A490] transition-colors">
+                    Request Complimentary Swatch Card
+                  </span>
+                  <p className="font-serif text-[11px] text-ink/50 italic leading-normal">
+                    Add an authentic 10x10 cm texture swatch sample to inspect exact hand-weave density, weight, and color dye matching in your private atelier before we deliver your final custom bolt.
+                  </p>
+                </div>
+              </label>
+
+              {/* CTA row */}
+              <div className="flex gap-3 pt-2">
+                <button 
+                  onClick={handleAddToBag}
+                  className="flex-grow bg-ink text-bg-base py-5 px-6 font-mono font-bold text-[11px] uppercase tracking-[0.35em] hover:bg-ink/90 active:scale-[0.99] transition-all relative overflow-hidden group shadow border border-transparent"
+                >
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    <ShoppingBag size={14} /> 
+                    ADD TO CART
+                  </span>
+                </button>
+                
+                <button 
+                  onClick={() => setWishlisted(!wishlisted)}
+                  className={`px-5 border transition-all duration-300 rounded-[1px] ${
+                    wishlisted 
+                      ? "bg-red-50/40 border-red-200 text-red-500" 
+                      : "border-ink/10 text-ink/40 hover:border-ink/35 hover:text-ink bg-transparent"
+                  }`}
+                  aria-label="Save to Wishlist"
+                >
+                  <Heart size={15} fill={wishlisted ? "currentColor" : "none"} className={wishlisted ? "scale-105" : ""} />
+                </button>
+              </div>
+            </div>
+
+            {/* Editorial Accordion */}
+            <div className="border-t border-ink/10 pt-4 space-y-4">
+              {/* Tab Selector */}
+              <div className="flex justify-between border-b border-ink/5 pb-2 font-mono text-[9px] tracking-widest uppercase">
+                <button 
+                  onClick={() => setActiveTab("specs")} 
+                  className={`pb-2 transition-all relative ${activeTab === "specs" ? "font-bold text-ink" : "text-ink/40 hover:text-ink"}`}
+                >
+                  01 / MATERIAL SPECS
+                  {activeTab === "specs" && <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-[#B2A490]" />}
+                </button>
+                <button 
+                  onClick={() => setActiveTab("origin")} 
+                  className={`pb-2 transition-all relative ${activeTab === "origin" ? "font-bold text-ink" : "text-ink/40 hover:text-ink"}`}
+                >
+                  02 / WEAVE & HARVEST
+                  {activeTab === "origin" && <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-[#B2A490]" />}
+                </button>
+                <button 
+                  onClick={() => setActiveTab("shipping")} 
+                  className={`pb-2 transition-all relative ${activeTab === "shipping" ? "font-bold text-ink" : "text-ink/40 hover:text-ink"}`}
+                >
+                  03 / PACKAGING & DELIVERY
+                  {activeTab === "shipping" && <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-[#B2A490]" />}
+                </button>
+              </div>
+
+              {/* Tab Content Box */}
+              <div className="min-h-[140px] pt-4">
+                <AnimatePresence mode="wait">
+                  {activeTab === "specs" && (
+                    <motion.div 
+                      key="specs"
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="space-y-4 font-mono text-[11px] uppercase tracking-widest text-ink/70 italic"
+                    >
+                      <div className="flex justify-between items-center border-b border-ink/5 pb-2.5">
+                        <span>FIBER TYPE</span>
+                        <span className="text-ink font-bold not-italic">{product.material}</span>
+                      </div>
+                      <div className="flex justify-between items-center border-b border-ink/5 pb-2.5">
+                        <span>BOLT USABLE WIDTH</span>
+                        <span className="text-ink font-bold not-italic">{product.dimensions}</span>
+                      </div>
+                      <div className="flex justify-between items-center border-b border-ink/5 pb-2.5">
+                        <span>FINISHING TECHNIQUE</span>
+                        <span className="text-ink font-bold not-italic">{product.technique}</span>
+                      </div>
+                      <div className="flex justify-between items-center pb-1">
+                        <span>ATELIER WEFT CODE</span>
+                        <span className="text-ink font-bold not-italic">TL-{product.category}-{product.process}</span>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {activeTab === "origin" && (
+                    <motion.div 
+                      key="origin"
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="space-y-3 font-serif text-[12px] italic text-ink/60 leading-relaxed"
+                    >
+                      <p>
+                        Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.
+                      </p>
+                      <p className="font-mono text-[9px] uppercase tracking-wider text-[#B2A490] font-bold">
+                        ORIGIN DIRECTORY: REGIONAL INTELLECTUAL PROPERTY — FRANCE
+                      </p>
+                    </motion.div>
+                  )}
+
+                  {activeTab === "shipping" && (
+                    <motion.div 
+                      key="shipping"
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="space-y-3 font-serif text-[12px] italic text-ink/60 leading-relaxed"
+                    >
+                      <p>
+                        Every fabric piece is hand-rolled around our custom lignin-free conservation cores and enclosed in luxury linen protective sleeves. Delivered globally via carbon-neutral white-glove couriers in pristine condition.
+                      </p>
+                      <p className="font-mono text-[9px] uppercase tracking-wider text-[#B2A490] font-bold">
+                        FREE TRACKED COURIER WORLDWIDE — SHIPPED WITHIN 24 HOURS
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
+
+            {/* Direct Line to the Atelier */}
+            <div className="border border-[#B2A490]/25 bg-[#B2A490]/5 p-5 flex items-start gap-4 rounded-[1px]">
+              <div className="p-2.5 bg-white border border-[#B2A490]/15 rounded-full flex-shrink-0">
+                <Globe size={15} className="text-[#B2A490]" />
+              </div>
+              <div className="space-y-1">
+                <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#B2A490] font-extrabold block">Atelier Consultation desk</span>
+                <p className="font-serif text-[11px] text-ink/65 italic leading-snug">
+                  Unsure about appropriate drape, weight, or custom weaving bolts for your interior project? Speak directly to our master weavers at <a href="mailto:info@sinceritylinen.com" className="underline hover:text-[#B2A490] font-sans not-italic font-medium">info@sinceritylinen.com</a>.
+                </p>
+              </div>
+            </div>
+
+          </div>
         </div>
 
-        {/* Related Products */}
-        <section>
-          <header className="mb-24 flex flex-col md:flex-row justify-between items-end gap-12 border-b border-ink pb-12">
-            <h2 className="text-4xl md:text-6xl font-serif font-black italic tracking-[-0.05em] leading-none uppercase">
-              COMPLEMENTARY <br /><span className="font-mono not-italic text-collision ml-12">TEXTILES</span>
+        {/* Related Products Section */}
+        <section className="pt-16 border-t border-ink/10">
+          <header className="mb-16 flex justify-between items-end border-b border-ink/5 pb-6">
+            <h2 className="text-3xl md:text-4xl font-serif font-black italic tracking-tighter uppercase">
+              COMPLEMENTARY <br /><span className="font-mono not-italic text-[#B2A490] text-xl md:text-2xl font-bold tracking-widest">TEXTILES</span>
             </h2>
           </header>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-24">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16">
             {relatedProducts.map((item) => (
-              <Link key={item.id} to={`/product/${item.id}`} className="group">
-                <div className="aspect-[3/4] bg-gray-50 overflow-hidden mb-8 transform group-hover:-rotate-2 transition-transform duration-700 h-[400px]">
+              <Link key={item.id} to={`/product/${item.id}`} className="group space-y-4">
+                <div className="aspect-[3/4] bg-white overflow-hidden border border-ink/5 relative rounded-[1px] shadow-sm transform group-hover:scale-[1.01] transition-transform duration-500 h-[380px]">
                   <img 
                     src={item.productImage} 
                     alt={item.title} 
-                    className="w-full h-full object-cover grayscale brightness-105 group-hover:grayscale-0 transition-all duration-1000"
+                    className="w-full h-full object-cover grayscale brightness-[0.93] group-hover:grayscale-0 transition-all duration-1000"
                     referrerPolicy="no-referrer"
                   />
+                  <div className="absolute inset-0 border border-white/5 group-hover:border-white/10 pointer-events-none transition-colors" />
                 </div>
-                <h4 className="font-serif italic text-2xl uppercase tracking-tighter mb-2 group-hover:underline underline-offset-4">{item.title}</h4>
-                <p className="font-mono text-[10px] md:text-[12px] font-bold tracking-tight text-ink/40">${item.price.toFixed(2)}</p>
+                <div className="space-y-1">
+                  <h4 className="font-serif italic text-xl uppercase tracking-tighter text-ink leading-tight group-hover:text-[#B2A490] transition-colors">
+                    {item.title}
+                  </h4>
+                  <p className="font-mono text-[10px] md:text-[11px] font-bold tracking-tight text-ink/45">
+                    ${item.price.toFixed(2)} / Yard
+                  </p>
+                </div>
               </Link>
             ))}
           </div>
@@ -824,7 +1096,7 @@ const ProductDetail: React.FC<{ onAddToCart: (product: Product) => void }> = ({ 
 };
 
 const AboutSection: React.FC = () => (
-  <section className="px-4 md:px-12 py-32 md:py-48 bg-[#FFF0F5] relative overflow-hidden">
+  <section className="px-4 md:px-12 py-16 md:py-24 bg-[#FAF9F5] border-t border-b border-ink/5 relative overflow-hidden">
     <div className="absolute top-0 right-0 p-12 mix-blend-difference pointer-events-none">
       <p className="font-mono text-[10px] md:text-[12px] tracking-[0.6em] vertical-text opacity-40 uppercase italic">HERITAGE — VISION — SINCERITY</p>
     </div>
@@ -837,26 +1109,35 @@ const AboutSection: React.FC = () => (
            initial={{ opacity: 0, x: -30 }}
            whileInView={{ opacity: 1, x: 0 }}
            transition={{ duration: 1 }}
+           viewport={{ once: true }}
            className="space-y-12"
         >
-          <h2 className="text-5xl md:text-7xl font-serif font-black italic tracking-[-0.05em] leading-none uppercase text-ink">
-            ABOUT <br /><span className="font-mono not-italic text-collision ml-12">SINCERITY</span>
-          </h2>
-          <p className="font-mono text-[14px] md:text-[18px] leading-relaxed uppercase tracking-tight text-ink/70 italic border-l-2 border-ink pl-8">
-            Starting as a specialized dyeing and printing factory, Tongling Sincerity Linen Group has evolved into a global leader in linen textiles. Our name is our promise—a sincere approach to craftsmanship, from the flax fields to the final finished fabric.
+          <div className="space-y-4">
+            <span className="font-mono text-[10px] tracking-widest text-[#B2A490] font-black uppercase">ANNALS & RECORD</span>
+            <h2 className="text-5xl md:text-7xl font-serif font-black italic tracking-[-0.05em] leading-[0.95] uppercase text-ink">
+              ABOUT <br /><span className="font-mono not-italic text-collision md:ml-12 text-5xl md:text-6xl">SINCERITY</span>
+            </h2>
+          </div>
+          <p className="font-mono text-[14px] md:text-[16px] leading-relaxed uppercase tracking-tight text-ink/70 italic border-l-2 border-ink pl-8">
+            Starting as a highly specialized small-scale dye house in Tongling, Sincerity Linen Group has matured into a premier global landmark for sustainable linen luxury. The name, "Sincerity" reflects our transparent relationship with natural textile materials and human makers.
           </p>
-          <Link to="/brand-story" className="inline-block font-mono text-[11px] md:text-[13px] font-bold underline underline-offset-8 hover:tracking-[0.2em] transition-all uppercase">
-            EXPLORE OUR JOURNEY
+          <Link to="/brand-story" className="inline-flex items-center gap-4 bg-ink text-bg-base px-8 py-4 font-mono text-[10px] font-bold tracking-[0.2em] hover:bg-ink/80 transition-all uppercase shadow-lg">
+            <span>EXPLORE OUR JOURNEY</span>
+            <ArrowRight size={14} />
           </Link>
         </motion.div>
+        
         <div className="relative">
-          <div className="aspect-[4/5] bg-gray-200 overlap-image transform rotate-1 overflow-hidden shadow-xl">
+          <div className="aspect-[4/5] bg-gray-200 overflow-hidden shadow-2xl border border-ink/5 relative group">
              <img 
                src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&w=1200&q=80" 
                alt="Craftsmanship" 
-               className="w-full h-full object-cover grayscale brightness-90 hover:grayscale-0 transition-all duration-1000"
+               className="w-full h-full object-cover grayscale brightness-90 group-hover:scale-105 duration-1000 transition-transform"
                referrerPolicy="no-referrer"
              />
+             <div className="absolute top-4 left-4 bg-bg-base/95 backdrop-blur-sm px-4 py-2 text-[9px] font-mono uppercase tracking-[0.15em] border border-ink/5">
+               TONGLING ARCHIVES / WEAVER L09
+             </div>
           </div>
         </div>
       </div>
@@ -865,30 +1146,39 @@ const AboutSection: React.FC = () => (
 );
 
 const SustainabilitySection: React.FC = () => (
-  <section className="px-4 md:px-12 py-32 md:py-48 bg-[#F0FFF0] relative overflow-hidden">
+  <section className="px-4 md:px-12 py-16 md:py-24 bg-[#F1EDE4] relative overflow-hidden">
     <div className="max-w-6xl mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-24 items-center">
         <div className="lg:col-span-7 order-2 lg:order-1">
            <div className="grid grid-cols-2 gap-8">
-             <div className="aspect-[3/4] bg-gray-200 overlap-image transform -rotate-2 overflow-hidden shadow-2xl">
-               <img src="https://images.unsplash.com/photo-1542601906970-36f967ad6f73?auto=format&fit=crop&w=1200&q=80" alt="Nature" className="w-full h-full object-cover grayscale" referrerPolicy="no-referrer" />
+             <div className="aspect-[3/4] bg-gray-200 overflow-hidden shadow-2xl border border-ink/5 group relative">
+               <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1200&q=80" alt="Nature" className="w-full h-full object-cover grayscale brightness-95 group-hover:scale-105 duration-[2s] transition-all" referrerPolicy="no-referrer" />
+               <div className="absolute bottom-4 left-4 bg-bg-base/90 p-3 text-[8px] font-mono tracking-widest uppercase">
+                 ORGANIC FLAX FIELDS
+               </div>
              </div>
-             <div className="aspect-[3/4] bg-gray-200 overlap-image transform rotate-3 mt-12 md:mt-24 overflow-hidden shadow-2xl">
-               <img src="https://images.unsplash.com/photo-1595853035070-59a39fe84de3?auto=format&fit=crop&w=1200&q=80" alt="Flax" className="w-full h-full object-cover grayscale" referrerPolicy="no-referrer" />
+             <div className="aspect-[3/4] bg-gray-200 mt-12 md:mt-24 overflow-hidden shadow-2xl border border-ink/5 group relative">
+               <img src="https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?auto=format&fit=crop&w=1200&q=80" alt="Flax" className="w-full h-full object-cover grayscale brightness-95 group-hover:scale-105 duration-[2s] transition-all" referrerPolicy="no-referrer" />
+               <div className="absolute bottom-4 left-4 bg-bg-base/90 p-3 text-[8px] font-mono tracking-widest uppercase">
+                 RAW HARVEST No. 04
+               </div>
              </div>
            </div>
         </div>
         <div className="lg:col-span-5 space-y-12 order-1 lg:order-2">
-           <h2 className="text-5xl md:text-7xl font-serif font-black italic tracking-[-0.05em] leading-none uppercase text-ink">
-             NATURE <br /><span className="font-mono not-italic text-collision ml-12">PRECTICE</span>
-           </h2>
+           <div className="space-y-4">
+             <span className="font-mono text-[10px] font-black uppercase tracking-widest text-[#B2A490]">ECOLOGICAL STANDARD</span>
+             <h2 className="text-5xl md:text-7xl font-serif font-black italic tracking-[-0.05em] leading-[0.95] uppercase text-ink">
+               NATURE <br /><span className="font-mono not-italic text-collision md:ml-12 text-5xl md:text-6xl">PRACTICE</span>
+             </h2>
+           </div>
            <p className="font-mono text-[12px] md:text-[14px] leading-relaxed uppercase tracking-tight text-ink/60 italic border-l-2 border-ink pl-8">
-             Our commitment to the environment is as deep as our passion for linen. From European Flax certification to closed-loop recycling of residual fibers, we ensure that our artistry leaves a minimal footprint on the planet.
+             Our pledge to earth runs companion to our search for pristine fiber. Through European Flax certifications and a waste-free loop of reprocessed leftover yarn, we seek minimal burden on the living land.
            </p>
-           <ul className="space-y-4 pt-8">
-             {['EUROPEAN FLAX CERTIFIED', 'CLOSED-LOOP RECYCLING', 'OEKO-TEX STANDARD 100', 'RESPONSIBLE SOURCING'].map((item) => (
-               <li key={item} className="font-mono text-[10px] md:text-[12px] tracking-[0.3em] uppercase italic flex items-center gap-4 text-ink/80">
-                 <div className="w-4 h-px bg-collision" />
+           <ul className="space-y-6 pt-8 border-t border-ink/10">
+             {['EUROPEAN FLAX® CERTIFIED', 'CLOSED-LOOP RECYCLED SELVEDGES', 'OEKO-TEX® STANDARD 100 COMPLIANT', 'RESPONSIBLY HARVESTED IN FRANCE'].map((item) => (
+               <li key={item} className="font-mono text-[9px] md:text-[11px] tracking-[0.25em] uppercase italic flex items-center gap-4 text-ink/80">
+                 <div className="w-4 h-[1px] bg-collision" />
                  {item}
                </li>
              ))}
@@ -899,102 +1189,315 @@ const SustainabilitySection: React.FC = () => (
   </section>
 );
 
-const ContactSection: React.FC = () => (
-  <section className="px-4 md:px-12 py-32 md:py-48 bg-ink text-bg-base relative overflow-hidden">
-    <div className="absolute top-0 left-1/4 w-px h-full bg-bg-base/10 hidden md:block" />
-    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-24 relative z-10">
-      <div className="lg:col-span-5">
-        <h2 className="text-6xl md:text-8xl font-serif font-black italic tracking-[-0.05em] leading-none uppercase mb-12">
-          GLOBAL <br /><span className="font-mono not-italic text-collision ml-12">CONTACT</span>
-        </h2>
-        <div className="space-y-8 font-mono text-[14px] uppercase tracking-tight italic">
-          <p className="text-bg-base/60">FOR WHOLESALE ENQUIRIES, CUSTOM FABRICATION OR GENERAL INFORMATION.</p>
-          <div className="space-y-4 text-2xl md:text-3xl font-serif border-t border-bg-base/10 pt-8">
-            <a href="mailto:info@sinceritylinen.com" className="block hover:text-collision transition-colors">INFO@SINCERITYLINEN.COM</a>
-            <a href="tel:+86212345678" className="block hover:text-collision transition-colors">+86 (21) 2345 678</a>
+const ContactSection: React.FC = () => {
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isFocused, setIsFocused] = useState<string | null>(null);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email) return;
+    setIsSubmitted(true);
+  };
+
+  return (
+    <section className="px-4 md:px-12 py-20 md:py-28 bg-[#121212] text-[#FAF9F6] relative overflow-hidden border-t border-white/5">
+      <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-white/[0.02] rounded-full blur-3xl pointer-events-none -z-0" />
+      
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 relative z-10 items-start">
+        {/* Left: Branding & Info */}
+        <div className="lg:col-span-5 space-y-12">
+          <div className="space-y-6">
+            <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-[#B2A490] font-bold block">
+              GET IN TOUCH
+            </span>
+            <h2 className="text-4xl md:text-6xl font-serif font-black italic tracking-tighter leading-none uppercase">
+              GLOBAL<br />
+              <span className="font-mono not-italic text-white/30 text-3.5xl md:text-5xl">INQUIRIES</span>
+            </h2>
+            <p className="font-serif text-lg leading-relaxed text-[#FAF9F6]/60 max-w-sm italic">
+              We welcome direct partner correspondence. Whether discussing bulk fabrics, custom weave developments, or private showroom visits, our team responds with care.
+            </p>
+          </div>
+
+          <div className="space-y-6 pt-10 border-t border-white/10 font-mono text-[11px] uppercase tracking-wider text-[#FAF9F6]/75">
+            <div className="space-y-2">
+              <span className="text-[#B2A490] text-[9px] block">GENERAL & WHOLESALE</span>
+              <a href="mailto:info@sinceritylinen.com" className="font-serif text-xl italic hover:text-[#B2A490] transition-colors block lowercase">
+                info@sinceritylinen.com
+              </a>
+            </div>
+            <div className="space-y-2">
+              <span className="text-[#B2A490] text-[9px] block">SHANGHAI SHOWROOM</span>
+              <a href="tel:+86212345678" className="font-serif text-xl italic hover:text-[#B2A490] transition-colors block">
+                +86 (21) 2345 6788
+              </a>
+            </div>
+            <div className="space-y-2">
+              <span className="text-[#B2A490] text-[9px] block">HEAD OFFICE ADDRESS</span>
+              <p className="font-serif text-[13px] italic text-[#FAF9F6]/60 leading-relaxed normal-case">
+                Tongling Sincerity Linen Group, Tongling Economic Development Zone, Anhui, China
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Right: Clean, Ultra-Minimal Form */}
+        <div className="lg:col-span-7">
+          <div className="w-full bg-[#1C1C1C] border border-white/5 p-8 md:p-12 shadow-2xl rounded-[2px] min-h-[460px] flex flex-col justify-center">
+            <AnimatePresence mode="wait">
+              {!isSubmitted ? (
+                <motion.div
+                  key="form"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.4 }}
+                  className="space-y-8"
+                >
+                  <div className="border-b border-white/10 pb-4">
+                    <h3 className="font-serif text-xl font-bold uppercase italic tracking-tight text-[#FAF9F6]">Contact Form</h3>
+                  </div>
+
+                  <form onSubmit={handleSubmit} className="space-y-8">
+                    {/* Name */}
+                    <div className={`space-y-2 border-b transition-colors duration-300 pb-2 ${isFocused === "name" ? "border-[#B2A490]" : "border-white/10"}`}>
+                      <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#FAF9F6]/40 block font-bold">
+                        Your Name
+                      </label>
+                      <input 
+                        type="text" 
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        onFocus={() => setIsFocused("name")}
+                        onBlur={() => setIsFocused(null)}
+                        placeholder="John Doe"
+                        className="w-full bg-transparent border-none focus:outline-none font-serif italic text-lg text-[#FAF9F6] placeholder-white/10 placeholder:italic"
+                      />
+                    </div>
+
+                    {/* Email */}
+                    <div className={`space-y-2 border-b transition-colors duration-300 pb-2 ${isFocused === "email" ? "border-[#B2A490]" : "border-white/10"}`}>
+                      <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#FAF9F6]/40 block font-bold">
+                        Email Address
+                      </label>
+                      <input 
+                        type="email" 
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        onFocus={() => setIsFocused("email")}
+                        onBlur={() => setIsFocused(null)}
+                        placeholder="john@example.com"
+                        className="w-full bg-transparent border-none focus:outline-none font-serif italic text-lg text-[#FAF9F6] placeholder-white/10 placeholder:italic"
+                      />
+                    </div>
+
+                    {/* Message */}
+                    <div className={`space-y-2 border-b transition-colors duration-300 pb-2 ${isFocused === "message" ? "border-[#B2A490]" : "border-white/10"}`}>
+                      <label className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#FAF9F6]/40 block font-bold">
+                        Your Message
+                      </label>
+                      <textarea 
+                        rows={2} 
+                        required
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        onFocus={() => setIsFocused("message")}
+                        onBlur={() => setIsFocused(null)}
+                        placeholder="How can we help you?"
+                        className="w-full bg-transparent border-none focus:outline-none font-serif italic text-base text-[#FAF9F6] placeholder-white/10 placeholder:italic resize-none leading-relaxed"
+                      />
+                    </div>
+
+                    <button 
+                      type="submit"
+                      className="w-full py-4 bg-[#FAF9F6] text-ink font-mono font-bold text-[11px] uppercase tracking-[0.3em] hover:bg-[#FAF9F6]/90 active:scale-[0.99] transition-all border border-transparent text-center shadow"
+                    >
+                      Send Message
+                    </button>
+                  </form>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="submitted"
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4 }}
+                  className="text-center space-y-6 py-8"
+                >
+                  <div className="w-12 h-12 rounded-full bg-[#B2A490]/10 border border-[#B2A490]/20 flex items-center justify-center mx-auto mb-2">
+                    <span className="font-serif italic text-lg text-[#B2A490] font-bold">s</span>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#B2A490] font-bold">THANK YOU</span>
+                    <h3 className="font-serif text-2xl italic text-[#FAF9F6] font-bold uppercase">MESSAGE RECEIVED</h3>
+                  </div>
+
+                  <p className="font-serif text-base text-[#FAF9F6]/75 leading-relaxed max-w-sm mx-auto italic">
+                    "Thank you, <span className="text-[#FAF9F6] font-semibold not-italic">{formData.name}</span>. We have received your inquiry. A representative from our team will email you at <span className="text-white font-medium not-italic">{formData.email}</span> within 24 hours."
+                  </p>
+
+                  <button 
+                    onClick={() => {
+                      setIsSubmitted(false);
+                      setFormData({ name: "", email: "", message: "" });
+                    }}
+                    className="mt-6 px-6 py-2.5 border border-white/10 text-white/50 font-mono text-[9px] uppercase tracking-widest hover:border-white/30 hover:text-white transition-all bg-transparent"
+                  >
+                    Send Another Message
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
-      <div className="lg:col-span-7">
-        <form className="space-y-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="space-y-4 border-b border-bg-base/20 pb-4">
-              <label className="font-mono text-[10px] tracking-[0.3em] uppercase opacity-40">NAME / IDENTITY</label>
-              <input type="text" className="w-full bg-transparent border-none focus:outline-none font-serif italic text-xl" />
-            </div>
-            <div className="space-y-4 border-b border-bg-base/20 pb-4">
-              <label className="font-mono text-[10px] tracking-[0.3em] uppercase opacity-40">EMAIL / COORDINATE</label>
-              <input type="email" className="w-full bg-transparent border-none focus:outline-none font-serif italic text-xl" />
+    </section>
+  );
+};
+
+const InteractiveChain: React.FC = () => {
+  const [activeStep, setActiveStep] = useState(0);
+
+  const steps = [
+    {
+      title: "YARN SPINNING",
+      detail: "FINELY COMBED SELECTION",
+      desc: "Sourced exclusively from the premier wet-spun linen mills of Northern France and Belgium, our yarns are carefully sorted to ensure maximum tensile strength, minimal impurities, and a clean, uniform thread density perfect for high-speed looms.",
+      image: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      title: "WEAVING TECHNIQUES",
+      detail: "HIGH-TENSION PRECISION",
+      desc: "Our state-of-the-art rapier looms operate under custom-monitored humidity and temperature coordinates. We weave both premium plain-weave fabrics and complex yarn-dyed stripes with perfectly tailored selvedges.",
+      image: "https://images.unsplash.com/photo-1558051815-0f18e64e6280?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      title: "DYEING & PRINTING",
+      detail: "ECO-CERTIFIED KITCHEN",
+      desc: "Using low-liquor ratio dyeing technologies and premium Swiss dye formulas, we achieve multi-layered, deep color depths and complex printed patterns while strictly protecting the raw fiber's breathability and durability.",
+      image: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      title: "PREMIUM FINISHING",
+      detail: "SIGNATURE SOFT TOUCH",
+      desc: "The defining stage. From natural local stone washing to bio-enzyme relaxed-crimp treatments and delicate anti-wrinkle press finishes, we transform the hand-feel into a fluid drape and textured comfort.",
+      image: "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?auto=format&fit=crop&w=1200&q=80"
+    }
+  ];
+
+  return (
+    <section className="px-4 md:px-12 py-16 md:py-24 border-b border-ink/10 bg-[#FAF9F6]">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
+        <div className="lg:col-span-12">
+          <div className="flex items-center gap-4 mb-4">
+            <span className="h-[1px] w-12 bg-collision" />
+            <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.5em] text-ink/40 italic font-bold">THE IN-HOUSE LOOM INITIATIVE</span>
+          </div>
+          <h2 className="text-4xl md:text-[6vw] font-serif font-black italic tracking-[-0.05em] leading-[0.95] uppercase text-ink mb-12">
+            PRODUCTION <br />
+            <span className="font-mono not-italic text-collision md:ml-24">CHAIN EXPERIENCE</span>
+          </h2>
+        </div>
+
+        {/* Interactive Steps List */}
+        <div className="lg:col-span-6 space-y-8">
+          <p className="font-serif text-lg md:text-xl leading-relaxed text-ink/80 italic border-l-2 border-ink pl-8 mb-12">
+            We deliver an entirely vertical, high-control supply chain spanning initial fiber combing to bespoke textile finishing, guaranteeing uncompromised authenticity.
+          </p>
+
+          <div className="space-y-4">
+            {steps.map((step, idx) => {
+              const isActive = activeStep === idx;
+              return (
+                <button
+                  key={step.title}
+                  onClick={() => setActiveStep(idx)}
+                  className={`w-full text-left p-6 md:p-8 border-b border-ink/10 flex flex-col gap-3 transition-all ${
+                    isActive ? "bg-bg-base shadow-lg pl-8 border-l-2 border-l-ink" : "hover:bg-bg-base/30 hover:pl-4"
+                  }`}
+                >
+                  <div className="flex justify-between items-center w-full">
+                    <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.3em] font-bold text-ink/40">
+                      PHASE {String(idx + 1).padStart(2, '0')}
+                    </span>
+                    {isActive && (
+                      <span className="font-mono text-[9px] bg-ink text-bg-base px-2 py-0.5 uppercase tracking-wider italic font-bold">
+                        ACTIVE VIEW
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="font-serif italic text-2xl uppercase tracking-tight text-ink font-bold">
+                    {step.title}
+                  </h3>
+                  {isActive && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="text-sm font-mono text-ink/65 uppercase tracking-wide leading-relaxed pt-2 space-y-2 border-t border-ink/5 mt-2"
+                    >
+                      <span className="text-collision font-bold block text-[10px] tracking-widest">
+                        {step.detail}
+                      </span>
+                      <p className="text-[11px] md:text-[12px] leading-relaxed select-text font-normal normal-case italic">
+                        {step.desc}
+                      </p>
+                    </motion.div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Large Dynamic Visual */}
+        <div className="lg:col-span-6">
+          <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/5] bg-gray-100 overflow-hidden shadow-2xl border border-ink/5">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={activeStep}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.8 }}
+                src={steps[activeStep].image}
+                alt={steps[activeStep].title}
+                className="w-full h-full object-cover grayscale brightness-95"
+                referrerPolicy="no-referrer"
+              />
+            </AnimatePresence>
+            <div className="absolute top-4 right-4 bg-bg-base/95 backdrop-blur-sm px-4 py-2 border border-ink/5 text-[9px] font-mono uppercase tracking-[0.2em] italic font-bold">
+              TONGLING LABS No. 0{activeStep + 1}
             </div>
           </div>
-          <div className="space-y-4 border-b border-bg-base/20 pb-4">
-            <label className="font-mono text-[10px] tracking-[0.3em] uppercase opacity-40">MESSAGE / ENQUIRY</label>
-            <textarea rows={1} className="w-full bg-transparent border-none focus:outline-none font-serif italic text-xl resize-none" />
-          </div>
-          <button className="w-full md:w-auto px-16 py-6 border border-bg-base font-mono font-bold text-[12px] uppercase tracking-[0.5em] hover:bg-bg-base hover:text-ink transition-all italic">
-            SEND ARCHIVE REQUEST
-          </button>
-        </form>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const Home: React.FC = () => (
   <main className="bg-bg-base overflow-x-hidden pt-20">
     <Hero />
-    
-    <section className="py-24 border-y border-ink flex overflow-hidden select-none">
-      <motion.div 
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-        className="flex whitespace-nowrap gap-24 items-center pr-24"
-      >
-        {[...Array(6)].map((_, i) => (
-          <span key={i} className="text-6xl md:text-8xl font-serif font-black italic uppercase tracking-tighter text-ink opacity-20">VERTICAL INTEGRATION — IN-HOUSE R&D — SINCE 1998 —</span>
-        ))}
-      </motion.div>
+
+    <section className="py-12 md:py-20 max-w-5xl mx-auto px-4 text-center">
+      <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-[#B2A490] block mb-6 font-bold">THE SINCERITY PHILOSOPHY</span>
+      <h2 className="text-3xl md:text-[3.2vw] font-serif font-light italic leading-relaxed text-ink/85">
+        "We believe luxury is a whisper, not a shout. True elegance resides in the organic irregularity of pure flax, the trace of human skill, and the quiet dignity of a fabric made to endure."
+      </h2>
+      <div className="w-12 h-px bg-collision mx-auto mt-12 mb-6" />
+      <span className="font-mono text-[9px] uppercase tracking-widest text-ink/40">AN INTRODUCTORY NOTE BY THE MASTER WEAVER</span>
     </section>
 
-    {/* Production Chain Section */}
-    <section className="px-4 md:px-12 py-32 md:py-64 border-b border-ink/10">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-24 items-center">
-        <div className="lg:col-span-12 mb-12">
-            <h2 className="text-4xl md:text-[9vw] font-serif font-black italic tracking-[-0.05em] leading-none uppercase text-ink">PRODUCTION <br /><span className="font-mono not-italic text-collision ml-12">CHAIN</span></h2>
-        </div>
-        <div className="lg:col-span-5 space-y-12">
-          <p className="font-mono text-[14px] md:text-[18px] leading-relaxed uppercase tracking-tight text-ink border-l-2 border-ink pl-8 italic">
-            WE DELIVER A FULLY INTEGRATED LINEN SUPPLY CHAIN—FROM YARN SPINNING THROUGH TO WEAVING, DYEING, PRINTING, AND FINISHING. 
-          </p>
-          <div className="font-mono text-[12px] tracking-[0.2em] uppercase text-ink/60 space-y-4 border-t border-ink/10 pt-12">
-             <p className="font-bold text-ink mb-4">IN-HOUSE R&D ABILITY</p>
-             <p>Our dedicated R&D facility focuses on technical innovation, creating proprietary finishes and textures that remain exclusive to our archive.</p>
-          </div>
-          <div className="space-y-6 pt-12">
-            {['YARN SPINNING', 'WEAVING', 'DYEING & PRINTING', 'FINISHING'].map((step, i) => (
-               <div key={step} className="flex items-center justify-between border-b border-ink/10 pb-4 hover:pl-4 transition-all group">
-                  <span className="font-mono text-[10px] md:text-[12px] font-bold uppercase tracking-[0.4em] italic group-hover:text-collision transition-colors">{step}</span>
-                  <span className="text-ink/10 group-hover:text-ink text-[10px] font-mono italic">IN-HOUSE</span>
-               </div>
-            ))}
-          </div>
-        </div>
-        <div className="lg:col-span-7">
-           <div className="aspect-[16/9] bg-gray-100 transform rotate-1 overflow-hidden overlap-image shadow-2xl">
-              <img 
-                src="https://images.unsplash.com/photo-1558051815-0f18e64e6280?auto=format&fit=crop&w=1200&q=80" 
-                alt="Production" 
-                className="w-full h-full object-cover grayscale brightness-90 hover:grayscale-0 transition-all duration-1000"
-                referrerPolicy="no-referrer"
-              />
-           </div>
-        </div>
-      </div>
-    </section>
+    <InteractiveChain />
 
     <AboutSection />
 
-    <section className="py-32 md:py-48">
+    <section className="py-16 md:py-24">
       <div className="px-4 md:px-12 mb-12 flex flex-col md:flex-row justify-between items-start md:items-end border-b border-ink pb-8 gap-8">
          <h2 className="text-4xl md:text-7xl font-serif font-black italic tracking-tighter uppercase leading-none">MAIN <br /><span className="ml-12 md:ml-32">COLLECTION</span></h2>
          <p className="font-mono text-[10px] md:text-[12px] uppercase tracking-[0.4em] text-ink/40 mb-2 italic">EUROPEAN LINEN — BLENDS — PRINTS — SINCE 1998</p>
@@ -1010,10 +1513,6 @@ const Home: React.FC = () => (
 
 const Footer: React.FC = () => (
   <footer className="px-4 md:px-12 py-24 md:py-32 border-t border-ink/10 bg-bg-base overflow-hidden relative">
-    <div className="absolute -bottom-24 -right-12 select-none pointer-events-none opacity-5">
-      <h2 className="text-[30vw] font-serif font-black italic leading-none whitespace-nowrap uppercase">SINCERITY</h2>
-    </div>
-    
     <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-24 md:gap-12 items-start h-full">
       <div className="md:col-span-4 space-y-12">
         <div className="group">
@@ -1167,64 +1666,74 @@ const CartDrawer: React.FC<{
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="fixed top-0 right-0 h-full w-full md:max-w-xl bg-bg-base z-[70] shadow-[-20px_0_60px_rgba(0,0,0,0.1)] flex flex-col border-l border-ink/10"
+            className="fixed top-0 right-0 h-full w-full md:max-w-md bg-[#FBFBFA] z-[70] shadow-[-20px_0_60px_rgba(0,0,0,0.05)] flex flex-col border-l border-ink/10"
           >
-            <header className="p-8 md:p-12 border-b border-ink/10 flex justify-between items-center">
-              <div>
-                <h2 className="text-4xl font-serif font-black italic tracking-tighter uppercase mb-1">ARCHIVE BAG</h2>
-                <p className="font-mono text-[10px] tracking-[0.4em] text-ink/30 italic">STORAGE UNIT — {items.length} ITEMS</p>
+            <header className="p-8 md:p-10 border-b border-ink/5 bg-[#FBFBFA] flex justify-between items-center">
+              <div className="space-y-1">
+                <h2 className="text-xl md:text-2xl font-serif font-bold uppercase tracking-tight text-ink">ARCHIVE BAG</h2>
+                <p className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#B2A490] font-bold">UNIT CONTAINER — {items.length} {items.length === 1 ? 'ITEM' : 'ITEMS'}</p>
               </div>
-              <button onClick={onClose} className="p-4 hover:bg-ink hover:text-bg-base transition-colors border border-ink">
-                <X size={20} strokeWidth={1} />
+              <button 
+                onClick={onClose} 
+                className="p-2.5 text-ink/60 hover:text-ink transition-colors border border-ink/10 hover:border-ink/30 rounded-[1px] bg-transparent"
+                aria-label="Close cart"
+              >
+                <X size={16} strokeWidth={1.5} />
               </button>
             </header>
 
-            <div className="flex-grow overflow-y-auto p-8 md:p-12 space-y-12">
+            <div className="flex-grow overflow-y-auto p-8 md:p-10">
               {items.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-center space-y-8">
-                  <ShoppingBag size={64} className="text-ink/10" strokeWidth={0.5} />
-                  <p className="font-mono text-[11px] uppercase tracking-[0.5em] text-ink/30 italic">YOUR STORAGE IS EMPTY</p>
+                <div className="h-full flex flex-col items-center justify-center text-center space-y-6">
+                  <ShoppingBag size={48} className="text-[#B2A490]/40" strokeWidth={1} />
+                  <div className="space-y-2">
+                    <p className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#B2A490] font-bold">YOUR STORAGE IS EMPTY</p>
+                    <p className="font-serif text-xs italic text-ink/50 max-w-xs leading-relaxed">No active textiles or fiber bolts recorded in your current archive segment.</p>
+                  </div>
                   <button 
                     onClick={onClose}
-                    className="border border-ink px-12 py-4 font-mono font-bold text-[11px] uppercase tracking-widest hover:bg-ink hover:text-bg-base transition-all"
+                    className="border border-ink/15 px-8 py-3.5 font-mono font-bold text-[9px] uppercase tracking-widest hover:bg-ink hover:text-bg-base hover:border-ink transition-all rounded-[1px] bg-transparent"
                   >
                     RETURN TO GALLERY
                   </button>
                 </div>
               ) : (
-                <div className="flex flex-col gap-12">
+                <div className="flex flex-col gap-8">
                   {items.map((item) => (
-                    <motion.div layout key={item.id} className="grid grid-cols-12 gap-8 border-b border-ink/5 pb-12 last:border-0 group">
-                      <div className="col-span-4 aspect-[3/4] bg-gray-50 overflow-hidden overlap-image transform skew-y-1">
-                        <img src={item.productImage} alt={item.title} className="w-full h-full object-cover grayscale brightness-105 group-hover:grayscale-0 transition-all duration-700" />
+                    <motion.div layout key={item.id} className="grid grid-cols-12 gap-6 border-b border-ink/5 pb-8 last:border-0 group items-center">
+                      <div className="col-span-3 aspect-[3/4] bg-[#FBFBFA] overflow-hidden border border-ink/5 rounded-[1px] shadow-sm">
+                        <img src={item.productImage} alt={item.title} className="w-full h-full object-cover grayscale brightness-95 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700" referrerPolicy="no-referrer" />
                       </div>
-                      <div className="col-span-8 flex flex-col justify-between py-2">
-                        <div className="space-y-2">
+                      <div className="col-span-9 flex flex-col justify-between py-1 h-full min-h-[96px]">
+                        <div className="space-y-1">
                           <div className="flex justify-between items-start gap-4">
-                            <h3 className="font-serif italic text-2xl uppercase tracking-tighter leading-none group-hover:underline underline-offset-4">{item.title}</h3>
-                            <button onClick={() => onRemove(item.id)} className="opacity-20 hover:opacity-100 transition-opacity">
-                              <X size={16} />
+                            <h3 className="font-serif italic text-[16px] md:text-[17px] font-bold uppercase tracking-tight text-ink leading-tight group-hover:text-[#B2A490] transition-colors">{item.title}</h3>
+                            <button onClick={() => onRemove(item.id)} className="text-ink/30 hover:text-red-500 transition-colors p-1" aria-label="Remove item">
+                              <X size={14} />
                             </button>
                           </div>
-                          <p className="font-mono text-[10px] text-ink/40 uppercase tracking-widest italic">{item.material}</p>
+                          <p className="font-mono text-[9px] text-[#B2A490] uppercase tracking-widest font-bold">{item.material}</p>
                         </div>
-                        <div className="flex justify-between items-end">
-                          <div className="flex items-center border border-ink">
+                        <div className="flex justify-between items-center mt-3">
+                          {/* Sleek inline selector */}
+                          <div className="flex items-center border border-ink/10 bg-white p-1 rounded-[1px]">
                             <button 
                               onClick={() => onUpdateQuantity(item.id, -1)}
-                              className="p-3 hover:bg-ink hover:text-bg-base transition-colors"
+                              className="w-6 h-6 flex items-center justify-center text-ink/50 hover:text-ink transition-colors"
+                              aria-label="Decrease quantity"
                             >
-                              <Minus size={14} />
+                              <Minus size={11} />
                             </button>
-                            <span className="px-6 font-mono text-[12px] font-bold border-x border-ink h-full flex items-center">{item.quantity}</span>
+                            <span className="w-8 text-center font-mono text-[11px] font-bold text-ink">{item.quantity}</span>
                             <button 
                               onClick={() => onUpdateQuantity(item.id, 1)}
-                              className="p-3 hover:bg-ink hover:text-bg-base transition-colors"
+                              className="w-6 h-6 flex items-center justify-center text-ink/50 hover:text-ink transition-colors"
+                              aria-label="Increase quantity"
                             >
-                              <Plus size={14} />
+                              <Plus size={11} />
                             </button>
                           </div>
-                          <p className="font-mono text-[16px] font-black">${(item.price * item.quantity).toFixed(2)}</p>
+                          <p className="font-mono text-xs md:text-sm font-bold text-ink">${(item.price * item.quantity).toFixed(2)}</p>
                         </div>
                       </div>
                     </motion.div>
@@ -1234,18 +1743,18 @@ const CartDrawer: React.FC<{
             </div>
 
             {items.length > 0 && (
-              <footer className="p-8 md:p-12 border-t border-ink bg-ink text-bg-base">
-                <div className="flex justify-between items-end mb-12">
+              <footer className="p-8 md:p-10 border-t border-ink/10 bg-[#FAF9F5] space-y-6">
+                <div className="flex justify-between items-end">
                   <div>
-                    <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-bg-base/40 mb-2 italic">ESTIMATED TOTAL</p>
-                    <span className="text-5xl font-serif font-black italic tracking-tighter leading-none">${total.toFixed(2)}</span>
+                    <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#B2A490] font-bold mb-1">ESTIMATED TOTAL</p>
+                    <span className="text-2xl md:text-3xl font-mono text-ink font-light tracking-tight">${total.toFixed(2)}</span>
                   </div>
-                  <p className="font-mono text-[9px] text-bg-base/40 uppercase tracking-widest italic text-right">
+                  <p className="font-mono text-[8px] text-ink/40 uppercase tracking-widest text-right leading-relaxed">
                     EXCLUDES SHIPPING & <br />INTERNATIONAL TAXES
                   </p>
                 </div>
-                <button className="w-full bg-bg-base text-ink py-8 font-mono font-bold text-[13px] uppercase tracking-[0.5em] hover:bg-white transition-all shadow-xl italic">
-                  PROCEED TO LOGISTICS
+                <button className="w-full bg-ink text-bg-base py-4 font-mono font-bold text-[10px] md:text-[11px] uppercase tracking-[0.3em] hover:bg-ink/90 active:scale-[0.99] transition-all border border-transparent shadow-[0_4px_12px_rgba(0,0,0,0.05)] text-center rounded-[1px]">
+                  PROCEED
                 </button>
               </footer>
             )}
