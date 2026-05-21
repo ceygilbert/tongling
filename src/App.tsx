@@ -456,18 +456,20 @@ const ProductSlider: React.FC = () => {
           </motion.div>
         </AnimatePresence>
 
-        <div className="absolute bottom-0 right-0 flex border-t border-l border-ink group">
+        <div className="absolute bottom-0 right-0 flex border-t border-l border-ink">
           <button 
             onClick={prevSlide}
-            className="p-8 hover:bg-ink hover:text-bg-base transition-all border-r border-ink"
+            className="w-10 h-10 md:w-12 md:h-12 hover:bg-ink hover:text-bg-base transition-all border-r border-ink flex items-center justify-center"
+            aria-label="Previous slide"
           >
-            <ChevronLeft size={24} strokeWidth={1} />
+            <ChevronLeft size={14} strokeWidth={1.5} />
           </button>
           <button 
             onClick={nextSlide}
-            className="p-8 hover:bg-ink hover:text-bg-base transition-all"
+            className="w-10 h-10 md:w-12 md:h-12 hover:bg-ink hover:text-bg-base transition-all flex items-center justify-center"
+            aria-label="Next slide"
           >
-            <ChevronRight size={24} strokeWidth={1} />
+            <ChevronRight size={14} strokeWidth={1.5} />
           </button>
         </div>
       </div>
