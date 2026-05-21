@@ -2,9 +2,10 @@
 @import "tailwindcss";
 
 @theme {
-  --font-serif: "EB Garamond", serif;
-  --font-mono: "Courier Prime", monospace;
-  --font-display: "Montserrat", sans-serif; /* For a sharp look like Copperplate */
+  --font-serif: "IvarDisplay", "Ivar Display", "EB Garamond", serif;
+  --font-mono: "IvarDisplay", "Ivar Display", "Courier Prime", monospace;
+  --font-display: "IvarDisplay", "Ivar Display", "Montserrat", sans-serif;
+  --font-sans: "IvarDisplay", "Ivar Display", sans-serif;
   --color-bg-base: #FBFBF2;
   --color-ink: #1A1A1A;
 }
@@ -12,6 +13,11 @@
 @layer base {
   body {
     @apply bg-bg-base text-ink antialiased font-serif;
+  }
+  
+  /* Selectively apply to all text elements to guarantee the entire website adopts the font */
+  body, h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select {
+    font-family: "IvarDisplay", "Ivar Display", "EB Garamond", serif;
   }
 }
 

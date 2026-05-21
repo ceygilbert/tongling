@@ -14,3 +14,8 @@ export interface Product {
   availability?: 'IN_STOCK' | 'MAKE_TO_ORDER';
   composition?: string;
 }
+
+export interface CartItem extends Product {
+  quantity: number;
+}
+
