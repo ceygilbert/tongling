@@ -82,11 +82,11 @@ export const Shop: React.FC<ShopProps> = ({ onAddToCart }) => {
           <aside className="lg:w-64 flex-shrink-0">
             <div className="lg:sticky lg:top-40 space-y-12">
               <div className="flex justify-between items-end pb-4 border-b border-ink/10">
-                <h4 className="font-mono text-[10px] font-bold tracking-[0.3em] text-ink">Filters</h4>
+                <h4 className="font-mono text-xs md:text-[13px] font-bold tracking-[0.2em] text-ink">Filters</h4>
                 {(activeFilters.category !== "ALL" || activeFilters.process !== "ALL" || activeFilters.availability !== "ALL" || activeFilters.composition !== "ALL") && (
                   <button 
                     onClick={() => setActiveFilters({ category: "ALL", process: "ALL", availability: "ALL", composition: "ALL" })}
-                    className="font-mono text-[9px] tracking-widest text-[#B2A490] underline underline-offset-4 font-bold"
+                    className="font-mono text-[10px] md:text-xs tracking-widest text-[#B2A490] underline underline-offset-4 font-bold"
                   >
                     Reset
                   </button>
@@ -95,13 +95,13 @@ export const Shop: React.FC<ShopProps> = ({ onAddToCart }) => {
 
               {(Object.keys(filterConfig) as Array<keyof typeof filterConfig>).map((key) => (
                 <div key={key} className="space-y-4">
-                  <h5 className="font-mono text-[10px] font-bold tracking-[0.3em] text-ink border-b border-ink/5 pb-2">{capitalizeFirstLetter(key)}</h5>
+                  <h5 className="font-mono text-xs md:text-[13px] font-bold tracking-[0.15em] text-ink border-b border-ink/5 pb-2">{capitalizeFirstLetter(key)}</h5>
                   <div className="flex flex-col gap-2.5">
                     {filterConfig[key].map((val) => (
                       <button
                         key={val}
                         onClick={() => updateFilter(key, val)}
-                        className={`font-mono text-[10px] tracking-widest text-left transition-all hover:pl-2 ${
+                        className={`font-mono text-[11px] md:text-xs tracking-wider text-left transition-all hover:pl-2 ${
                           activeFilters[key] === val ? "text-[#B2A490] font-bold" : "text-ink hover:text-[#B2A490]"
                         }`}
                       >

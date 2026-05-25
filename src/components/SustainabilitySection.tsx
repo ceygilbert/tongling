@@ -23,8 +23,8 @@ export const SustainabilitySection: React.FC = () => (
         <div className="lg:col-span-5 space-y-12 order-1 lg:order-2">
            <div className="space-y-4">
              <span className="font-mono text-[10px] font-black tracking-widest text-[#B2A490]">Ecological Standard</span>
-             <h2 className="text-5xl md:text-7xl font-serif font-black tracking-[-0.05em] leading-[0.95] text-ink">
-               Nature <br /><span className="font-mono not-italic text-collision md:ml-12 text-5xl md:text-6xl">Practice</span>
+             <h2 className="text-4xl md:text-5xl font-ivar font-black tracking-[-0.05em] leading-[0.95] text-ink">
+               Nature <br /><span className="font-ivar not-italic text-collision md:ml-12">Practice</span>
              </h2>
            </div>
            <p className="font-mono text-[12px] md:text-[14px] leading-relaxed tracking-tight text-ink/60 border-l-2 border-ink pl-8">

@@ -39,7 +39,7 @@ export const InteractiveChain: React.FC = () => {
               <span className="h-[1px] w-12 bg-collision" />
               <span className="font-mono text-[10px] md:text-[11px] tracking-[0.5em] text-ink/40 font-bold">The In-House Loom Initiative</span>
             </div>
-          <h2 className="text-4xl md:text-[6vw] font-serif font-black tracking-[-0.05em] leading-[0.95] text-ink mb-2">
+          <h2 className="text-4xl md:text-5xl font-ivar font-black tracking-[-0.05em] leading-[0.95] text-ink mb-2">
             Production
           </h2>
         </div>

@@ -27,10 +27,10 @@ export const Hero: React.FC = () => (
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-[7vw] font-serif font-black leading-[0.9] tracking-[-0.05em] text-ink"
+            className="text-5xl md:text-[7vw] font-ivar font-black leading-[0.9] tracking-[-0.05em] text-ink"
           >
             The Art Of <br />
-            <span className="font-mono not-italic text-collision md:ml-16 tracking-tight">Crafted</span> <br />
+            <span className="font-ivar not-italic text-collision md:ml-16 tracking-tight">Crafted</span> <br />
             <span className="md:ml-32">Textures</span>
           </motion.h1>
         </div>
@@ -87,16 +87,7 @@ export const Hero: React.FC = () => (
           </div>
         </motion.div>
 
-        {/* Small floating detail block */}
-        <motion.div 
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.2, delay: 0.6 }}
-          className="absolute -left-12 bottom-12 hidden xl:flex flex-col items-center bg-[#FAF9F6] p-6 border border-ink/5 shadow-xl rotate-[-3deg] w-48"
-        >
-          <span className="font-serif text-2xl font-black text-ink mb-1">01/07</span>
-          <span className="font-mono text-[8px] tracking-[0.3em] text-ink/40 text-center leading-normal">Craft Archive Collections</span>
-        </motion.div>
+
       </div>
     </div>
 

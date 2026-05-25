@@ -50,12 +50,12 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
         <div className="mb-12 md:mb-16 flex items-center justify-between border-b border-ink/5 pb-6">
           <Link 
             to="/shop" 
-            className="font-mono text-[9px] md:text-[10px] font-bold tracking-[0.45em] text-ink/40 hover:text-ink transition-colors flex items-center gap-2 group"
+            className="font-mono text-xs md:text-sm font-bold tracking-[0.45em] text-ink/40 hover:text-ink transition-colors flex items-center gap-2 group"
           >
-            <ArrowLeft size={13} className="group-hover:-translate-x-1 transition-transform" /> 
+            <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> 
             Back to archive range
           </Link>
-          <div className="hidden sm:flex items-center gap-4 font-mono text-[9px] tracking-widest text-ink/40 font-bold">
+          <div className="hidden sm:flex items-center gap-4 font-mono text-xs md:text-sm tracking-widest text-ink/40 font-bold">
             <span>Index / Apparel System</span>
             <span>—</span>
             <span>Specification code TL-{product.id}0A</span>
@@ -129,27 +129,27 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#B2A490] animate-pulse" />
-                <span className="font-mono text-[9px] tracking-[0.4em] text-[#B2A490] font-black">
+                <span className="font-mono text-xs md:text-[13px] tracking-[0.4em] text-[#B2A490] font-black">
                   {product.status} — Sincerity Atelier
                 </span>
               </div>
               
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-black tracking-tighter leading-tight text-ink">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-black tracking-tighter leading-tight text-ink">
                 {product.title}
               </h1>
 
               <div className="flex items-baseline justify-between border-b border-ink/10 pb-6 pt-2">
-                <p className="text-2xl md:text-3xl font-mono text-ink tracking-tight font-light">
-                  ${product.price.toFixed(2)} <span className="font-serif text-[13px] text-ink/40">/ yard</span>
+                <p className="text-3xl md:text-4xl font-mono text-ink tracking-tight font-light">
+                  ${product.price.toFixed(2)} <span className="font-serif text-[15px] text-ink/40">/ yard</span>
                 </p>
-                <span className="font-mono text-[9px] text-[#B2A490] tracking-widest border border-[#B2A490]/25 px-2.5 py-1 rounded-[1px] font-bold">
+                <span className="font-mono text-xs md:text-[13px] tracking-widest border border-[#B2A490]/25 px-2.5 py-1 rounded-[1px] font-bold">
                   {product.availability === 'IN_STOCK' ? "Immediate dispatch" : "Bespoke craft-to-order"}
                 </span>
               </div>
             </div>
 
             {/* Editorial Description */}
-            <p className="font-serif text-base leading-relaxed text-ink/75 py-2 border-l border-[#B2A490] pl-6">
+            <p className="font-serif text-lg md:text-xl leading-relaxed text-ink/75 py-2 border-l border-[#B2A490] pl-6">
               "{product.description}"
             </p>
 
@@ -157,27 +157,27 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
             <div className="bg-[#FAF9F5] border border-ink/5 p-6 md:p-8 space-y-6 rounded-[2px] shadow-[0_4px_24px_rgba(0,0,0,0.01)]">
               {/* Order Quantity */}
               <div className="space-y-3">
-                <div className="flex justify-between items-center text-[10px] font-mono tracking-widest text-ink/50 font-bold">
+                <div className="flex justify-between items-center text-xs md:text-[13px] font-mono tracking-widest text-ink/50 font-bold">
                   <span>Select Bolt Yardage</span>
                   <span>Calculated Total: ${(product.price * quantity).toFixed(2)}</span>
                 </div>
                 <div className="flex items-center justify-between border border-ink/10 bg-white p-3.5 rounded-[1px]">
-                  <span className="font-mono text-[11px] text-ink/60 font-medium">Desired Length</span>
+                  <span className="font-mono text-xs md:text-sm text-ink/60 font-medium">Desired Length</span>
                   <div className="flex items-center gap-4">
                     <button 
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
                       className="p-1 hover:text-[#B2A490] transition-colors"
                       aria-label="Decrease quantity"
                     >
-                      <Minus size={13} />
+                      <Minus size={14} />
                     </button>
-                    <span className="font-mono text-[13px] font-bold min-w-8 text-center">{quantity} Yards</span>
+                    <span className="font-mono text-sm md:text-base font-bold min-w-8 text-center">{quantity} Yards</span>
                     <button 
                       onClick={() => setQuantity(quantity + 1)}
                       className="p-1 hover:text-[#B2A490] transition-colors"
                       aria-label="Increase quantity"
                     >
-                      <Plus size={13} />
+                      <Plus size={14} />
                     </button>
                   </div>
                 </div>
@@ -192,10 +192,10 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
                   className="mt-1 accent-ink h-3.5 w-3.5 cursor-pointer rounded-[2px] transition-all"
                 />
                 <div className="space-y-1">
-                  <span className="font-mono text-[10px] tracking-widest font-bold text-ink block group-hover:text-[#B2A490] transition-colors">
+                  <span className="font-mono text-xs md:text-[13px] tracking-widest font-bold text-ink block group-hover:text-[#B2A490] transition-colors">
                     Request Complimentary Swatch Card
                   </span>
-                  <p className="font-serif text-[11px] text-ink/50 leading-normal">
+                  <p className="font-serif text-xs md:text-sm text-ink/50 leading-normal">
                     Add an authentic 10x10 cm texture swatch sample to inspect exact hand-weave density, weight, and color dye matching in your private atelier before we deliver your final custom bolt.
                   </p>
                 </div>
@@ -205,7 +205,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
               <div className="flex gap-3 pt-2">
                 <button 
                   onClick={handleAddToBag}
-                  className="flex-grow bg-ink text-bg-base py-5 px-6 font-mono font-bold text-[11px] tracking-[0.35em] hover:bg-ink/90 active:scale-[0.99] transition-all relative overflow-hidden group shadow border border-transparent"
+                  className="flex-grow bg-ink text-bg-base py-5 px-6 font-mono font-bold text-xs md:text-sm tracking-[0.35em] hover:bg-ink/90 active:scale-[0.99] transition-all relative overflow-hidden group shadow border border-transparent"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     <ShoppingBag size={14} /> 
@@ -230,7 +230,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
             {/* Editorial Accordion */}
             <div className="border-t border-ink/10 pt-4 space-y-4">
               {/* Tab Selector */}
-              <div className="flex justify-between border-b border-ink/5 pb-2 font-mono text-[9px] tracking-widest">
+              <div className="flex justify-between border-b border-ink/5 pb-2 font-mono text-xs md:text-[13px] tracking-widest">
                 <button 
                   onClick={() => setActiveTab("specs")} 
                   className={`pb-2 transition-all relative ${activeTab === "specs" ? "font-bold text-ink" : "text-ink/40 hover:text-ink"}`}
@@ -264,7 +264,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.3 }}
-                      className="space-y-4 font-mono text-[11px] tracking-widest text-ink/70 font-bold"
+                      className="space-y-4 font-mono text-[13px] md:text-sm tracking-widest text-[#1A1A1A]/70 font-bold"
                     >
                       <div className="flex justify-between items-center border-b border-ink/5 pb-2.5">
                         <span>Fiber Type</span>
@@ -292,12 +292,12 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.3 }}
-                      className="space-y-3 font-serif text-[12px] text-ink/70 leading-relaxed"
+                      className="space-y-3 font-serif text-sm md:text-base text-ink/70 leading-relaxed"
                     >
                       <p>
                         Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.
                       </p>
-                      <p className="font-mono text-[9px] tracking-wider text-[#B2A490] font-bold">
+                      <p className="font-mono text-xs md:text-[13px] tracking-wider text-[#B2A490] font-bold">
                         Origin directory: Regional intellectual property — France
                       </p>
                     </motion.div>
@@ -310,12 +310,12 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.3 }}
-                      className="space-y-3 font-serif text-[12px] text-ink/70 leading-relaxed"
+                      className="space-y-3 font-serif text-sm md:text-base text-ink/70 leading-relaxed"
                     >
                       <p>
                         Every fabric piece is hand-rolled around our custom lignin-free conservation cores and enclosed in luxury linen protective sleeves. Delivered globally via carbon-neutral white-glove couriers in pristine condition.
                       </p>
-                      <p className="font-mono text-[9px] tracking-wider text-[#B2A490] font-bold">
+                      <p className="font-mono text-xs md:text-[13px] tracking-wider text-[#B2A490] font-bold">
                         Free tracked courier worldwide — Shipped within 24 hours
                       </p>
                     </motion.div>
@@ -330,8 +330,8 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
                 <Globe size={15} className="text-[#B2A490]" />
               </div>
               <div className="space-y-1">
-                <span className="font-mono text-[9px] tracking-[0.2em] text-[#B2A490] font-extrabold block">Atelier Consultation desk</span>
-                <p className="font-serif text-[11px] text-ink/65 leading-snug">
+                <span className="font-mono text-xs md:text-[13px] tracking-[0.2em] text-[#B2A490] font-extrabold block">Atelier Consultation desk</span>
+                <p className="font-serif text-xs md:text-sm text-ink/65 leading-snug">
                   Unsure about appropriate drape, weight, or custom weaving bolts for your interior project? Speak directly to our master weavers at <a href="mailto:info@sinceritylinen.com" className="underline hover:text-[#B2A490] font-sans font-medium">info@sinceritylinen.com</a>.
                 </p>
               </div>
@@ -344,7 +344,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
         <section className="pt-16 border-t border-ink/10">
           <header className="mb-16 flex justify-between items-end border-b border-ink/5 pb-6">
             <h2 className="text-3xl md:text-4xl font-serif font-black tracking-tighter">
-              Complementary <br /><span className="font-mono not-italic text-[#B2A490] text-xl md:text-2xl font-bold tracking-widest">Textiles</span>
+              Complementary <br /><span className="font-mono not-italic text-[#B2A490] text-2xl md:text-3xl font-bold tracking-widest">Textiles</span>
             </h2>
           </header>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16">
@@ -360,10 +360,10 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
                   <div className="absolute inset-0 border border-white/5 group-hover:border-white/10 pointer-events-none transition-colors" />
                 </div>
                 <div className="space-y-1">
-                  <h4 className="font-serif text-xl tracking-tighter text-ink leading-tight group-hover:text-[#B2A490] transition-colors font-black">
+                  <h4 className="font-serif text-2xl tracking-tighter text-ink leading-tight group-hover:text-[#B2A490] transition-colors font-black">
                     {item.title}
                   </h4>
-                  <p className="font-mono text-[10px] md:text-[11px] font-bold tracking-tight text-ink/45">
+                  <p className="font-mono text-xs md:text-sm font-bold tracking-tight text-ink/45">
                     ${item.price.toFixed(2)} / Yard
                   </p>
                 </div>

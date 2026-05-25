@@ -3,7 +3,7 @@ import { Product } from "./types";
 export const PRODUCTS: Product[] = [
   {
     id: "1",
-    title: "EUROPEAN FLAX LINEN",
+    title: "European Flax Linen",
     description: "Our premium 100% European Flax Linen is sourced from the finest fields in Europe. This fabric is celebrated for its exceptional breathability, natural strength, and a signature crisp texture that softens beautifully over time.",
     dimensions: "150 CM WIDTH",
     material: "100% EUROPEAN FLAX",
@@ -19,7 +19,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "2",
-    title: "LINEN–TENCEL BLEND",
+    title: "Linen–Tencel Blend",
     description: "A perfect marriage of nature and science. The strength of linen meets the silky drape of Tencel. This blend offers a luxurious sheen and a cooling touch, making it ideal for high-end fashion and summer drapery.",
     dimensions: "145 CM WIDTH",
     material: "LINEN / TENCEL",
@@ -35,7 +35,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "3",
-    title: "JACQUARD WOVEN LINEN",
+    title: "Jacquard Woven Linen",
     description: "Intricate patterns woven directly into the fabric. Our Jacquard series combines traditional craftsmanship with modern design, creating a rich, textured surface that adds depth and sophistication to any interior.",
     dimensions: "140 CM WIDTH",
     material: "LINEN BLEND",
@@ -51,7 +51,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "4",
-    title: "ECO LIVA VISCOSE BLEND",
+    title: "Eco Liva Viscose Blend",
     description: "Featuring Eco Liva Viscose, this blend provides a fluid, liquid-like drape and a soft hand-feel. It is a conscious choice for those seeking the natural look of linen with enhanced comfort and sustainability.",
     dimensions: "148 CM WIDTH",
     material: "LINEN / ECO VISCOSE",
