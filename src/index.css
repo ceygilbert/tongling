@@ -1,23 +1,45 @@
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@700;900&display=swap');
 @import "tailwindcss";
+
+@font-face {
+  font-family: 'Kepler Std';
+  src: url('/fonts/KeplerStd-BoldScnDisp.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kepler Std';
+  src: url('/fonts/KeplerStd-BoldScnItDisp.otf') format('opentype');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
 
 @theme {
   --font-serif: "IvarDisplay", "Ivar Display", "EB Garamond", serif;
   --font-mono: "IvarDisplay", "Ivar Display", "Courier Prime", monospace;
-  --font-display: "IvarDisplay", "Ivar Display", "Montserrat", sans-serif;
+  --font-display: "Cormorant Garamond", "EB Garamond", "IvarDisplay", "Ivar Display", "Montserrat", sans-serif;
   --font-sans: "IvarDisplay", "Ivar Display", sans-serif;
   --font-ivar: "IvarDisplay", "Ivar Display", "EB Garamond", serif;
+  --font-kepler: "Kepler Std", "IvarDisplay", "Ivar Display", "EB Garamond", serif;
+  --font-cormorant: "Cormorant Garamond", "EB Garamond", serif;
+  --font-cinzel: "Cinzel", "EB Garamond", serif;
+  --font-formal: "Cormorant Garamond", "EB Garamond", serif;
   --color-bg-base: #FBFBF2;
   --color-ink: #1A1A1A;
 }
 
 @layer base {
   body {
-    @apply bg-bg-base text-ink antialiased font-serif;
+    @apply bg-bg-base text-ink antialiased;
+    font-family: "IvarDisplay", "Ivar Display", "EB Garamond", serif;
   }
   
-  /* Selectively apply to all text elements to guarantee the entire website adopts the font */
-  body, h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select {
+  /* Guarantee browser defaults like buttons or inputs inherit standard body typography,
+     while allowing headings and text elements to inherit naturally or use utility classes like font-kepler */
+  button, input, textarea, select {
     font-family: "IvarDisplay", "Ivar Display", "EB Garamond", serif;
   }
 }

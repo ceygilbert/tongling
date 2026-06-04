@@ -23,9 +23,9 @@ export const ContactSection: React.FC = () => {
             <span className="font-mono text-[10px] tracking-[0.4em] text-[#B2A490] font-bold block">
               Get In Touch
             </span>
-            <h2 className="text-4xl md:text-5xl font-ivar font-black tracking-[-0.05em] leading-[0.95]">
+            <h2 className="text-3xl sm:text-4xl md:text-[3.2vw] font-formal font-bold uppercase leading-[1.25] tracking-[0.08em] md:tracking-[0.1em]">
               Global<br />
-              <span className="font-ivar not-italic text-white/30">Inquiries</span>
+              <span className="not-italic text-white/30">Inquiries</span>
             </h2>
             <p className="font-serif text-lg leading-relaxed text-[#FAF9F6]/60 max-w-sm">
               We welcome direct partner correspondence. Whether discussing bulk fabrics, custom weave developments, or private showroom visits, our team responds with care.

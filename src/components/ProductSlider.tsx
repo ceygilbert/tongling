@@ -76,9 +76,9 @@ export const ProductSlider: React.FC = () => {
                     <span className="w-12 h-px bg-collision" />
                     <span className="font-mono text-[10px] tracking-[0.5em] text-collision font-bold">{product.status}</span>
                   </div>
-                  <h4 className="text-3xl sm:text-4xl md:text-[4.5vw] font-ivar font-black tracking-[-0.06em] leading-[0.85] text-ink">
+                  <h4 className="text-2xl sm:text-3xl md:text-[3vw] font-formal font-bold uppercase leading-[1.25] tracking-[0.08em] md:tracking-[0.1em] text-ink">
                     {product.title.split(' ')[0]} <br />
-                    <span className="md:ml-20 font-ivar font-black not-italic text-collision">{product.title.split(' ').slice(1).join(' ')}</span>
+                    <span className="md:ml-20 not-italic text-collision">{product.title.split(' ').slice(1).join(' ')}</span>
                   </h4>
                </div>
 

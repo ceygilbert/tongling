@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 
-export const Collections: React.FC = () => {
+export const Solutions: React.FC = () => {
   const archives = [
     { title: "Piece Dyed", count: "01", img: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80" },
     { title: "Yarn Dyed", count: "02", img: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=1200&q=80" },
@@ -21,7 +21,7 @@ export const Collections: React.FC = () => {
             className="flex flex-col md:flex-row md:items-end justify-between gap-8"
           >
             <div className="max-w-2xl">
-              <h2 className="text-4xl md:text-6xl font-serif tracking-tight text-ink mb-4 font-black">Collection</h2>
+              <h2 className="text-4xl md:text-6xl font-serif tracking-tight text-ink mb-4 font-black">Solutions</h2>
               <p className="font-mono text-[10px] md:text-[12px] tracking-[0.2em] text-ink/60 leading-relaxed max-w-lg font-bold">
                 A curated selection of our most significant fabric developments, spanning three decades of weaving excellence.
               </p>
@@ -70,4 +70,4 @@ export const Collections: React.FC = () => {
     </div>
   );
 };
-export default Collections;
+export default Solutions;

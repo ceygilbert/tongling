@@ -25,7 +25,9 @@ export const Home: React.FC = () => (
 
     <section className="pt-6 pb-16 md:pt-10 md:pb-24 animate-fade-in">
       <div className="px-4 md:px-12 mb-8 flex flex-col md:flex-row justify-between items-start md:items-end border-b border-[#121212] pb-4 gap-6">
-         <h2 className="text-4xl md:text-5xl font-ivar font-black tracking-[-0.05em] leading-[0.95] text-ink">Main <br /><span className="ml-8 md:ml-16">Collection</span></h2>
+          <h2 className="text-3xl sm:text-4xl md:text-[3.2vw] font-formal font-bold uppercase leading-[1.25] tracking-[0.08em] md:tracking-[0.1em] text-ink">
+            Main <br /><span className="ml-8 md:ml-16">Collection</span>
+          </h2>
          <p className="font-mono text-[9px] md:text-[11px] tracking-[0.35em] text-[#121212]/40 mb-1">European Linen — Blends — Prints — Since 1998</p>
       </div>
       <ProductSlider />

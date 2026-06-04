@@ -30,7 +30,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart }) => {
           </button>
           <nav className="hidden md:flex gap-10 text-xs md:text-sm font-medium tracking-wider font-ivar">
             <Link to="/shop" className="hover:opacity-100 opacity-60 transition-all hover:tracking-[0.15em]">Shop</Link>
-            <Link to="/collections" className="hover:opacity-100 opacity-60 transition-all hover:tracking-[0.15em]">Collections</Link>
+            <Link to="/solutions" className="hover:opacity-100 opacity-60 transition-all hover:tracking-[0.15em]">Solutions</Link>
             <Link to="/brand-story" className="hover:opacity-100 opacity-60 transition-all hover:tracking-[0.15em]">Story</Link>
           </nav>
         </div>
@@ -91,7 +91,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart }) => {
               <nav className="flex flex-col p-6 gap-8 font-ivar">
                 <Link to="/" className="text-2xl font-bold tracking-tight hover:pl-2 transition-all">Home</Link>
                 <Link to="/shop" className="text-2xl font-bold tracking-tight hover:pl-2 transition-all">Shop</Link>
-                <Link to="/collections" className="text-2xl font-bold tracking-tight hover:pl-2 transition-all">Collections</Link>
+                <Link to="/solutions" className="text-2xl font-bold tracking-tight hover:pl-2 transition-all">Solutions</Link>
                 <Link to="/brand-story" className="text-2xl font-bold tracking-tight hover:pl-2 transition-all">Brand Story</Link>
               </nav>
               <div className="mt-auto p-6 border-t border-gray-100">

@@ -27,10 +27,10 @@ export const Hero: React.FC = () => (
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-[7vw] font-ivar font-black leading-[0.9] tracking-[-0.05em] text-ink"
+            className="text-3xl sm:text-4xl md:text-[5.5vw] font-formal font-bold uppercase leading-[1.2] tracking-[0.08em] md:tracking-[0.1em] text-ink"
           >
             The Art Of <br />
-            <span className="font-ivar not-italic text-collision md:ml-16 tracking-tight">Crafted</span> <br />
+            <span className="text-collision md:ml-16">Crafted</span> <br />
             <span className="md:ml-32">Textures</span>
           </motion.h1>
         </div>

@@ -28,10 +28,10 @@ export const Footer: React.FC = () => (
         <div className="space-y-6">
           <h5 className="font-mono text-[10px] font-bold tracking-[0.3em] text-ink/30 border-b border-ink/10 pb-2">Archive</h5>
           <nav className="flex flex-col gap-4 font-mono text-[11px] md:text-[12px] tracking-tight">
-            <Link to="/collections" className="hover:underline underline-offset-4">Pure Linen</Link>
-            <Link to="/collections" className="hover:underline underline-offset-4">Blended</Link>
-            <Link to="/collections" className="hover:underline underline-offset-4">Printed</Link>
-            <Link to="/collections" className="hover:underline underline-offset-4">Striped</Link>
+            <Link to="/solutions" className="hover:underline underline-offset-4">Pure Linen</Link>
+            <Link to="/solutions" className="hover:underline underline-offset-4">Blended</Link>
+            <Link to="/solutions" className="hover:underline underline-offset-4">Printed</Link>
+            <Link to="/solutions" className="hover:underline underline-offset-4">Striped</Link>
           </nav>
         </div>
         

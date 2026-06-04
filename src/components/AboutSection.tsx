@@ -22,8 +22,8 @@ export const AboutSection: React.FC = () => (
         >
           <div className="space-y-4">
             <span className="font-mono text-[10px] tracking-widest text-[#B2A490] font-black">Annals & Record</span>
-            <h2 className="text-4xl md:text-5xl font-ivar font-black tracking-[-0.05em] leading-[0.95] text-ink">
-              About <br /><span className="font-ivar not-italic text-collision md:ml-12">Sincerity</span>
+            <h2 className="text-3xl sm:text-4xl md:text-[3.2vw] font-formal font-bold uppercase leading-[1.25] tracking-[0.08em] md:tracking-[0.1em] text-ink">
+              About <br /><span className="not-italic text-collision md:ml-12">Sincerity</span>
             </h2>
           </div>
           <p className="font-mono text-[14px] md:text-[16px] leading-relaxed tracking-tight text-ink/70 border-l-2 border-ink pl-8">

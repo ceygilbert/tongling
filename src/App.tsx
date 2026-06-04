@@ -6,7 +6,7 @@ import { CartDrawer } from "./components/CartDrawer";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { Home } from "./components/Home";
 import { BrandStory } from "./components/BrandStory";
-import { Collections } from "./components/Collections";
+import { Solutions } from "./components/Solutions";
 import { Shop } from "./components/Shop";
 import { ProductDetail } from "./components/ProductDetail";
 import { Product, CartItem } from "./types";
@@ -61,7 +61,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/brand-story" element={<BrandStory />} />
-          <Route path="/collections" element={<Collections />} />
+          <Route path="/solutions" element={<Solutions />} />
           <Route path="/shop" element={<Shop onAddToCart={addToCart} />} />
           <Route path="/product/:id" element={<ProductDetail onAddToCart={addToCart} />} />
         </Routes>
