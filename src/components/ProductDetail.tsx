@@ -332,7 +332,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
               <div className="space-y-1">
                 <span className="font-mono text-xs md:text-[13px] tracking-[0.2em] text-[#B2A490] font-extrabold block">Atelier Consultation desk</span>
                 <p className="font-serif text-xs md:text-sm text-ink/65 leading-snug">
-                  Unsure about appropriate drape, weight, or custom weaving bolts for your interior project? Speak directly to our master weavers at <a href="mailto:info@sinceritylinen.com" className="underline hover:text-[#B2A490] font-sans font-medium">info@sinceritylinen.com</a>.
+                  Unsure about appropriate drape, weight, or custom weaving bolts for your interior project? Speak directly to our master weavers at <a href="mailto:info@tonglingsinceritylinen.com" className="underline hover:text-[#B2A490] font-sans font-medium">info@tonglingsinceritylinen.com</a>.
                 </p>
               </div>
             </div>

@@ -35,20 +35,15 @@ export const ContactSection: React.FC = () => {
           <div className="space-y-6 pt-10 border-t border-white/10 font-mono text-[11px] tracking-wider text-[#FAF9F6]/75">
             <div className="space-y-2">
               <span className="text-[#B2A490] text-[9px] block">General & Wholesale</span>
-              <a href="mailto:info@sinceritylinen.com" className="font-serif text-xl hover:text-[#B2A490] transition-colors block lowercase">
-                info@sinceritylinen.com
-              </a>
-            </div>
-            <div className="space-y-2">
-              <span className="text-[#B2A490] text-[9px] block">Shanghai Showroom</span>
-              <a href="tel:+86212345678" className="font-serif text-xl hover:text-[#B2A490] transition-colors block">
-                +86 (21) 2345 6788
+              <a href="mailto:info@tonglingsinceritylinen.com" className="font-serif text-lg md:text-xl hover:text-[#B2A490] transition-colors block lowercase truncate">
+                info@tonglingsinceritylinen.com
               </a>
             </div>
             <div className="space-y-2">
               <span className="text-[#B2A490] text-[9px] block">Head Office Address</span>
               <p className="font-serif text-[13px] text-[#FAF9F6]/60 leading-relaxed normal-case">
-                Tongling Sincerity Linen Group, Tongling Economic Development Zone, Anhui, China
+                Sincerity Linen AU <br />
+                Sincerity Linen China｜15/F, B7 Block, Beidou Star City, Tongguan District, Tongling City, Anhui Province, China 244000
               </p>
             </div>
           </div>
