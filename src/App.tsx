@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { CartDrawer } from "./components/CartDrawer";
@@ -11,9 +11,15 @@ import { Shop } from "./components/Shop";
 import { ProductDetail } from "./components/ProductDetail";
 import { Product, CartItem } from "./types";
 
-export default function App() {
+import { Login } from "./components/Login";
+import { AdminPanel } from "./components/AdminPanel";
+
+const AppInner = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const location = useLocation();
+
+  const isAuthOrAdmin = location.pathname.startsWith('/admin') || location.pathname.startsWith('/login');
 
   const addToCart = (product: Product) => {
     setCartItems(prev => {
@@ -44,30 +50,47 @@ export default function App() {
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
+  if (isAuthOrAdmin) {
+    return (
+      <div className="min-h-screen font-sans selection:bg-black selection:text-white bg-bg-base">
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/admin/*" element={<AdminPanel />} />
+        </Routes>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen font-sans selection:bg-black selection:text-white bg-bg-base">
+      <Header cartCount={cartCount} onOpenCart={() => setIsCartOpen(true)} />
+      
+      <CartDrawer 
+        isOpen={isCartOpen} 
+        onClose={() => setIsCartOpen(false)} 
+        items={cartItems}
+        onUpdateQuantity={updateQuantity}
+        onRemove={removeFromCart}
+      />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/brand-story" element={<BrandStory />} />
+        <Route path="/solutions" element={<Solutions />} />
+        <Route path="/shop" element={<Shop onAddToCart={addToCart} />} />
+        <Route path="/product/:id" element={<ProductDetail onAddToCart={addToCart} />} />
+      </Routes>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="min-h-screen font-sans selection:bg-black selection:text-white bg-bg-base">
-        <Header cartCount={cartCount} onOpenCart={() => setIsCartOpen(true)} />
-        
-        <CartDrawer 
-          isOpen={isCartOpen} 
-          onClose={() => setIsCartOpen(false)} 
-          items={cartItems}
-          onUpdateQuantity={updateQuantity}
-          onRemove={removeFromCart}
-        />
-
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/brand-story" element={<BrandStory />} />
-          <Route path="/solutions" element={<Solutions />} />
-          <Route path="/shop" element={<Shop onAddToCart={addToCart} />} />
-          <Route path="/product/:id" element={<ProductDetail onAddToCart={addToCart} />} />
-        </Routes>
-
-        <Footer />
-      </div>
+      <AppInner />
     </Router>
   );
 }

@@ -295,10 +295,10 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
                       className="space-y-3 font-serif text-sm md:text-base text-ink/70 leading-relaxed"
                     >
                       <p>
-                        Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.
+                        {product.weaveHarvest || "Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength."}
                       </p>
                       <p className="font-mono text-xs md:text-[13px] tracking-wider text-[#B2A490] font-bold">
-                        Origin directory: Regional intellectual property — France
+                        Origin directory: {product.weaveHarvestOrigin || "Regional intellectual property — France"}
                       </p>
                     </motion.div>
                   )}
@@ -313,10 +313,10 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
                       className="space-y-3 font-serif text-sm md:text-base text-ink/70 leading-relaxed"
                     >
                       <p>
-                        Every fabric piece is hand-rolled around our custom lignin-free conservation cores and enclosed in luxury linen protective sleeves. Delivered globally via carbon-neutral white-glove couriers in pristine condition.
+                        {product.packagingDelivery || "Every fabric piece is hand-rolled around our custom lignin-free conservation cores and enclosed in luxury linen protective sleeves. Delivered globally via carbon-neutral white-glove couriers in pristine condition."}
                       </p>
                       <p className="font-mono text-xs md:text-[13px] tracking-wider text-[#B2A490] font-bold">
-                        Free tracked courier worldwide — Shipped within 24 hours
+                        {product.packagingDeliveryCourier || "Free tracked courier worldwide — Shipped within 24 hours"}
                       </p>
                     </motion.div>
                   )}

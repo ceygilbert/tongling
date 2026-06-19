@@ -1,0 +1,799 @@
+import React, { useEffect, useState } from "react";
+import { Routes, Route, Link, useNavigate, useLocation } from "react-router-dom";
+import { LogOut, Package, ListTree, Settings, Layers, Plus, Trash2, Edit2, Check, X, Eye, Image } from "lucide-react";
+
+const fetchApi = async (url: string, options: any = {}) => {
+  const token = localStorage.getItem("admin-token");
+  const headers = {
+    "Content-Type": "application/json",
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...options.headers,
+  };
+  const res = await fetch(url, { ...options, headers });
+  if (res.status === 401) {
+    if (window.location.pathname !== "/login") {
+      window.location.href = "/login";
+    }
+    throw new Error("Unauthorized");
+  }
+  return res.json();
+};
+
+const BaseCrud = ({ resourceName, columns, title }: { resourceName: string, columns: any[], title: string }) => {
+  const [items, setItems] = useState<any[]>([]);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editForm, setEditForm] = useState<any>({});
+  const [isAdding, setIsAdding] = useState(false);
+
+  const loadData = async () => {
+    try {
+      const data = await fetchApi(`/api/admin/${resourceName}`);
+      setItems(data);
+    } catch(e) {}
+  };
+
+  useEffect(() => {
+    loadData();
+  }, [resourceName]);
+
+  const handleDelete = async (id: string) => {
+    if(!window.confirm(`Delete this item?`)) return;
+    try {
+      await fetchApi(`/api/admin/${resourceName}/${id}`, { method: "DELETE" });
+      loadData();
+    } catch(e) {}
+  };
+
+  const handleSave = async () => {
+    try {
+      if (isAdding) {
+        await fetchApi(`/api/admin/${resourceName}`, {
+          method: "POST",
+          body: JSON.stringify(editForm),
+        });
+      } else if (editingId) {
+        await fetchApi(`/api/admin/${resourceName}/${editingId}`, {
+          method: "PUT",
+          body: JSON.stringify(editForm),
+        });
+      }
+      setIsAdding(false);
+      setEditingId(null);
+      setEditForm({});
+      loadData();
+    } catch(e) {}
+  };
+
+  const startEdit = (item: any) => {
+    setIsAdding(false);
+    setEditingId(item.id);
+    setEditForm(item);
+  };
+
+  const startAdd = () => {
+    setEditingId(null);
+    setIsAdding(true);
+    setEditForm({});
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-formal font-bold tracking-wider uppercase text-ink">{title}</h2>
+        <button onClick={startAdd} className="flex items-center gap-2 bg-ink text-bg-base px-4 py-2 text-xs font-mono tracking-widest font-bold uppercase transition-colors hover:bg-collision">
+          <Plus className="w-4 h-4" /> Add New
+        </button>
+      </div>
+
+      <div className="bg-white border border-ink/10 overflow-x-auto">
+        <table className="w-full text-left text-sm font-sans text-ink">
+          <thead className="bg-[#FAF9F6] border-b border-ink/10 font-mono text-[10px] tracking-widest uppercase text-[#B2A490]">
+            <tr>
+              {columns.map(c => <th key={c.key} className="p-4">{c.label}</th>)}
+              <th className="p-4 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-ink/5">
+            {isAdding && (
+               <tr>
+                 {columns.map(c => (
+                    <td key={c.key} className="p-3">
+                       <input 
+                         type="text" 
+                         className="w-full border border-ink/20 p-2 text-xs"
+                         value={editForm[c.key] || ""}
+                         onChange={e => setEditForm({ ...editForm, [c.key]: e.target.value })}
+                       />
+                    </td>
+                 ))}
+                 <td className="p-3 text-right">
+                    <button onClick={handleSave} className="text-[#B2A490] hover:text-ink mr-2 p-1"><Check className="w-4 h-4"/></button>
+                    <button onClick={() => setIsAdding(false)} className="text-red-400 hover:text-red-600 p-1"><X className="w-4 h-4"/></button>
+                 </td>
+               </tr>
+            )}
+            {items.map(item => {
+              const isEditing = editingId === item.id;
+              return (
+                <tr key={item.id} className="hover:bg-ink/5 transition-colors group">
+                  {columns.map(c => (
+                    <td key={c.key} className="p-4 max-w-[200px] truncate">
+                      {isEditing ? (
+                        <input 
+                          type="text" 
+                          className="w-full border border-ink/20 p-1 text-xs"
+                          value={editForm[c.key] || ""}
+                          onChange={e => setEditForm({ ...editForm, [c.key]: e.target.value })}
+                        />
+                      ) : (
+                        item[c.key]
+                      )}
+                    </td>
+                  ))}
+                  <td className="p-4 text-right flex justify-end gap-2">
+                    {isEditing ? (
+                      <>
+                        <button onClick={handleSave} className="text-[#B2A490] hover:text-ink"><Check className="w-4 h-4"/></button>
+                        <button onClick={() => setEditingId(null)} className="text-red-400 hover:text-red-600"><X className="w-4 h-4"/></button>
+                      </>
+                    ) : (
+                      <>
+                        <button onClick={() => startEdit(item)} className="text-ink/65 hover:text-ink"><Edit2 className="w-4 h-4"/></button>
+                        <button onClick={() => handleDelete(item.id)} className="text-red-400 hover:text-red-600"><Trash2 className="w-4 h-4"/></button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+            {items.length === 0 && !isAdding && (
+               <tr>
+                 <td colSpan={columns.length + 1} className="p-8 text-center text-ink/40 font-mono text-xs uppercase tracking-widest">
+                   No data found
+                 </td>
+               </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+const ProductCrud = () => {
+  const [items, setItems] = useState<any[]>([]);
+  const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
+  const [processes, setProcesses] = useState<{ id: string; name: string }[]>([]);
+  const [compositions, setCompositions] = useState<{ id: string; name: string }[]>([]);
+
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [formState, setFormState] = useState<any>({
+    title: "",
+    price: 0,
+    description: "",
+    dimensions: "",
+    material: "",
+    technique: "",
+    status: "",
+    lifestyleImage: "",
+    productImage: "",
+    category: "",
+    process: "",
+    composition: "",
+    availability: "IN_STOCK",
+    weaveHarvest: "",
+    weaveHarvestOrigin: "",
+    packagingDelivery: "",
+    packagingDeliveryCourier: "",
+  });
+
+  const loadData = async () => {
+    try {
+      const data = await fetchApi("/api/admin/products");
+      setItems(data);
+      
+      const cats = await fetchApi("/api/admin/categories");
+      setCategories(cats);
+      
+      const procs = await fetchApi("/api/admin/processes");
+      setProcesses(procs);
+
+      const comps = await fetchApi("/api/admin/compositions");
+      setCompositions(comps);
+    } catch (e) {}
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const handleDelete = async (id: string) => {
+    if (!window.confirm("Delete this product?")) return;
+    try {
+      await fetchApi(`/api/admin/products/${id}`, { method: "DELETE" });
+      loadData();
+    } catch (e) {}
+  };
+
+  const handleEdit = (product: any) => {
+    setEditingId(product.id);
+    setFormState({
+      title: product.title || "",
+      price: product.price || 0,
+      description: product.description || "",
+      dimensions: product.dimensions || "",
+      material: product.material || "",
+      technique: product.technique || "",
+      status: product.status || "",
+      lifestyleImage: product.lifestyleImage || "",
+      productImage: product.productImage || "",
+      category: product.category || "",
+      process: product.process || "",
+      composition: product.composition || "",
+      availability: product.availability || "IN_STOCK",
+      weaveHarvest: product.weaveHarvest || "",
+      weaveHarvestOrigin: product.weaveHarvestOrigin || "",
+      packagingDelivery: product.packagingDelivery || "",
+      packagingDeliveryCourier: product.packagingDeliveryCourier || "",
+    });
+    setIsFormOpen(true);
+  };
+
+  const handleAdd = () => {
+    setEditingId(null);
+    setFormState({
+      title: "",
+      price: 0,
+      description: "",
+      dimensions: "150 CM WIDTH",
+      material: "100% EUROPEAN FLAX",
+      technique: "PLAIN WEAVE",
+      status: "CORE COLLECTION",
+      lifestyleImage: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80",
+      productImage: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=1200&q=80",
+      category: categories[0]?.name || "SHIRTING",
+      process: processes[0]?.name || "PIECE_DYED",
+      composition: compositions[0]?.name || "Pure linen",
+      availability: "IN_STOCK",
+      weaveHarvest: "Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.",
+      weaveHarvestOrigin: "Regional intellectual property — France",
+      packagingDelivery: "Every fabric piece is hand-rolled around our custom lignin-free conservation cores and enclosed in luxury linen protective sleeves. Delivered globally via carbon-neutral white-glove couriers in pristine condition.",
+      packagingDeliveryCourier: "Free tracked courier worldwide — Shipped within 24 hours",
+    });
+    setIsFormOpen(true);
+  };
+
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const payload = {
+        ...formState,
+        price: parseFloat(formState.price) || 0
+      };
+
+      if (editingId) {
+        await fetchApi(`/api/admin/products/${editingId}`, {
+          method: "PUT",
+          body: JSON.stringify(payload),
+        });
+      } else {
+        await fetchApi("/api/admin/products", {
+          method: "POST",
+          body: JSON.stringify(payload),
+        });
+      }
+      setIsFormOpen(false);
+      loadData();
+    } catch (e) {}
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-2xl font-formal font-bold tracking-wider uppercase text-ink">Products Directory</h2>
+          <p className="font-mono text-[10px] text-[#B2A490] tracking-wider uppercase mt-1">Full specification control panel</p>
+        </div>
+        <button onClick={handleAdd} className="flex items-center gap-2 bg-ink text-bg-base px-5 py-3 text-xs font-mono tracking-widest font-black uppercase transition-colors hover:bg-collision">
+          <Plus className="w-4 h-4" /> Create Product
+        </button>
+      </div>
+
+      {/* Main Table */}
+      <div className="bg-white border border-ink/10 overflow-x-auto">
+        <table className="w-full text-left text-sm font-sans text-ink">
+          <thead className="bg-[#FAF9F6] border-b border-ink/10 font-mono text-[10px] tracking-widest uppercase text-[#B2A490]">
+            <tr>
+              <th className="p-4">Fabric</th>
+              <th className="p-4">Price</th>
+              <th className="p-4">Details & Specs</th>
+              <th className="p-4">Classification</th>
+              <th className="p-4">Availability</th>
+              <th className="p-4 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-ink/5">
+            {items.map(product => (
+              <tr key={product.id} className="hover:bg-ink/5 transition-colors group">
+                <td className="p-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-gray-50 border border-ink/10 overflow-hidden flex-shrink-0">
+                      <img src={product.productImage} className="w-full h-full object-cover grayscale group-hover:grayscale-0 duration-500" alt="" />
+                    </div>
+                    <div>
+                      <h4 className="font-sans font-bold text-ink text-sm uppercase tracking-wide">{product.title}</h4>
+                      <p className="font-mono text-[10px] text-ink/40 tracking-wider">CODE: TL-{product.id}0A</p>
+                    </div>
+                  </div>
+                </td>
+                <td className="p-4 font-mono font-bold text-sm text-ink/80">
+                  ${parseFloat(product.price).toFixed(2)}
+                </td>
+                <td className="p-4 space-y-0.5 text-xs">
+                  <p className="font-sans text-ink"><strong className="font-mono uppercase text-[9px] text-ink/40">Composition:</strong> {product.composition}</p>
+                  <p className="font-sans text-ink/75"><strong className="font-mono uppercase text-[9px] text-ink/40">Technique:</strong> {product.technique}</p>
+                  <p className="font-sans text-ink/75"><strong className="font-mono uppercase text-[9px] text-ink/40">Dimensions:</strong> {product.dimensions}</p>
+                </td>
+                <td className="p-4 text-xs font-mono space-y-0.5">
+                  <p className="text-ink"><span className="text-[#B2A490]">CAT:</span> {product.category}</p>
+                  <p className="text-ink/65"><span className="text-[#B2A490]">PROC:</span> {product.process}</p>
+                </td>
+                <td className="p-4">
+                  <span className={`inline-block font-mono text-[9px] font-bold tracking-widest uppercase px-2 py-1 rounded-sm ${
+                    product.availability === 'IN_STOCK' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-amber-50 text-amber-700 border border-amber-200'
+                  }`}>
+                    {product.availability === 'IN_STOCK' ? 'In Stock' : 'Make to order'}
+                  </span>
+                </td>
+                <td className="p-4 text-right">
+                  <div className="flex justify-end gap-2">
+                    <button onClick={() => handleEdit(product)} className="p-2 border border-ink/10 hover:border-ink hover:bg-ink hover:text-bg-base transition-all rounded-sm" title="Edit Properties">
+                      <Edit2 className="w-3.5 h-3.5" />
+                    </button>
+                    <button onClick={() => handleDelete(product.id)} className="p-2 border border-red-100 hover:border-red-400 hover:bg-red-50 text-red-500 transition-all rounded-sm" title="Delete Product">
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+            {items.length === 0 && (
+              <tr>
+                <td colSpan={6} className="p-16 text-center text-ink/30 font-mono text-xs uppercase tracking-widest">
+                  No products in directory
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Editor Modal */}
+      {isFormOpen && (
+        <div className="fixed inset-0 bg-ink/50 backdrop-blur-sm z-50 flex justify-center items-center p-4 overflow-y-auto">
+          <div className="bg-[#FAF9F6] border border-ink/15 shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto flex flex-col">
+            <div className="p-6 border-b border-ink/10 flex justify-between items-center bg-white">
+              <div>
+                <h3 className="text-xl font-formal font-bold tracking-wider uppercase text-ink">
+                  {editingId ? "Edit Product Specifications" : "Create New Product Standard"}
+                </h3>
+                <p className="font-mono text-[9px] text-[#B2A490] tracking-widest uppercase mt-0.5">Master Weave Specifications Manager</p>
+              </div>
+              <button onClick={() => setIsFormOpen(false)} className="p-2 text-ink/50 hover:text-ink hover:bg-ink/5 transition-colors rounded-full">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSave} className="p-6 md:p-8 space-y-8 flex-1">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                {/* Column One: Basic Attributes */}
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Fabric Title</label>
+                    <input 
+                      type="text" 
+                      required
+                      className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors"
+                      value={formState.title}
+                      onChange={e => setFormState({ ...formState, title: e.target.value })}
+                      placeholder="e.g. Pure European Flax Linen"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Price (USD)</label>
+                      <input 
+                        type="number" 
+                        step="0.01"
+                        required
+                        className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors"
+                        value={formState.price}
+                        onChange={e => setFormState({ ...formState, price: e.target.value })}
+                        placeholder="e.g. 28.50"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Availability Status</label>
+                      <select 
+                        className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors"
+                        value={formState.availability}
+                        onChange={e => setFormState({ ...formState, availability: e.target.value })}
+                      >
+                        <option value="IN_STOCK">IN_STOCK (In Stock)</option>
+                        <option value="MAKE_TO_ORDER">MAKE_TO_ORDER (Make to Order)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Category Classification</label>
+                      <select 
+                        className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors"
+                        value={formState.category}
+                        onChange={e => setFormState({ ...formState, category: e.target.value })}
+                      >
+                        {categories.map(cat => (
+                          <option key={cat.id} value={cat.name}>{cat.name}</option>
+                        ))}
+                        {categories.length === 0 && (
+                          <>
+                            <option value="SHIRTING">SHIRTING</option>
+                            <option value="GARMENT">GARMENT</option>
+                            <option value="SUIT">SUIT</option>
+                            <option value="TEXTURE">TEXTURE</option>
+                          </>
+                        )}
+                      </select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Technical Process</label>
+                      <select 
+                        className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors"
+                        value={formState.process}
+                        onChange={e => setFormState({ ...formState, process: e.target.value })}
+                      >
+                        {processes.map(proc => (
+                          <option key={proc.id} value={proc.name}>{proc.name}</option>
+                        ))}
+                        {processes.length === 0 && (
+                          <>
+                            <option value="PIECE_DYED">PIECE_DYED</option>
+                            <option value="YARN_DYED">YARN_DYED</option>
+                            <option value="PRINTING">PRINTING</option>
+                            <option value="SPECIAL_FINISH">SPECIAL_FINISH</option>
+                          </>
+                        )}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Description</label>
+                    <textarea 
+                      rows={5}
+                      className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors resize-none"
+                      value={formState.description}
+                      onChange={e => setFormState({ ...formState, description: e.target.value })}
+                      placeholder="Faux composition parameters, tactile feel descriptors, origin description, and optimal applications..."
+                    />
+                  </div>
+                </div>
+
+                {/* Column Two: Specifications & Media */}
+                <div className="space-y-6">
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Composition</label>
+                      <select 
+                        className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors"
+                        value={formState.composition}
+                        onChange={e => setFormState({ ...formState, composition: e.target.value })}
+                      >
+                        {compositions.map(comp => (
+                          <option key={comp.id} value={comp.name}>{comp.name}</option>
+                        ))}
+                        {compositions.length === 0 && (
+                          <>
+                            <option value="Pure linen">Pure linen</option>
+                            <option value="Linen Tencel">Linen Tencel</option>
+                            <option value="Linen-wool">Linen-wool</option>
+                            <option value="Linen Viscose">Linen Viscose</option>
+                            <option value="linen-cotton">linen-cotton</option>
+                          </>
+                        )}
+                      </select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Bolt Usable Width</label>
+                      <input 
+                        type="text" 
+                        className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors"
+                        value={formState.dimensions}
+                        onChange={e => setFormState({ ...formState, dimensions: e.target.value })}
+                        placeholder="e.g. 150 CM WIDTH"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Weaving/Finishing Technique</label>
+                      <input 
+                        type="text" 
+                        className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors"
+                        value={formState.technique}
+                        onChange={e => setFormState({ ...formState, technique: e.target.value })}
+                        placeholder="e.g. PLAIN WEAVE"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Fiber/Material Detail</label>
+                      <input 
+                        type="text" 
+                        className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors"
+                        value={formState.material}
+                        onChange={e => setFormState({ ...formState, material: e.target.value })}
+                        placeholder="e.g. 100% EUROPEAN FLAX"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Status Collection Tag</label>
+                    <input 
+                      type="text" 
+                      className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors"
+                      value={formState.status}
+                      onChange={e => setFormState({ ...formState, status: e.target.value })}
+                      placeholder="e.g. CORE COLLECTION"
+                    />
+                  </div>
+
+                  {/* Media Section */}
+                  <div className="border border-ink/10 p-4 bg-white space-y-4">
+                    <span className="font-mono text-[10px] font-black text-ink uppercase tracking-wider block">Media & Image Assets (Unsplash URL)</span>
+                    
+                    <div className="space-y-3">
+                      <div className="space-y-1">
+                        <span className="font-mono text-[8px] text-[#B2A490] uppercase tracking-widest block font-bold">Product Asset Image</span>
+                        <input 
+                          type="text" 
+                          className="w-full border border-ink/15 p-2 bg-bg-base font-sans text-xs outline-none"
+                          value={formState.productImage}
+                          onChange={e => setFormState({ ...formState, productImage: e.target.value })}
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <span className="font-mono text-[8px] text-[#B2A490] uppercase tracking-widest block font-bold">Lifestyle Atmospheric Image</span>
+                        <input 
+                          type="text" 
+                          className="w-full border border-ink/15 p-2 bg-bg-base font-sans text-xs outline-none"
+                          value={formState.lifestyleImage}
+                          onChange={e => setFormState({ ...formState, lifestyleImage: e.target.value })}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4 pt-1">
+                      <div className="space-y-1">
+                        <span className="font-mono text-[8px] text-ink/40 uppercase block">Product Shot</span>
+                        <div className="h-20 border border-ink/5 bg-[#FBF9F5] overflow-hidden">
+                          {formState.productImage ? (
+                            <img src={formState.productImage} className="w-full h-full object-cover" alt="" />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-ink/20"><Image className="w-4 h-4"/></div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="space-y-1">
+                        <span className="font-mono text-[8px] text-ink/40 uppercase block">Lifestyle Shot</span>
+                        <div className="h-20 border border-ink/5 bg-[#FBF9F5] overflow-hidden">
+                          {formState.lifestyleImage ? (
+                            <img src={formState.lifestyleImage} className="w-full h-full object-cover" alt="" />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-ink/20"><Image className="w-4 h-4"/></div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+              {/* Advanced Editorial Section */}
+              <div className="border-t border-ink/10 pt-6 space-y-6">
+                <h4 className="font-mono text-xs font-black uppercase tracking-widest text-[#B2A490]">Advanced Product Editorial Specs</h4>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Weave & Harvest */}
+                  <div className="border border-ink/10 p-5 bg-white space-y-4 rounded-sm">
+                    <span className="font-mono text-[10px] font-black uppercase tracking-wider text-ink block">02 / Weave & Harvest Editorial</span>
+                    
+                    <div className="space-y-4">
+                      <div className="space-y-1.5">
+                        <label className="font-mono text-[8px] uppercase tracking-widest text-[#B2A490] font-bold block">Weave & Harvest Description</label>
+                        <textarea 
+                          rows={4}
+                          className="w-full border border-ink/20 p-2.5 bg-white font-sans text-xs outline-none focus:border-ink resize-none text-ink"
+                          value={formState.weaveHarvest}
+                          onChange={e => setFormState({ ...formState, weaveHarvest: e.target.value })}
+                          placeholder="Our pure linen flax fibers are harvested from cooperative agricultural farms..."
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="font-mono text-[8px] uppercase tracking-widest text-[#B2A490] font-bold block">Origin Directory / Tag</label>
+                        <input 
+                          type="text" 
+                          className="w-full border border-ink/20 p-2.5 bg-white font-sans text-xs outline-none focus:border-ink text-ink"
+                          value={formState.weaveHarvestOrigin}
+                          onChange={e => setFormState({ ...formState, weaveHarvestOrigin: e.target.value })}
+                          placeholder="Regional intellectual property — France"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Packaging & Delivery */}
+                  <div className="border border-ink/10 p-5 bg-white space-y-4 rounded-sm">
+                    <span className="font-mono text-[10px] font-black uppercase tracking-wider text-ink block">03 / Packaging & Delivery Editorial</span>
+                    
+                    <div className="space-y-4">
+                      <div className="space-y-1.5">
+                        <label className="font-mono text-[8px] uppercase tracking-widest text-[#B2A490] font-bold block">Packaging & Delivery Description</label>
+                        <textarea 
+                          rows={4}
+                          className="w-full border border-ink/20 p-2.5 bg-white font-sans text-xs outline-none focus:border-ink resize-none text-ink"
+                          value={formState.packagingDelivery}
+                          onChange={e => setFormState({ ...formState, packagingDelivery: e.target.value })}
+                          placeholder="Every fabric piece is hand-rolled around our custom lignin-free conservation cores..."
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="font-mono text-[8px] uppercase tracking-widest text-[#B2A490] font-bold block">Courier Status Indicator</label>
+                        <input 
+                          type="text" 
+                          className="w-full border border-ink/20 p-2.5 bg-white font-sans text-xs outline-none focus:border-ink text-ink"
+                          value={formState.packagingDeliveryCourier}
+                          onChange={e => setFormState({ ...formState, packagingDeliveryCourier: e.target.value })}
+                          placeholder="Free tracked courier worldwide — Shipped within 24 hours"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-ink/10 flex justify-end gap-3 bg-white -mx-8 -mb-8 p-6">
+                <button 
+                  type="button" 
+                  onClick={() => setIsFormOpen(false)}
+                  className="px-5 py-3 border border-ink/25 text-ink font-mono text-[10px] tracking-widest uppercase font-bold hover:bg-ink/5"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  className="px-6 py-3 bg-ink text-bg-base font-mono text-[10px] tracking-widest uppercase font-black hover:bg-collision transition-colors"
+                >
+                  Save Standard
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export const AdminPanel: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!localStorage.getItem("admin-token")) {
+      navigate("/login");
+    }
+  }, [navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("admin-token");
+    navigate("/login");
+  };
+
+  const navItems = [
+    { name: "Products", path: "/admin", icon: Package },
+    { name: "Categories", path: "/admin/categories", icon: ListTree },
+    { name: "Processes", path: "/admin/processes", icon: Settings },
+    { name: "Compositions", path: "/admin/compositions", icon: Layers },
+  ];
+
+  return (
+    <div className="min-h-screen bg-bg-base flex flex-col md:flex-row text-ink">
+      {/* Sidebar */}
+      <aside className="w-full md:w-64 bg-white border-r border-ink/10 flex flex-col min-h-screen">
+        <div className="p-6 border-b border-ink/10">
+          <h1 className="text-xl font-formal font-bold tracking-widest uppercase text-ink">Admin</h1>
+          <p className="font-mono text-[9px] text-[#B2A490] tracking-widest uppercase mt-1">Sincerity Linen</p>
+        </div>
+        <nav className="flex-1 p-4 space-y-1">
+          {navItems.map(item => {
+            const Icon = item.icon;
+            const isActive = location.pathname === item.path || (item.path !== "/admin" && location.pathname.startsWith(item.path));
+            return (
+              <Link
+                key={item.name}
+                to={item.path}
+                className={`flex items-center gap-3 px-4 py-3 text-sm font-mono tracking-wider uppercase transition-colors ${
+                  isActive ? "bg-ink/5 text-ink font-bold" : "text-ink/60 hover:bg-ink/5 hover:text-ink"
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                {item.name}
+              </Link>
+            )
+          })}
+        </nav>
+        <div className="p-4 border-t border-ink/10">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 w-full px-4 py-3 text-sm font-mono tracking-wider uppercase text-red-500 hover:bg-red-50 transition-colors text-left font-bold"
+          >
+            <LogOut className="w-4 h-4" />
+            Sign Out
+          </button>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 p-6 md:p-10 overflow-y-auto">
+        <div className="max-w-6xl mx-auto">
+          <Routes>
+            <Route path="/" element={<ProductCrud />} />
+            <Route path="/categories" element={
+              <BaseCrud 
+                title="Categories"
+                resourceName="categories" 
+                columns={[
+                  { key: "id", label: "ID" },
+                  { key: "name", label: "Category Name" }
+                ]} 
+              />
+            } />
+            <Route path="/processes" element={
+              <BaseCrud 
+                title="Processes"
+                resourceName="processes" 
+                columns={[
+                  { key: "id", label: "ID" },
+                  { key: "name", label: "Process Name" }
+                ]} 
+              />
+            } />
+            <Route path="/compositions" element={
+              <BaseCrud 
+                title="Compositions"
+                resourceName="compositions" 
+                columns={[
+                  { key: "id", label: "ID" },
+                  { key: "name", label: "Composition Name" }
+                ]} 
+              />
+            } />
+          </Routes>
+        </div>
+      </main>
+    </div>
+  );
+};
+

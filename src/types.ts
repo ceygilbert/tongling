@@ -13,6 +13,10 @@ export interface Product {
   process?: 'PIECE_DYED' | 'YARN_DYED' | 'PRINTING' | 'SPECIAL_FINISH';
   availability?: 'IN_STOCK' | 'MAKE_TO_ORDER';
   composition?: string;
+  weaveHarvest?: string;
+  weaveHarvestOrigin?: string;
+  packagingDelivery?: string;
+  packagingDeliveryCourier?: string;
 }
 
 export interface CartItem extends Product {
