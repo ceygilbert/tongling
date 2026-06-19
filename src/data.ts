@@ -1,6 +1,6 @@
 import { Product } from "./types";
 
-export const PRODUCTS: Product[] = [
+const DEFAULT_PRODUCTS: Product[] = [
   {
     id: "1",
     title: "European Flax Linen",
@@ -15,7 +15,11 @@ export const PRODUCTS: Product[] = [
     category: 'SHIRTING',
     process: 'PIECE_DYED',
     availability: 'IN_STOCK',
-    composition: 'Pure linen'
+    composition: 'Pure linen',
+    weaveHarvest: "Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.",
+    weaveHarvestOrigin: "Regional intellectual property — France",
+    packagingDelivery: "Every fabric piece is hand-rolled around our custom lignin-free conservation cores and enclosed in luxury linen protective sleeves. Delivered globally via carbon-neutral white-glove couriers in pristine condition.",
+    packagingDeliveryCourier: "Free tracked courier worldwide — Shipped within 24 hours"
   },
   {
     id: "2",
@@ -31,7 +35,11 @@ export const PRODUCTS: Product[] = [
     category: 'GARMENT',
     process: 'YARN_DYED',
     availability: 'IN_STOCK',
-    composition: 'Linen Tencel'
+    composition: 'Linen Tencel',
+    weaveHarvest: "Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.",
+    weaveHarvestOrigin: "Regional intellectual property — France",
+    packagingDelivery: "Every fabric piece is hand-rolled around our custom lignin-free conservation cores and enclosed in luxury linen protective sleeves. Delivered globally via carbon-neutral white-glove couriers in pristine condition.",
+    packagingDeliveryCourier: "Free tracked courier worldwide — Shipped within 24 hours"
   },
   {
     id: "3",
@@ -47,7 +55,11 @@ export const PRODUCTS: Product[] = [
     category: 'TEXTURE',
     process: 'SPECIAL_FINISH',
     availability: 'MAKE_TO_ORDER',
-    composition: 'Linen-wool'
+    composition: 'Linen-wool',
+    weaveHarvest: "Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.",
+    weaveHarvestOrigin: "Regional intellectual property — France",
+    packagingDelivery: "Every fabric piece is hand-rolled around our custom lignin-free conservation cores and enclosed in luxury linen protective sleeves. Delivered globally via carbon-neutral white-glove couriers in pristine condition.",
+    packagingDeliveryCourier: "Free tracked courier worldwide — Shipped within 24 hours"
   },
   {
     id: "4",
@@ -63,7 +75,11 @@ export const PRODUCTS: Product[] = [
     category: 'SHIRTING',
     process: 'PIECE_DYED',
     availability: 'IN_STOCK',
-    composition: 'Linen Viscose'
+    composition: 'Linen Viscose',
+    weaveHarvest: "Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.",
+    weaveHarvestOrigin: "Regional intellectual property — France",
+    packagingDelivery: "Every fabric piece is hand-rolled around our custom lignin-free conservation cores and enclosed in luxury linen protective sleeves. Delivered globally via carbon-neutral white-glove couriers in pristine condition.",
+    packagingDeliveryCourier: "Free tracked courier worldwide — Shipped within 24 hours"
   },
   {
     id: "5",
@@ -79,7 +95,11 @@ export const PRODUCTS: Product[] = [
     category: 'SUIT',
     process: 'YARN_DYED',
     availability: 'MAKE_TO_ORDER',
-    composition: 'Pure linen'
+    composition: 'Pure linen',
+    weaveHarvest: "Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.",
+    weaveHarvestOrigin: "Regional intellectual property — France",
+    packagingDelivery: "Every fabric piece is hand-rolled around our custom lignin-free conservation cores and enclosed in luxury linen protective sleeves. Delivered globally via carbon-neutral white-glove couriers in pristine condition.",
+    packagingDeliveryCourier: "Free tracked courier worldwide — Shipped within 24 hours"
   },
   {
     id: "6",
@@ -95,7 +115,11 @@ export const PRODUCTS: Product[] = [
     category: 'GARMENT',
     process: 'SPECIAL_FINISH',
     availability: 'IN_STOCK',
-    composition: 'linen-cotton'
+    composition: 'linen-cotton',
+    weaveHarvest: "Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.",
+    weaveHarvestOrigin: "Regional intellectual property — France",
+    packagingDelivery: "Every fabric piece is hand-rolled around our custom lignin-free conservation cores and enclosed in luxury linen protective sleeves. Delivered globally via carbon-neutral white-glove couriers in pristine condition.",
+    packagingDeliveryCourier: "Free tracked courier worldwide — Shipped within 24 hours"
   },
   {
     id: "7",
@@ -111,9 +135,53 @@ export const PRODUCTS: Product[] = [
     category: 'TEXTURE',
     process: 'PRINTING',
     availability: 'IN_STOCK',
-    composition: 'linen-cotton'
+    composition: 'linen-cotton',
+    weaveHarvest: "Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.",
+    weaveHarvestOrigin: "Regional intellectual property — France",
+    packagingDelivery: "Every fabric piece is hand-rolled around our custom lignin-free conservation cores and enclosed in luxury linen protective sleeves. Delivered globally via carbon-neutral white-glove couriers in pristine condition.",
+    packagingDeliveryCourier: "Free tracked courier worldwide — Shipped within 24 hours"
   }
 ];
+
+const getStoredProducts = (): Product[] => {
+  if (typeof window === "undefined") return DEFAULT_PRODUCTS;
+  const local = localStorage.getItem("sincerity_products");
+  if (local) {
+    try {
+      return JSON.parse(local);
+    } catch (e) {
+      return DEFAULT_PRODUCTS;
+    }
+  }
+  // Initialize with DEFAULT_PRODUCTS on first clean run
+  try {
+    localStorage.setItem("sincerity_products", JSON.stringify(DEFAULT_PRODUCTS));
+  } catch(e) {}
+  return DEFAULT_PRODUCTS;
+};
+
+export const PRODUCTS = new Proxy([], {
+  get(target, prop) {
+    const list = getStoredProducts();
+    const val = (list as any)[prop];
+    if (typeof val === "function") {
+      return val.bind(list);
+    }
+    return val;
+  },
+  getOwnPropertyDescriptor(target, prop) {
+    const list = getStoredProducts();
+    return Reflect.getOwnPropertyDescriptor(list, prop);
+  },
+  ownKeys(target) {
+    const list = getStoredProducts();
+    return Reflect.ownKeys(list);
+  },
+  has(target, prop) {
+    const list = getStoredProducts();
+    return Reflect.has(list, prop);
+  }
+}) as unknown as Product[];
 
 export const LOGO_URL = "https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/generals/tongling_logo.png";
 
