@@ -16,7 +16,7 @@ async function startServer() {
   // Admin login route
   app.post("/api/admin/login", (req, res) => {
     const { email, password } = req.body;
-    if (email === "admin@admin.com" && password === "Admin1234!$") {
+    if (email === "info@tonglingsinceritylinen.com" && password === "AdmTL13572468!$") {
       res.json({ token: "admin-token-1234" });
     } else {
       res.status(401).json({ error: "Invalid credentials" });
