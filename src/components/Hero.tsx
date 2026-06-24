@@ -20,7 +20,7 @@ export const Hero: React.FC = () => (
           >
             <span>Tongling Sincerity Linen</span>
             <span className="w-1.5 h-1.5 rounded-full bg-ink/30" />
-            <span className="font-bold">Est. 1998</span>
+            <span className="font-bold">Est. 2005</span>
           </motion.div>
           
           <motion.h1 

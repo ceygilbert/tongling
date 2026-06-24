@@ -107,7 +107,7 @@ export const Solutions: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
             <div className="lg:col-span-8 space-y-6">
               <span className="font-mono text-[10px] md:text-[11px] tracking-[0.4em] text-[#B2A490] font-black uppercase block">
-                Since 1998 — Tongling Quality
+                Since 2005 — Tongling Quality
               </span>
               <h1 className="text-3xl sm:text-5xl md:text-[4vw] font-formal font-bold uppercase leading-[1.1] tracking-[0.06em] text-ink">
                 From European Flax <br />

@@ -151,7 +151,7 @@ export const Shop: React.FC<ShopProps> = ({ onAddToCart }) => {
                         onClick={() => onAddToCart(product)}
                         className="absolute bottom-0 left-0 w-full bg-ink/90 backdrop-blur-sm text-bg-base py-4 font-mono font-bold text-[9px] tracking-[0.2em] md:translate-y-full group-hover:translate-y-0 transition-transform duration-500"
                       >
-                        Quick Add — ${product.price.toFixed(2)}
+                        {product.showPrice !== false ? `Quick Add — $${product.price.toFixed(2)}` : "Quick Add"}
                       </button>
                     </div>
                     <div className="flex justify-between items-end gap-2">

@@ -18,7 +18,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   onUpdateQuantity, 
   onRemove 
 }) => {
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const total = items.reduce((sum, item) => sum + (item.showPrice !== false ? item.price * item.quantity : 0), 0);
 
   return (
     <AnimatePresence>
@@ -103,7 +103,9 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                               <Plus size={11} />
                             </button>
                           </div>
-                          <p className="font-mono text-xs md:text-sm font-bold text-ink">${(item.price * item.quantity).toFixed(2)}</p>
+                          <p className="font-mono text-xs md:text-sm font-bold text-ink">
+                            {item.showPrice !== false ? `$${(item.price * item.quantity).toFixed(2)}` : "Price on inquiry"}
+                          </p>
                         </div>
                       </div>
                     </motion.div>
@@ -117,7 +119,14 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 <div className="flex justify-between items-end">
                   <div>
                     <p className="font-mono text-[9px] tracking-[0.25em] text-[#B2A490] font-bold mb-1">Estimated Total</p>
-                    <span className="text-2xl md:text-3xl font-mono text-ink font-light tracking-tight">${total.toFixed(2)}</span>
+                    <span className="text-2xl md:text-3xl font-mono text-ink font-light tracking-tight">
+                      ${total.toFixed(2)}
+                      {items.some(item => item.showPrice === false) && (
+                        <span className="text-[10px] text-ink/40 block mt-1 normal-case tracking-normal font-sans font-normal">
+                          *Excludes items with hidden prices
+                        </span>
+                      )}
+                    </span>
                   </div>
                   <p className="font-mono text-[8px] text-ink/40 tracking-widest text-right leading-relaxed">
                     Excludes shipping & <br />international taxes

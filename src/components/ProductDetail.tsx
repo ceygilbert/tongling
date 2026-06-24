@@ -139,9 +139,15 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
               </h1>
 
               <div className="flex items-baseline justify-between border-b border-ink/10 pb-6 pt-2">
-                <p className="text-3xl md:text-4xl font-mono text-ink tracking-tight font-light">
-                  ${product.price.toFixed(2)} <span className="font-serif text-[15px] text-ink/40">/ yard</span>
-                </p>
+                {product.showPrice !== false ? (
+                  <p className="text-3xl md:text-4xl font-mono text-ink tracking-tight font-light">
+                    ${product.price.toFixed(2)} <span className="font-serif text-[15px] text-ink/40">/ yard</span>
+                  </p>
+                ) : (
+                  <p className="text-lg md:text-xl font-mono text-[#B2A490] tracking-widest font-black uppercase">
+                    Price on inquiry
+                  </p>
+                )}
                 <span className="font-mono text-xs md:text-[13px] tracking-widest border border-[#B2A490]/25 px-2.5 py-1 rounded-[1px] font-bold">
                   {product.availability === 'IN_STOCK' ? "Immediate dispatch" : "Bespoke craft-to-order"}
                 </span>
@@ -159,7 +165,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
               <div className="space-y-3">
                 <div className="flex justify-between items-center text-xs md:text-[13px] font-mono tracking-widest text-ink/50 font-bold">
                   <span>Select Bolt Yardage</span>
-                  <span>Calculated Total: ${(product.price * quantity).toFixed(2)}</span>
+                  <span>Calculated Total: {product.showPrice !== false ? `$${(product.price * quantity).toFixed(2)}` : "Price on inquiry"}</span>
                 </div>
                 <div className="flex items-center justify-between border border-ink/10 bg-white p-3.5 rounded-[1px]">
                   <span className="font-mono text-xs md:text-sm text-ink/60 font-medium">Desired Length</span>
@@ -364,7 +370,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
                     {item.title}
                   </h4>
                   <p className="font-mono text-xs md:text-sm font-bold tracking-tight text-ink/45">
-                    ${item.price.toFixed(2)} / Yard
+                    {item.showPrice !== false ? `$${item.price.toFixed(2)} / Yard` : "Price on inquiry"}
                   </p>
                 </div>
               </Link>

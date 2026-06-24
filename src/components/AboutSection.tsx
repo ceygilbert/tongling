@@ -10,7 +10,7 @@ export const AboutSection: React.FC = () => (
     </div>
     <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 md:gap-24 items-center">
       <div className="md:col-span-1 hidden md:block">
-        <p className="vertical-text text-ink/20 font-mono text-[10px] tracking-[0.5em] whitespace-nowrap">Founded in 1998 — Shanghai</p>
+        <p className="vertical-text text-ink/20 font-mono text-[10px] tracking-[0.5em] whitespace-nowrap">Founded in 2005 — Shanghai</p>
       </div>
       <div className="md:col-span-11 grid grid-cols-1 lg:grid-cols-2 gap-20">
         <motion.div

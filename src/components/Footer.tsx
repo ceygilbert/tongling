@@ -16,7 +16,7 @@ export const Footer: React.FC = () => (
           />
         </div>
         <p className="font-mono text-[12px] leading-relaxed tracking-tight text-ink/60 max-w-xs">
-          Weaving tradition with modernity since 1998. Crafting the finest linen textiles with unwavering sincerity.
+          Weaving tradition with modernity since 2005. Crafting the finest linen textiles with unwavering sincerity.
         </p>
         <div className="flex gap-8">
           <Instagram size={20} strokeWidth={1} className="hover:opacity-40 cursor-pointer transition-opacity" />

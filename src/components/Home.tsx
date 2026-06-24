@@ -28,7 +28,7 @@ export const Home: React.FC = () => (
           <h2 className="text-3xl sm:text-4xl md:text-[3.2vw] font-formal font-bold uppercase leading-[1.25] tracking-[0.08em] md:tracking-[0.1em] text-ink">
             Main <br /><span className="ml-8 md:ml-16">Collection</span>
           </h2>
-         <p className="font-mono text-[9px] md:text-[11px] tracking-[0.35em] text-[#121212]/40 mb-1">European Linen — Blends — Prints — Since 1998</p>
+         <p className="font-mono text-[9px] md:text-[11px] tracking-[0.35em] text-[#121212]/40 mb-1">European Linen — Blends — Prints — Since 2005</p>
       </div>
       <ProductSlider />
     </section>

@@ -29,7 +29,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart }) => {
             <Menu size={24} strokeWidth={1} />
           </button>
           <nav className="hidden md:flex gap-10 text-xs md:text-sm font-medium tracking-wider font-ivar">
-            <Link to="/shop" className="hover:opacity-100 opacity-60 transition-all hover:tracking-[0.15em]">Shop</Link>
+            <Link to="/shop" className="hover:opacity-100 opacity-60 transition-all hover:tracking-[0.15em]">Collection</Link>
             <Link to="/solutions" className="hover:opacity-100 opacity-60 transition-all hover:tracking-[0.15em]">Solutions</Link>
             <Link to="/brand-story" className="hover:opacity-100 opacity-60 transition-all hover:tracking-[0.15em]">Story</Link>
           </nav>
@@ -60,7 +60,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart }) => {
             )}
           </button>
           <div className="hidden md:flex flex-col items-end border-l border-ink/20 pl-6 h-10 justify-center">
-            <p className="text-xs font-medium tracking-widest text-ink/40 font-ivar">Since 1998</p>
+            <p className="text-xs font-medium tracking-widest text-ink/40 font-ivar">Since 2005</p>
           </div>
         </div>
       </header>
@@ -90,7 +90,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart }) => {
               </div>
               <nav className="flex flex-col p-6 gap-8 font-ivar">
                 <Link to="/" className="text-2xl font-bold tracking-tight hover:pl-2 transition-all">Home</Link>
-                <Link to="/shop" className="text-2xl font-bold tracking-tight hover:pl-2 transition-all">Shop</Link>
+                <Link to="/shop" className="text-2xl font-bold tracking-tight hover:pl-2 transition-all">Collection</Link>
                 <Link to="/solutions" className="text-2xl font-bold tracking-tight hover:pl-2 transition-all">Solutions</Link>
                 <Link to="/brand-story" className="text-2xl font-bold tracking-tight hover:pl-2 transition-all">Brand Story</Link>
               </nav>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
@@ -18,6 +18,26 @@ const AppInner = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    // Dynamically fetch and sync products with the database
+    const syncDatabaseProducts = async () => {
+      try {
+        const res = await fetch("/api/public/products");
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data) && data.length > 0) {
+            localStorage.setItem("sincerity_products", JSON.stringify(data));
+            // Dispatch a storage event to update any active state subscribers immediately
+            window.dispatchEvent(new Event("storage"));
+          }
+        }
+      } catch (err) {
+        console.warn("Public API connection offline. Falling back to local/cached product state.");
+      }
+    };
+    syncDatabaseProducts();
+  }, []);
 
   const isAuthOrAdmin = location.pathname.startsWith('/admin') || location.pathname.startsWith('/login');
 

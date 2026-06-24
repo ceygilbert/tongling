@@ -283,6 +283,23 @@ const fetchApi = async (url: string, options: any = {}) => {
       throw new Error("Unauthorized");
     }
     const data = await res.json();
+
+    // Sync client local cache if we modified products via real DB backend API
+    if (options.method && options.method !== "GET" && url.includes("/api/admin/products")) {
+      try {
+        const prodRes = await fetch("/api/public/products");
+        if (prodRes.ok) {
+          const prods = await prodRes.json();
+          if (Array.isArray(prods)) {
+            localStorage.setItem("sincerity_products", JSON.stringify(prods));
+            window.dispatchEvent(new Event("storage"));
+          }
+        }
+      } catch (e) {
+        console.warn("Could not sync client cache following real DB edit:", e);
+      }
+    }
+
     return data;
   } catch (err) {
     console.warn("Express backend API unreachable or returned 404. Performing local persistence operation instead for: " + url);
@@ -437,11 +454,64 @@ const ProductCrud = () => {
   const [processes, setProcesses] = useState<{ id: string; name: string }[]>([]);
   const [compositions, setCompositions] = useState<{ id: string; name: string }[]>([]);
 
+  const [isUploadingProduct, setIsUploadingProduct] = useState(false);
+  const [isUploadingLifestyle, setIsUploadingLifestyle] = useState(false);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: "productImage" | "lifestyleImage") => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (field === "productImage") {
+      setIsUploadingProduct(true);
+    } else {
+      setIsUploadingLifestyle(true);
+    }
+
+    try {
+      const token = localStorage.getItem("admin-token");
+      const formData = new FormData();
+      formData.append("image", file);
+
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: formData,
+      });
+
+      if (!res.ok) {
+        throw new Error("Upload failed on server");
+      }
+
+      const data = await res.json();
+      if (data.url) {
+        setFormState((prev: any) => ({ ...prev, [field]: data.url }));
+      }
+    } catch (err) {
+      console.warn("Express backend file upload offline/unreachable. Encoding locally as Base64 data URL fallback instead.");
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result === "string") {
+          setFormState((prev: any) => ({ ...prev, [field]: reader.result }));
+        }
+      };
+      reader.readAsDataURL(file);
+    } finally {
+      if (field === "productImage") {
+        setIsUploadingProduct(false);
+      } else {
+        setIsUploadingLifestyle(false);
+      }
+    }
+  };
+
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formState, setFormState] = useState<any>({
     title: "",
     price: 0,
+    showPrice: true,
     description: "",
     dimensions: "",
     material: "",
@@ -492,6 +562,7 @@ const ProductCrud = () => {
     setFormState({
       title: product.title || "",
       price: product.price || 0,
+      showPrice: product.showPrice === undefined ? true : !!product.showPrice,
       description: product.description || "",
       dimensions: product.dimensions || "",
       material: product.material || "",
@@ -516,6 +587,7 @@ const ProductCrud = () => {
     setFormState({
       title: "",
       price: 0,
+      showPrice: true,
       description: "",
       dimensions: "150 CM WIDTH",
       material: "100% EUROPEAN FLAX",
@@ -598,8 +670,15 @@ const ProductCrud = () => {
                     </div>
                   </div>
                 </td>
-                <td className="p-4 font-mono font-bold text-sm text-ink/80">
-                  ${parseFloat(product.price).toFixed(2)}
+                <td className="p-4 font-mono text-xs text-ink/80">
+                  <div className="font-bold text-sm">${parseFloat(product.price).toFixed(2)}</div>
+                  <div className="text-[9px] mt-1 uppercase tracking-wider">
+                    {product.showPrice !== false ? (
+                      <span className="text-[#B2A490] font-black">● Visible</span>
+                    ) : (
+                      <span className="text-red-500/80 font-black">○ Hidden</span>
+                    )}
+                  </div>
                 </td>
                 <td className="p-4 space-y-0.5 text-xs">
                   <p className="font-sans text-ink"><strong className="font-mono uppercase text-[9px] text-ink/40">Composition:</strong> {product.composition}</p>
@@ -685,6 +764,18 @@ const ProductCrud = () => {
                         onChange={e => setFormState({ ...formState, price: e.target.value })}
                         placeholder="e.g. 28.50"
                       />
+                      <div className="flex items-center gap-2 pt-1">
+                        <input 
+                          type="checkbox"
+                          id="showPrice"
+                          checked={formState.showPrice !== false}
+                          onChange={e => setFormState({ ...formState, showPrice: e.target.checked })}
+                          className="w-3.5 h-3.5 accent-ink border border-ink/20 focus:ring-0 cursor-pointer"
+                        />
+                        <label htmlFor="showPrice" className="font-mono text-[9px] uppercase tracking-wider text-ink/75 select-none cursor-pointer">
+                          Show Price on Storefront
+                        </label>
+                      </div>
                     </div>
                     <div className="space-y-2">
                       <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Availability Status</label>
@@ -835,21 +926,47 @@ const ProductCrud = () => {
                     <div className="space-y-3">
                       <div className="space-y-1">
                         <span className="font-mono text-[8px] text-[#B2A490] uppercase tracking-widest block font-bold">Product Asset Image</span>
-                        <input 
-                          type="text" 
-                          className="w-full border border-ink/15 p-2 bg-bg-base font-sans text-xs outline-none"
-                          value={formState.productImage}
-                          onChange={e => setFormState({ ...formState, productImage: e.target.value })}
-                        />
+                        <div className="flex gap-2">
+                          <input 
+                            type="text" 
+                            className="flex-1 border border-ink/15 p-2 bg-bg-base font-sans text-xs outline-none"
+                            value={formState.productImage}
+                            onChange={e => setFormState({ ...formState, productImage: e.target.value })}
+                            placeholder="Paste image URL or browse..."
+                          />
+                          <label className="cursor-pointer font-mono text-[9px] bg-ink text-white hover:bg-ink/80 px-3 py-2 uppercase tracking-wider flex items-center justify-center transition-colors">
+                            {isUploadingProduct ? "Uploading..." : "Browse"}
+                            <input 
+                              type="file" 
+                              accept="image/*" 
+                              className="hidden" 
+                              onChange={e => handleImageUpload(e, "productImage")}
+                              disabled={isUploadingProduct}
+                            />
+                          </label>
+                        </div>
                       </div>
                       <div className="space-y-1">
                         <span className="font-mono text-[8px] text-[#B2A490] uppercase tracking-widest block font-bold">Lifestyle Atmospheric Image</span>
-                        <input 
-                          type="text" 
-                          className="w-full border border-ink/15 p-2 bg-bg-base font-sans text-xs outline-none"
-                          value={formState.lifestyleImage}
-                          onChange={e => setFormState({ ...formState, lifestyleImage: e.target.value })}
-                        />
+                        <div className="flex gap-2">
+                          <input 
+                            type="text" 
+                            className="flex-1 border border-ink/15 p-2 bg-bg-base font-sans text-xs outline-none"
+                            value={formState.lifestyleImage}
+                            onChange={e => setFormState({ ...formState, lifestyleImage: e.target.value })}
+                            placeholder="Paste image URL or browse..."
+                          />
+                          <label className="cursor-pointer font-mono text-[9px] bg-ink text-white hover:bg-ink/80 px-3 py-2 uppercase tracking-wider flex items-center justify-center transition-colors">
+                            {isUploadingLifestyle ? "Uploading..." : "Browse"}
+                            <input 
+                              type="file" 
+                              accept="image/*" 
+                              className="hidden" 
+                              onChange={e => handleImageUpload(e, "lifestyleImage")}
+                              disabled={isUploadingLifestyle}
+                            />
+                          </label>
+                        </div>
                       </div>
                     </div>
 
