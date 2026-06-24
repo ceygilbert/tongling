@@ -1096,10 +1096,20 @@ const DbStatusWidget: React.FC = () => {
         const data = await res.json();
         setStatus(data);
       } else {
-        setStatus({ connected: false, configured: false, message: "Could not fetch DB status." });
+        const text = await res.text().catch(() => "");
+        setStatus({ 
+          connected: false, 
+          configured: false, 
+          message: `HTTP ${res.status}: ${text || "Could not fetch DB status from backend server."}` 
+        });
       }
     } catch (err: any) {
-      setStatus({ connected: false, configured: false, message: "Network error connecting to backend diagnostics." });
+      console.error("DB Status check failed:", err);
+      setStatus({ 
+        connected: false, 
+        configured: false, 
+        message: `Network/CORS/Parsing Error: ${err.message || String(err)}` 
+      });
     } finally {
       setLoading(false);
     }
