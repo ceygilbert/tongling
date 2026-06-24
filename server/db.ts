@@ -585,5 +585,54 @@ export const dbService = {
       return deleted[0];
     }
     return null;
+  },
+
+  async checkConnection() {
+    if (!pool) {
+      return {
+        configured: false,
+        connected: false,
+        message: "No DB_HOST configured in environment. The system is falling back to in-memory database storage.",
+        config: {
+          host: poolConfig.host,
+          port: poolConfig.port,
+          user: poolConfig.user,
+          database: poolConfig.database,
+        }
+      };
+    }
+    try {
+      const conn = await pool.getConnection();
+      conn.release();
+      return {
+        configured: true,
+        connected: true,
+        message: "Successfully connected to MySQL/MariaDB database!",
+        config: {
+          host: poolConfig.host,
+          port: poolConfig.port,
+          user: poolConfig.user,
+          database: poolConfig.database,
+        }
+      };
+    } catch (err: any) {
+      return {
+        configured: true,
+        connected: false,
+        message: err.message || String(err),
+        error: {
+          code: err.code,
+          errno: err.errno,
+          sqlState: err.sqlState,
+          fatal: err.fatal
+        },
+        config: {
+          host: poolConfig.host,
+          port: poolConfig.port,
+          user: poolConfig.user,
+          database: poolConfig.database,
+        }
+      };
+    }
   }
 };

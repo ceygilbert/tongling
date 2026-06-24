@@ -88,6 +88,16 @@ async function startServer() {
     }
   });
 
+  // DB diagnostic route
+  app.get("/api/admin/db-status", async (req, res) => {
+    try {
+      const status = await dbService.checkConnection();
+      res.json(status);
+    } catch (err: any) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
   // Public read endpoints for dynamic content delivery
   app.get("/api/public/products", async (req, res) => {
     try {

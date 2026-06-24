@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Link, useNavigate, useLocation } from "react-router-dom";
-import { LogOut, Package, ListTree, Settings, Layers, Plus, Trash2, Edit2, Check, X, Eye, Image } from "lucide-react";
+import { LogOut, Package, ListTree, Settings, Layers, Plus, Trash2, Edit2, Check, X, Eye, Image, RefreshCw } from "lucide-react";
 
 const fetchApi = async (url: string, options: any = {}) => {
   const token = localStorage.getItem("admin-token");
@@ -1084,6 +1084,120 @@ const ProductCrud = () => {
   );
 };
 
+const DbStatusWidget: React.FC = () => {
+  const [status, setStatus] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+
+  const fetchStatus = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/admin/db-status");
+      if (res.ok) {
+        const data = await res.json();
+        setStatus(data);
+      } else {
+        setStatus({ connected: false, configured: false, message: "Could not fetch DB status." });
+      }
+    } catch (err: any) {
+      setStatus({ connected: false, configured: false, message: "Network error connecting to backend diagnostics." });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchStatus();
+    const interval = setInterval(fetchStatus, 25000);
+    return () => clearInterval(interval);
+  }, []);
+
+  if (!status) {
+    return (
+      <div className="p-4 border-t border-ink/10 font-mono text-[10px] text-ink/45 tracking-wider">
+        Loading connection health...
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-4 border-t border-ink/10 font-mono text-[10px] space-y-2">
+      <div className="flex items-center justify-between">
+        <span className="text-[#B2A490] uppercase tracking-widest font-black text-[9px]">Database Connection</span>
+        <button 
+          onClick={fetchStatus} 
+          disabled={loading} 
+          className={`hover:text-ink text-ink/50 transition-colors ${loading ? "animate-spin" : ""}`}
+          title="Refresh status"
+        >
+          <RefreshCw size={10} />
+        </button>
+      </div>
+
+      <div className="p-2 border border-ink/5 bg-[#FBF9F5] rounded-[1px] space-y-1.5">
+        <div className="flex items-center gap-1.5 font-bold">
+          {status.connected ? (
+            <>
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span className="text-emerald-700 uppercase">Hostinger Online</span>
+            </>
+          ) : (
+            <>
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+              <span className="text-amber-600 uppercase">Memory Fallback</span>
+            </>
+          )}
+        </div>
+
+        {status.config && (
+          <div className="text-[9px] text-ink/65 space-y-0.5 border-t border-ink/5 pt-1.5">
+            <p><span className="text-ink/40 font-bold">Host:</span> {status.config.host}</p>
+            <p><span className="text-ink/40 font-bold">DB:</span> {status.config.database}</p>
+            <p><span className="text-ink/40 font-bold">User:</span> {status.config.user}</p>
+          </div>
+        )}
+
+        {!status.connected && (
+          <div className="text-[9px] bg-red-50 text-red-700/90 border border-red-200/40 p-1.5 leading-normal mt-1 rounded-[1px]">
+            <span className="font-bold">Error Info:</span>
+            <div className="font-mono text-[8px] break-all max-h-20 overflow-y-auto mt-0.5 bg-white p-1 border border-red-100">
+              {status.message}
+            </div>
+            {status.error?.code === "ETIMEDOUT" && (
+              <div className="mt-1.5 font-sans text-[9px] leading-normal text-red-800 font-medium">
+                💡 <span className="font-bold">Important:</span> Hostinger blocks remote connections by default. 
+                Go to <span className="font-bold">Hostinger Panel → Databases → Remote MySQL</span>, 
+                add IP/host <span className="font-bold font-mono bg-red-100 p-0.5 select-all text-red-600">%</span> (allows any host), 
+                and click Save.
+              </div>
+            )}
+            {status.error?.code === "ER_ACCESS_DENIED_ERROR" && (
+              <div className="mt-1.5 font-sans text-[9px] leading-normal text-red-800 font-medium">
+                💡 <span className="font-bold">Important:</span> Double check your database user and password credentials inside your environment setup.
+              </div>
+            )}
+            {status.error?.code === "ENOTFOUND" && (
+              <div className="mt-1.5 font-sans text-[9px] leading-normal text-red-800 font-medium">
+                💡 <span className="font-bold">Important:</span> Check that your host address matches the Hostinger MySQL database host (starts with <span className="font-mono font-bold">sql...</span>).
+              </div>
+            )}
+            {!status.error && status.configured && (
+              <div className="mt-1.5 font-sans text-[9px] leading-normal text-red-800 font-medium">
+                💡 <span className="font-bold">Important:</span> Check that your Hostinger database permits remote MySQL requests from external hosts or whitelist the wildcard <span className="font-mono font-bold">%</span> host.
+              </div>
+            )}
+          </div>
+        )}
+
+        {status.connected && (
+          <p className="text-[8px] text-emerald-700/80 leading-normal">
+            ✓ Your catalog, categories, and custom assets are connected directly to your Hostinger database.
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};
+
 export const AdminPanel: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -1132,6 +1246,9 @@ export const AdminPanel: React.FC = () => {
             )
           })}
         </nav>
+        
+        <DbStatusWidget />
+
         <div className="p-4 border-t border-ink/10">
           <button
             onClick={handleLogout}
