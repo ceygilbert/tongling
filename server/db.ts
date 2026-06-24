@@ -165,10 +165,21 @@ export const inMemoryDB = {
   ]
 };
 
+const isCloudRun = !!(process.env.K_SERVICE || process.env.K_REVISION || process.env.CLOUD_RUN_JOB);
+
+let dbHost = process.env.DB_HOST || "localhost";
+
+// If we are running on Hostinger (not Cloud Run) and the DB_HOST is set to the external Hostinger IP,
+// we should connect using 'localhost' instead because the web app and database reside on the same server.
+if (!isCloudRun && (dbHost === "153.92.15.62" || dbHost === "153.92.15.63" || dbHost.startsWith("153.92."))) {
+  console.log("Detecting Hostinger production environment. Overriding database host to localhost.");
+  dbHost = "localhost";
+}
+
 const hasDbConfig = !!process.env.DB_HOST;
 
 const poolConfig = {
-  host: process.env.DB_HOST || "localhost",
+  host: dbHost,
   port: parseInt(process.env.DB_PORT || "3306", 10),
   user: process.env.DB_USER || "root",
   password: process.env.DB_PASSWORD || "",

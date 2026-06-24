@@ -12,7 +12,16 @@ const __dirname = path.dirname(__filename);
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  
+  // Use port 3000 inside the AI Studio container.
+  // In other environments (like Hostinger), bind to process.env.PORT if available.
+  let PORT = 3000;
+  if (process.env.PORT) {
+    const isCloudRun = !!(process.env.K_SERVICE || process.env.K_REVISION || process.env.CLOUD_RUN_JOB);
+    if (!isCloudRun) {
+      PORT = parseInt(process.env.PORT, 10);
+    }
+  }
 
   app.use(express.json());
 
