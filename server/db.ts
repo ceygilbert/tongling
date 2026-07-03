@@ -1,5 +1,7 @@
 import "dotenv/config";
 import mysql from "mysql2/promise";
+import fs from "fs";
+import path from "path";
 
 export const inMemoryDB = {
   products: [
@@ -164,6 +166,37 @@ export const inMemoryDB = {
     { id: "5", name: "linen-cotton" },
   ]
 };
+
+
+const DB_FILE = path.join(process.cwd(), 'db-fallback.json');
+
+function loadFallbackDB() {
+  if (fs.existsSync(DB_FILE)) {
+    try {
+      const data = fs.readFileSync(DB_FILE, 'utf8');
+      const parsed = JSON.parse(data);
+      if (parsed.products && parsed.categories) {
+        Object.assign(inMemoryDB, parsed);
+        console.log("Loaded fallback database from db-fallback.json");
+      }
+    } catch (err) {
+      console.error("Error reading db-fallback.json", err);
+    }
+  } else {
+    saveFallbackDB();
+  }
+}
+
+function saveFallbackDB() {
+  try {
+    fs.writeFileSync(DB_FILE, JSON.stringify(inMemoryDB, null, 2));
+  } catch (err) {
+    console.error("Error writing db-fallback.json", err);
+  }
+}
+
+// Immediately load
+loadFallbackDB();
 
 const isCloudRun = !!(process.env.K_SERVICE || process.env.K_REVISION || process.env.CLOUD_RUN_JOB);
 
@@ -366,6 +399,8 @@ export const dbService = {
     }
     const newItem = { id: Date.now().toString(), ...prod, showPrice: prod.showPrice !== false };
     inMemoryDB.products.push(newItem);
+    saveFallbackDB();
+      saveFallbackDB();
     return newItem;
   },
 
@@ -393,6 +428,7 @@ export const dbService = {
     const index = inMemoryDB.products.findIndex((item: any) => item.id === id);
     if (index !== -1) {
       inMemoryDB.products[index] = { ...inMemoryDB.products[index], ...prod, id, showPrice: prod.showPrice !== false };
+      saveFallbackDB();
       return inMemoryDB.products[index];
     }
     return null;
@@ -410,6 +446,7 @@ export const dbService = {
     const index = inMemoryDB.products.findIndex((item: any) => item.id === id);
     if (index !== -1) {
       const deleted = inMemoryDB.products.splice(index, 1);
+      saveFallbackDB();
       return deleted[0];
     }
     return null;
@@ -439,6 +476,7 @@ export const dbService = {
     }
     const newItem = { id: Date.now().toString(), ...cat };
     inMemoryDB.categories.push(newItem);
+      saveFallbackDB();
     return newItem;
   },
 
@@ -454,6 +492,7 @@ export const dbService = {
     const index = inMemoryDB.categories.findIndex((item: any) => item.id === id);
     if (index !== -1) {
       inMemoryDB.categories[index] = { ...inMemoryDB.categories[index], ...cat, id };
+      saveFallbackDB();
       return inMemoryDB.categories[index];
     }
     return null;
@@ -471,6 +510,7 @@ export const dbService = {
     const index = inMemoryDB.categories.findIndex((item: any) => item.id === id);
     if (index !== -1) {
       const deleted = inMemoryDB.categories.splice(index, 1);
+      saveFallbackDB();
       return deleted[0];
     }
     return null;
@@ -500,6 +540,7 @@ export const dbService = {
     }
     const newItem = { id: Date.now().toString(), ...proc };
     inMemoryDB.processes.push(newItem);
+      saveFallbackDB();
     return newItem;
   },
 
@@ -515,6 +556,7 @@ export const dbService = {
     const index = inMemoryDB.processes.findIndex((item: any) => item.id === id);
     if (index !== -1) {
       inMemoryDB.processes[index] = { ...inMemoryDB.processes[index], ...proc, id };
+      saveFallbackDB();
       return inMemoryDB.processes[index];
     }
     return null;
@@ -532,6 +574,7 @@ export const dbService = {
     const index = inMemoryDB.processes.findIndex((item: any) => item.id === id);
     if (index !== -1) {
       const deleted = inMemoryDB.processes.splice(index, 1);
+      saveFallbackDB();
       return deleted[0];
     }
     return null;
@@ -561,6 +604,7 @@ export const dbService = {
     }
     const newItem = { id: Date.now().toString(), ...comp };
     inMemoryDB.compositions.push(newItem);
+      saveFallbackDB();
     return newItem;
   },
 
@@ -576,6 +620,7 @@ export const dbService = {
     const index = inMemoryDB.compositions.findIndex((item: any) => item.id === id);
     if (index !== -1) {
       inMemoryDB.compositions[index] = { ...inMemoryDB.compositions[index], ...comp, id };
+      saveFallbackDB();
       return inMemoryDB.compositions[index];
     }
     return null;
@@ -593,6 +638,7 @@ export const dbService = {
     const index = inMemoryDB.compositions.findIndex((item: any) => item.id === id);
     if (index !== -1) {
       const deleted = inMemoryDB.compositions.splice(index, 1);
+      saveFallbackDB();
       return deleted[0];
     }
     return null;

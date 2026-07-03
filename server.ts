@@ -7,8 +7,9 @@ import fs from "fs";
 import multer from "multer";
 import { dbService, initializeDatabase } from "./server/db.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// Get _dirname dynamically (works for both TSX in ESM mode and ESBuild in CJS mode)
+const _filename = typeof __filename !== 'undefined' ? __filename : fileURLToPath(import.meta.url);
+const _dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(_filename);
 
 async function startServer() {
   const app = express();

@@ -648,7 +648,7 @@ const ProductCrud = () => {
         <table className="w-full text-left text-sm font-sans text-ink">
           <thead className="bg-[#FAF9F6] border-b border-ink/10 font-mono text-[10px] tracking-widest uppercase text-[#B2A490]">
             <tr>
-              <th className="p-4">Fabric</th>
+              <th className="p-4">SKU No.</th>
               <th className="p-4">Price</th>
               <th className="p-4">Details & Specs</th>
               <th className="p-4">Classification</th>
@@ -741,20 +741,20 @@ const ProductCrud = () => {
                 {/* Column One: Basic Attributes */}
                 <div className="space-y-6">
                   <div className="space-y-2">
-                    <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Fabric Title</label>
+                    <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">SKU No.</label>
                     <input 
                       type="text" 
                       required
                       className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors"
                       value={formState.title}
                       onChange={e => setFormState({ ...formState, title: e.target.value })}
-                      placeholder="e.g. Pure European Flax Linen"
+                      placeholder="e.g. TL-SL-1001"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Price (USD)</label>
+                    <div className="space-y-2 hidden">
+                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Price</label>
                       <input 
                         type="number" 
                         step="0.01"
@@ -777,8 +777,8 @@ const ProductCrud = () => {
                         </label>
                       </div>
                     </div>
-                    <div className="space-y-2">
-                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Availability Status</label>
+                    <div className="space-y-2 col-span-2">
+                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Greige Availability</label>
                       <select 
                         className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors"
                         value={formState.availability}
@@ -792,7 +792,7 @@ const ProductCrud = () => {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Category Classification</label>
+                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Application</label>
                       <select 
                         className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors"
                         value={formState.category}
@@ -813,7 +813,7 @@ const ProductCrud = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Technical Process</label>
+                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Finishes</label>
                       <select 
                         className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors"
                         value={formState.process}
@@ -873,7 +873,7 @@ const ProductCrud = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Bolt Usable Width</label>
+                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Cuttable Width (cm)</label>
                       <input 
                         type="text" 
                         className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors"
@@ -884,9 +884,9 @@ const ProductCrud = () => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 gap-4">
                     <div className="space-y-2">
-                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Weaving/Finishing Technique</label>
+                      <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Weaving</label>
                       <input 
                         type="text" 
                         className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors"
@@ -896,7 +896,7 @@ const ProductCrud = () => {
                       />
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-2 hidden">
                       <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Fiber/Material Detail</label>
                       <input 
                         type="text" 
@@ -909,7 +909,7 @@ const ProductCrud = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Status Collection Tag</label>
+                    <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Weight (GSM)</label>
                     <input 
                       type="text" 
                       className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors"
@@ -921,7 +921,7 @@ const ProductCrud = () => {
 
                   {/* Media Section */}
                   <div className="border border-ink/10 p-4 bg-white space-y-4">
-                    <span className="font-mono text-[10px] font-black text-ink uppercase tracking-wider block">Media & Image Assets (Unsplash URL)</span>
+                    <span className="font-mono text-[10px] font-black text-ink uppercase tracking-wider block">Image Upload</span>
                     
                     <div className="space-y-3">
                       <div className="space-y-1">
@@ -1003,13 +1003,13 @@ const ProductCrud = () => {
                 <h4 className="font-mono text-xs font-black uppercase tracking-widest text-[#B2A490]">Advanced Product Editorial Specs</h4>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Weave & Harvest */}
+                  {/* Traceability */}
                   <div className="border border-ink/10 p-5 bg-white space-y-4 rounded-sm">
-                    <span className="font-mono text-[10px] font-black uppercase tracking-wider text-ink block">02 / Weave & Harvest Editorial</span>
+                    <span className="font-mono text-[10px] font-black uppercase tracking-wider text-ink block">02 / Traceability</span>
                     
                     <div className="space-y-4">
                       <div className="space-y-1.5">
-                        <label className="font-mono text-[8px] uppercase tracking-widest text-[#B2A490] font-bold block">Weave & Harvest Description</label>
+                        <label className="font-mono text-[8px] uppercase tracking-widest text-[#B2A490] font-bold block">Traceability Description</label>
                         <textarea 
                           rows={4}
                           className="w-full border border-ink/20 p-2.5 bg-white font-sans text-xs outline-none focus:border-ink resize-none text-ink"
@@ -1031,13 +1031,13 @@ const ProductCrud = () => {
                     </div>
                   </div>
 
-                  {/* Packaging & Delivery */}
+                  {/* Sample Inquiry & Delivery Options */}
                   <div className="border border-ink/10 p-5 bg-white space-y-4 rounded-sm">
-                    <span className="font-mono text-[10px] font-black uppercase tracking-wider text-ink block">03 / Packaging & Delivery Editorial</span>
+                    <span className="font-mono text-[10px] font-black uppercase tracking-wider text-ink block">03 / Sample Inquiry & Delivery Options</span>
                     
                     <div className="space-y-4">
                       <div className="space-y-1.5">
-                        <label className="font-mono text-[8px] uppercase tracking-widest text-[#B2A490] font-bold block">Packaging & Delivery Description</label>
+                        <label className="font-mono text-[8px] uppercase tracking-widest text-[#B2A490] font-bold block">Sample Inquiry & Delivery Description</label>
                         <textarea 
                           rows={4}
                           className="w-full border border-ink/20 p-2.5 bg-white font-sans text-xs outline-none focus:border-ink resize-none text-ink"
