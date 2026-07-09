@@ -158,7 +158,6 @@ export const Shop: React.FC<ShopProps> = ({ onAddToCart }) => {
                        <Link to={`/product/${product.id}`} className="flex-grow space-y-1">
                         <h3 className="font-sans font-medium text-lg md:text-xl tracking-tight text-ink">{product.title.split(' ')[0]}</h3>
                         <p className="font-sans text-[11px] md:text-[13px] text-ink/60">{product.composition}</p>
-                        <p className="font-sans text-[10px] md:text-[12px] text-ink/30 tracking-widest font-bold">{product.category === 'TEXTURE' ? 'James Dunlop' : 'Mokum'}</p>
                       </Link>
                       <div className="flex flex-col items-end gap-4">
                         <button className="p-2 rounded-full border border-ink/5 hover:bg-ink/5 transition-colors group/heart" aria-label="Add to wishlist">

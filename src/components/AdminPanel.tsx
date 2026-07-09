@@ -38,7 +38,7 @@ const fetchApi = async (url: string, options: any = {}) => {
       price: 28.50,
       category: 'SHIRTING',
       process: 'PIECE_DYED',
-      availability: 'IN_STOCK',
+      availability: 'YES',
       composition: 'Pure linen',
       weaveHarvest: "Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.",
       weaveHarvestOrigin: "Regional intellectual property — France",
@@ -58,7 +58,7 @@ const fetchApi = async (url: string, options: any = {}) => {
       price: 32.00,
       category: 'GARMENT',
       process: 'YARN_DYED',
-      availability: 'IN_STOCK',
+      availability: 'YES',
       composition: 'Linen Tencel',
       weaveHarvest: "Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.",
       weaveHarvestOrigin: "Regional intellectual property — France",
@@ -78,7 +78,7 @@ const fetchApi = async (url: string, options: any = {}) => {
       price: 45.00,
       category: 'TEXTURE',
       process: 'SPECIAL_FINISH',
-      availability: 'MAKE_TO_ORDER',
+      availability: 'NO',
       composition: 'Linen-wool',
       weaveHarvest: "Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.",
       weaveHarvestOrigin: "Regional intellectual property — France",
@@ -98,7 +98,7 @@ const fetchApi = async (url: string, options: any = {}) => {
       price: 24.50,
       category: 'SHIRTING',
       process: 'PIECE_DYED',
-      availability: 'IN_STOCK',
+      availability: 'YES',
       composition: 'Linen Viscose',
       weaveHarvest: "Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.",
       weaveHarvestOrigin: "Regional intellectual property — France",
@@ -118,7 +118,7 @@ const fetchApi = async (url: string, options: any = {}) => {
       price: 35.00,
       category: 'SUIT',
       process: 'YARN_DYED',
-      availability: 'MAKE_TO_ORDER',
+      availability: 'NO',
       composition: 'Pure linen',
       weaveHarvest: "Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.",
       weaveHarvestOrigin: "Regional intellectual property — France",
@@ -138,7 +138,7 @@ const fetchApi = async (url: string, options: any = {}) => {
       price: 38.00,
       category: 'GARMENT',
       process: 'SPECIAL_FINISH',
-      availability: 'IN_STOCK',
+      availability: 'YES',
       composition: 'linen-cotton',
       weaveHarvest: "Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.",
       weaveHarvestOrigin: "Regional intellectual property — France",
@@ -158,7 +158,7 @@ const fetchApi = async (url: string, options: any = {}) => {
       price: 42.00,
       category: 'TEXTURE',
       process: 'PRINTING',
-      availability: 'IN_STOCK',
+      availability: 'YES',
       composition: 'linen-cotton',
       weaveHarvest: "Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.",
       weaveHarvestOrigin: "Regional intellectual property — France",
@@ -523,7 +523,7 @@ const ProductCrud = () => {
     category: "",
     process: "",
     composition: "",
-    availability: "IN_STOCK",
+    availability: "YES",
     weaveHarvest: "",
     weaveHarvestOrigin: "",
     packagingDelivery: "",
@@ -574,7 +574,7 @@ const ProductCrud = () => {
       category: product.category || "",
       process: product.process || "",
       composition: product.composition || "",
-      availability: product.availability || "IN_STOCK",
+      availability: product.availability || "YES",
       weaveHarvest: product.weaveHarvest || "",
       weaveHarvestOrigin: product.weaveHarvestOrigin || "",
       packagingDelivery: product.packagingDelivery || "",
@@ -599,7 +599,7 @@ const ProductCrud = () => {
       category: categories[0]?.name || "SHIRTING",
       process: processes[0]?.name || "PIECE_DYED",
       composition: compositions[0]?.name || "Pure linen",
-      availability: "IN_STOCK",
+      availability: "YES",
       weaveHarvest: "Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength.",
       weaveHarvestOrigin: "Regional intellectual property — France",
       packagingDelivery: "Every fabric piece is hand-rolled around our custom lignin-free conservation cores and enclosed in luxury linen protective sleeves. Delivered globally via carbon-neutral white-glove couriers in pristine condition.",
@@ -692,9 +692,9 @@ const ProductCrud = () => {
                 </td>
                 <td className="p-4">
                   <span className={`inline-block font-mono text-[9px] font-bold tracking-widest uppercase px-2 py-1 rounded-sm ${
-                    product.availability === 'IN_STOCK' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-amber-50 text-amber-700 border border-amber-200'
+                    product.availability === 'YES' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-amber-50 text-amber-700 border border-amber-200'
                   }`}>
-                    {product.availability === 'IN_STOCK' ? 'In Stock' : 'Make to order'}
+                    {product.availability === 'YES' ? 'Yes' : 'No'}
                   </span>
                 </td>
                 <td className="p-4 text-right">
@@ -785,8 +785,8 @@ const ProductCrud = () => {
                         value={formState.availability}
                         onChange={e => setFormState({ ...formState, availability: e.target.value })}
                       >
-                        <option value="IN_STOCK">IN_STOCK (In Stock)</option>
-                        <option value="MAKE_TO_ORDER">MAKE_TO_ORDER (Make to Order)</option>
+                        <option value="YES">Yes</option>
+                        <option value="NO">No</option>
                       </select>
                     </div>
                   </div>

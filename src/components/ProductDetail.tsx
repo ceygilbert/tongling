@@ -144,7 +144,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
                   </p>
                 )}
                 <span className="font-mono text-xs md:text-[13px] tracking-widest border border-[#B2A490]/25 px-2.5 py-1 rounded-[1px] font-bold">
-                  {product.availability === 'IN_STOCK' ? "Immediate dispatch" : "Bespoke craft-to-order"}
+                  {product.availability === 'YES' ? "Immediate dispatch" : "Bespoke craft-to-order"}
                 </span>
               </div>
             </div>
@@ -327,9 +327,12 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
                   </div>
 
                   <div className="space-y-3 font-mono text-xs tracking-widest font-bold text-ink/90 leading-relaxed">
-                    <p className="font-bold text-sm">Greige Availability Yes/ No (两个选项)</p>
-                    <p className="font-bold">Running Stock - Yes, this is one of our running stock qualities. As it is widely used for everyday garments, we keep several core colours in stock for faster delivery</p>
-                    <p>- No, please see Made to Order Instruction</p>
+                    <p className="font-bold text-sm">Greige Availability</p>
+                    {product.availability === 'YES' ? (
+                      <p>Running Stock - Yes, this is one of our running stock qualities. As it is widely used for everyday garments, we keep several core colours in stock for faster delivery</p>
+                    ) : (
+                      <p>Running Stock - No, please see Made to Order Instruction</p>
+                    )}
 
                     <p className="font-bold mt-4">Made to Order Instruction -</p>
                     <p>Please provide one of the following:</p>

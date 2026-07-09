@@ -12,7 +12,7 @@ export interface Product {
   showPrice?: boolean;
   category?: 'SHIRTING' | 'GARMENT' | 'SUIT' | 'TEXTURE';
   process?: 'PIECE_DYED' | 'YARN_DYED' | 'PRINTING' | 'SPECIAL_FINISH';
-  availability?: 'IN_STOCK' | 'MAKE_TO_ORDER';
+  availability?: 'YES' | 'NO';
   composition?: string;
   weaveHarvest?: string;
   weaveHarvestOrigin?: string;
