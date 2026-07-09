@@ -27,7 +27,7 @@ export const AboutSection: React.FC = () => (
             </h2>
           </div>
           <p className="font-mono text-[14px] md:text-[16px] leading-relaxed tracking-tight text-ink/70 border-l-2 border-ink pl-8">
-            Starting as a highly specialized small-scale dye house in Tongling, Sincerity Linen Group has matured into a premier global landmark for sustainable linen luxury. The name, "Sincerity" reflects our transparent relationship with natural textile materials and human makers.
+            Founded in 2005 as a dyeing and printing manufacturer, Tongling Sincerity Linen Group has grown from a dedicated production facility into a trusted long-term partner for global brands. As a manufacturer-led group, we combine in-house R&D capabilities with efficient production management. Committed to sustainability, we are continuously developing innovative and eco-friendly linen processing technique. Surplus and residual linen fibres are carefully collected and recycled for secondary applications, including eco-friendly paper and related material uses, extending the lifecycle of flax beyond textiles.
           </p>
           <Link to="/brand-story" className="inline-flex items-center gap-4 bg-ink text-bg-base px-8 py-4 font-mono text-[10px] font-bold tracking-[0.2em] hover:bg-ink/80 transition-all shadow-lg">
             <span>Explore Our Journey</span>
@@ -38,7 +38,7 @@ export const AboutSection: React.FC = () => (
         <div className="relative">
           <div className="aspect-[4/5] bg-gray-200 overflow-hidden shadow-2xl border border-ink/5 relative group">
              <img 
-               src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&w=1200&q=80" 
+               src="HomeAboutTL.jpg?auto=format&fit=crop&w=1200&q=80" 
                alt="Craftsmanship" 
                className="w-full h-full object-cover grayscale brightness-90 group-hover:scale-105 duration-1000 transition-transform"
                referrerPolicy="no-referrer"

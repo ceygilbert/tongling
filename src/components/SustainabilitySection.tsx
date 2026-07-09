@@ -7,7 +7,7 @@ export const SustainabilitySection: React.FC = () => (
         <div className="lg:col-span-7 order-2 lg:order-1">
            <div className="grid grid-cols-2 gap-8">
              <div className="aspect-[3/4] bg-gray-200 overflow-hidden shadow-2xl border border-ink/5 group relative">
-               <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1200&q=80" alt="Nature" className="w-full h-full object-cover grayscale brightness-95 group-hover:scale-105 duration-[2s] transition-all" referrerPolicy="no-referrer" />
+               <img src="Natural.png?auto=format&fit=crop&w=1200&q=80" alt="Nature" className="w-full h-full object-cover grayscale brightness-95 group-hover:scale-105 duration-[2s] transition-all" referrerPolicy="no-referrer" />
                <div className="absolute bottom-4 left-4 bg-bg-base/90 p-3 text-[8px] font-mono tracking-widest">
                  Organic Flax Fields
                </div>
@@ -23,12 +23,12 @@ export const SustainabilitySection: React.FC = () => (
         <div className="lg:col-span-5 space-y-12 order-1 lg:order-2">
            <div className="space-y-4">
              <span className="font-mono text-[10px] font-black tracking-widest text-[#B2A490]">Ecological Standard</span>
-             <h2 className="text-3xl sm:text-4xl md:text-[3.2vw] font-formal font-bold uppercase leading-[1.25] tracking-[0.08em] md:tracking-[0.1em] text-ink">
-               Nature <br /><span className="not-italic text-collision md:ml-12">Practice</span>
+             <h2 className="text-3xl sm:text-4xl md:text-[3.2vw] font-formal font-bold leading-[1.25] tracking-[0.08em] md:tracking-[0.1em] text-ink">
+               Culture as<br /><span className="not-italic text-collision md:ml-12">Nature</span>
              </h2>
            </div>
            <p className="font-mono text-[12px] md:text-[14px] leading-relaxed tracking-tight text-ink/60 border-l-2 border-ink pl-8">
-             Our pledge to earth runs companion to our search for pristine fiber. Through European Flax certifications and a waste-free loop of reprocessed leftover yarn, we seek minimal burden on the living land.
+             Each thread reflects the intelligence of nature. Our commitment to linen begins in the field. Flax is naturally resilient, requires minimal irrigation and generates virtually no waste, with every part of the plant finding a purpose. These qualities are the reason we continue to build our collections around this remarkable fibre.
            </p>
            <ul className="space-y-6 pt-8 border-t border-ink/10">
              {['European Flax® Certified', 'Closed-Loop Recycled Selvedges', 'OEKO-TEX® Standard 100 Compliant', 'Responsibly Harvested In France'].map((item) => (

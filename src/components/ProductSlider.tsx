@@ -87,14 +87,6 @@ export const ProductSlider: React.FC = () => {
                     {product.description}
                   </p>
                   <div className="grid grid-cols-2 gap-8 font-mono text-[10px] md:text-[11px] tracking-widest text-ink/40">
-                     <div>
-                        <p className="font-bold text-ink mb-1">Spec</p>
-                        <p>{product.dimensions}</p>
-                     </div>
-                     <div>
-                        <p className="font-bold text-ink mb-1">Material</p>
-                        <p>{product.material}</p>
-                     </div>
                   </div>
                   <Link 
                     to={`/product/${product.id}`}

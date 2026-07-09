@@ -9,25 +9,25 @@ export const InteractiveChain: React.FC = () => {
       title: "Yarn Spinning",
       detail: "Finely Combed Selection",
       desc: "Sourced exclusively from the premier wet-spun linen mills of Northern France and Belgium, our yarns are carefully sorted to ensure maximum tensile strength, minimal impurities, and a clean, uniform thread density perfect for high-speed looms.",
-      image: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=1200&q=80"
+      image: "Interactive1.jpg?auto=format&fit=crop&w=1200&q=80"
     },
     {
-      title: "Weaving Techniques",
+      title: "Precision Weaving",
       detail: "High-Tension Precision",
-      desc: "Our state-of-the-art rapier looms operate under custom-monitored humidity and temperature coordinates. We weave both premium plain-weave fabrics and complex yarn-dyed stripes with perfectly tailored selvedges.",
-      image: "https://images.unsplash.com/photo-1558051815-0f18e64e6280?auto=format&fit=crop&w=1200&q=80"
+      desc: "Weaving is where yarn becomes fabric. Our rapier looms handle both solid and yarn-dyed constructions with consistent tension and accurate yarn placement, delivering stable fabric quality from sampling through bulk production.",
+      image: "Interactive2.jpg?auto=format&fit=crop&w=1200&q=80"
     },
     {
       title: "Dyeing & Printing",
       detail: "Eco-Certified Kitchen",
-      desc: "Using low-liquor ratio dyeing technologies and premium Swiss dye formulas, we achieve multi-layered, deep color depths and complex printed patterns while strictly protecting the raw fiber's breathability and durability.",
-      image: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=1200&q=80"
+      desc: "Our dyeing and printing processes are carefully controlled to achieve consistent colour, good colourfastness and a clean finish. A range of dyeing and printing techniques allows us to produce both solid colours and custom designs for apparel and home textiles.",
+      image: "Interactive3.jpg?auto=format&fit=crop&w=1200&q=80"
     },
     {
       title: "Premium Finishing",
       detail: "Signature Soft Touch",
-      desc: "The defining stage. From natural local stone washing to bio-enzyme relaxed-crimp treatments and delicate anti-wrinkle press finishes, we transform the hand-feel into a fluid drape and textured comfort.",
-      image: "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?auto=format&fit=crop&w=1200&q=80"
+      desc: "Each fabric is finished according to its fibre composition and intended use. From stone washing and enzyme treatments to softening and calendaring, our finishing processes enhance texture, drape and long-term performance while preserving the natural character of the fibre.",
+      image: "Interactive4.jpg?auto=format&fit=crop&w=1200&q=80"
     }
   ];
 
@@ -35,10 +35,6 @@ export const InteractiveChain: React.FC = () => {
     <section className="px-4 md:px-12 py-16 md:py-24 border-b border-ink/10 bg-[#FAF9F6]">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
           <div className="md:col-span-12">
-            <div className="flex items-center gap-4 mb-4">
-              <span className="h-[1px] w-12 bg-collision" />
-              <span className="font-mono text-[10px] md:text-[11px] tracking-[0.5em] text-ink/40 font-bold">The In-House Loom Initiative</span>
-            </div>
           <h2 className="text-3xl sm:text-4xl md:text-[3.2vw] font-formal font-bold uppercase leading-[1.25] tracking-[0.08em] md:tracking-[0.1em] text-ink mb-2">
             Production
           </h2>
@@ -47,7 +43,7 @@ export const InteractiveChain: React.FC = () => {
         {/* Interactive Steps List */}
         <div className="lg:col-span-6 space-y-8 -mt-8 sm:-mt-10 lg:-mt-12">
           <p className="font-serif text-lg md:text-xl leading-relaxed text-ink/80 border-l-2 border-ink pl-8 mb-8">
-            We deliver an entirely vertical, high-control supply chain spanning initial fiber combing to bespoke textile finishing, guaranteeing uncompromised authenticity.
+            Tongling Sincerity Linen Group delivers a fully vertically integrated linen supply chain, from yarn spinning through to weaving, dyeing, printing, and finishing. Full yarn traceability underpins our commitment to transparency, quality assurance, and responsible manufacturing at every stage.
           </p>
 
           <div className="space-y-4">

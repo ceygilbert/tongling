@@ -18,6 +18,7 @@ export interface Product {
   weaveHarvestOrigin?: string;
   packagingDelivery?: string;
   packagingDeliveryCourier?: string;
+  galleryImages?: string[];
 }
 
 export interface CartItem extends Product {

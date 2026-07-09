@@ -242,6 +242,13 @@ export async function initializeDatabase() {
     const connection = await pool.getConnection();
     console.log("Successfully connected to MySQL/MariaDB database. Verifying schemas...");
 
+    
+    try {
+      await connection.query("ALTER TABLE products ADD COLUMN galleryImages TEXT");
+    } catch (e) {
+      // Ignore error if column already exists
+    }
+
     // Create categories table
     await connection.query(`
       CREATE TABLE IF NOT EXISTS categories (
@@ -287,7 +294,8 @@ export async function initializeDatabase() {
         weaveHarvest TEXT,
         weaveHarvestOrigin VARCHAR(255),
         packagingDelivery TEXT,
-        packagingDeliveryCourier VARCHAR(255)
+        packagingDeliveryCourier VARCHAR(255),
+        galleryImages TEXT
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     `);
 
@@ -338,12 +346,12 @@ export async function initializeDatabase() {
           INSERT INTO products (
             title, description, dimensions, material, technique, status,
             lifestyleImage, productImage, price, showPrice, category, process, availability, composition,
-            weaveHarvest, weaveHarvestOrigin, packagingDelivery, packagingDeliveryCourier
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            weaveHarvest, weaveHarvestOrigin, packagingDelivery, packagingDeliveryCourier, galleryImages
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `, [
           prod.title, prod.description, prod.dimensions, prod.material, prod.technique, prod.status,
           prod.lifestyleImage, prod.productImage, prod.price, 1, prod.category, prod.process, prod.availability, prod.composition,
-          prod.weaveHarvest, prod.weaveHarvestOrigin, prod.packagingDelivery, prod.packagingDeliveryCourier
+          prod.weaveHarvest, prod.weaveHarvestOrigin, prod.packagingDelivery, prod.packagingDeliveryCourier, JSON.stringify((prod as any).galleryImages || [])
         ]);
       }
     }
@@ -367,7 +375,8 @@ export const dbService = {
           ...r,
           id: String(r.id),
           price: Number(r.price),
-          showPrice: r.showPrice !== 0 // convert tinyint/number to boolean
+          showPrice: r.showPrice !== 0, // convert tinyint/number to boolean
+          galleryImages: r.galleryImages ? JSON.parse(r.galleryImages) : []
         }));
       } catch (err) {
         console.warn("MySQL query for products failed, using in-memory:", err);
@@ -383,13 +392,13 @@ export const dbService = {
           INSERT INTO products (
             title, description, dimensions, material, technique, status,
             lifestyleImage, productImage, price, showPrice, category, process, availability, composition,
-            weaveHarvest, weaveHarvestOrigin, packagingDelivery, packagingDeliveryCourier
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            weaveHarvest, weaveHarvestOrigin, packagingDelivery, packagingDeliveryCourier, galleryImages
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `, [
           prod.title || "", prod.description || "", prod.dimensions || "", prod.material || "",
           prod.technique || "", prod.status || "", prod.lifestyleImage || "", prod.productImage || "",
           prod.price || 0, prod.showPrice !== false ? 1 : 0, prod.category || "", prod.process || "", prod.availability || "IN_STOCK", prod.composition || "",
-          prod.weaveHarvest || "", prod.weaveHarvestOrigin || "", prod.packagingDelivery || "", prod.packagingDeliveryCourier || ""
+          prod.weaveHarvest || "", prod.weaveHarvestOrigin || "", prod.packagingDelivery || "", prod.packagingDeliveryCourier || "", JSON.stringify(prod.galleryImages || [])
         ]);
         const newId = String(result.insertId);
         return { ...prod, id: newId, showPrice: prod.showPrice !== false };
@@ -411,13 +420,13 @@ export const dbService = {
           UPDATE products SET
             title = ?, description = ?, dimensions = ?, material = ?, technique = ?, status = ?,
             lifestyleImage = ?, productImage = ?, price = ?, showPrice = ?, category = ?, process = ?, availability = ?, composition = ?,
-            weaveHarvest = ?, weaveHarvestOrigin = ?, packagingDelivery = ?, packagingDeliveryCourier = ?
+            weaveHarvest = ?, weaveHarvestOrigin = ?, packagingDelivery = ?, packagingDeliveryCourier = ?, galleryImages = ?
           WHERE id = ?
         `, [
           prod.title || "", prod.description || "", prod.dimensions || "", prod.material || "",
           prod.technique || "", prod.status || "", prod.lifestyleImage || "", prod.productImage || "",
           prod.price || 0, prod.showPrice !== false ? 1 : 0, prod.category || "", prod.process || "", prod.availability || "IN_STOCK", prod.composition || "",
-          prod.weaveHarvest || "", prod.weaveHarvestOrigin || "", prod.packagingDelivery || "", prod.packagingDeliveryCourier || "",
+          prod.weaveHarvest || "", prod.weaveHarvestOrigin || "", prod.packagingDelivery || "", prod.packagingDeliveryCourier || "", JSON.stringify(prod.galleryImages || []),
           id
         ]);
         return { ...prod, id, showPrice: prod.showPrice !== false };

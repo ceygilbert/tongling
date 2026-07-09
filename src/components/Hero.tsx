@@ -42,7 +42,7 @@ export const Hero: React.FC = () => (
           className="max-w-xl md:ml-24 relative pl-8 border-l border-ink/10 space-y-8"
         >
           <p className="font-serif text-lg md:text-xl lg:text-2xl leading-relaxed text-ink/75">
-            "A quiet dialogue between raw organic flax and decades of technical precision. We compose linen textiles that resonate with silent luxury and natural expression."
+            "Tongling Sincerity Linen Group offers a vertically integrated linen supply chain, covering yarn spinning, weaving, dyeing, printing, and finishing. Every yarn we use is fully traceable, ensuring transparency, quality assurance and responsibility across all stages of production."
           </p>
           <div className="flex flex-wrap gap-8 items-center pt-4">
             <Link 
@@ -72,19 +72,11 @@ export const Hero: React.FC = () => (
         >
           {/* Main cover image */}
           <img 
-            src="https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=1200&q=80" 
+            src="HeroSectionTL.jpg?auto=format&fit=crop&w=1200&q=80" 
             alt="Premium Linen" 
-            className="w-full h-full object-cover grayscale brightness-[0.92] hover:scale-105 duration-[3s] transition-transform ease-out"
+            className="w-full h-full object-cover brightness-[0.92] hover:scale-105 duration-[3s] transition-transform ease-out"
             referrerPolicy="no-referrer"
           />
-          {/* Premium editorial label */}
-          <div className="absolute bottom-6 left-6 right-6 bg-bg-base/90 backdrop-blur-md p-6 border border-ink/10 flex justify-between items-end">
-            <div className="space-y-1">
-              <span className="font-mono text-[9px] tracking-widest text-ink/40 block">Product Archive No. 01</span>
-              <h3 className="font-serif text-lg font-bold tracking-tight text-ink">European Flax Fine</h3>
-            </div>
-            <span className="font-mono text-[11px] tracking-wider text-collision font-bold text-ink">100% Pure</span>
-          </div>
         </motion.div>
 
 
@@ -95,10 +87,10 @@ export const Hero: React.FC = () => (
     <div className="border-t border-ink/10 py-8 flex flex-wrap gap-8 justify-between items-center text-[10px] sm:text-[11px] font-mono tracking-[0.25em] text-ink/40">
       <div className="flex items-center gap-3">
         <span className="w-2 h-2 rounded-full bg-emerald-700/60 animate-pulse" />
-        <span>Certified Normandy Flax</span>
+        <span>Masters of LINEN™ Certification</span>
       </div>
-      <div>Loom Capacity: 280,000 m / Month</div>
-      <div className="hidden md:block">ISO 9001 & Oeko-Tex Compliance</div>
+      <div>OEKO-TEX® STANDARD 100</div>
+      <div className="hidden md:block">GOTS certificated </div>
     </div>
   </section>
 );

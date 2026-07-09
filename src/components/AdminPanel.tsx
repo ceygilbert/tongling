@@ -456,8 +456,9 @@ const ProductCrud = () => {
 
   const [isUploadingProduct, setIsUploadingProduct] = useState(false);
   const [isUploadingLifestyle, setIsUploadingLifestyle] = useState(false);
+  const [isUploadingGallery, setIsUploadingGallery] = useState(false);
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: "productImage" | "lifestyleImage") => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: "productImage" | "lifestyleImage" | "galleryImages") => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -927,15 +928,9 @@ const ProductCrud = () => {
                       <div className="space-y-1">
                         <span className="font-mono text-[8px] text-[#B2A490] uppercase tracking-widest block font-bold">Product Asset Image</span>
                         <div className="flex gap-2">
-                          <input 
-                            type="text" 
-                            className="flex-1 border border-ink/15 p-2 bg-bg-base font-sans text-xs outline-none"
-                            value={formState.productImage}
-                            onChange={e => setFormState({ ...formState, productImage: e.target.value })}
-                            placeholder="Paste image URL or browse..."
-                          />
+                          
                           <label className="cursor-pointer font-mono text-[9px] bg-ink text-white hover:bg-ink/80 px-3 py-2 uppercase tracking-wider flex items-center justify-center transition-colors">
-                            {isUploadingProduct ? "Uploading..." : "Browse"}
+                            {isUploadingProduct ? "Uploading..." : "Upload Image"}
                             <input 
                               type="file" 
                               accept="image/*" 
@@ -946,18 +941,47 @@ const ProductCrud = () => {
                           </label>
                         </div>
                       </div>
+
+                      <div className="space-y-1">
+                        <span className="font-mono text-[8px] text-[#B2A490] uppercase tracking-widest block font-bold">Gallery Images (Max 10)</span>
+                        <div className="flex gap-2">
+                          
+                          <label className="cursor-pointer font-mono text-[9px] bg-ink text-white hover:bg-ink/80 px-3 py-2 uppercase tracking-wider flex items-center justify-center transition-colors">
+                            {isUploadingGallery ? "Uploading..." : "Upload Image"}
+                            <input 
+                              type="file" 
+                              accept="image/*" 
+                              className="hidden"
+                              onChange={e => handleImageUpload(e, "galleryImages")}
+                              disabled={isUploadingGallery || (formState.galleryImages || []).length >= 10}
+                            />
+                          </label>
+                        </div>
+                        <div className="grid grid-cols-5 gap-2 pt-2">
+                          {(formState.galleryImages || []).map((imgUrl: string, idx: number) => (
+                            <div key={idx} className="relative group h-16 border border-ink/5 bg-[#FBF9F5] overflow-hidden">
+                              <img src={imgUrl} className="w-full h-full object-cover" alt="" />
+                              <button
+                                type="button"
+                                className="absolute inset-0 bg-red-500/80 text-white opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity"
+                                onClick={() => {
+                                  const newGallery = [...(formState.galleryImages || [])];
+                                  newGallery.splice(idx, 1);
+                                  setFormState(prev => ({ ...prev, galleryImages: newGallery }));
+                                }}
+                              >
+                                <span className="font-mono text-[10px] font-bold uppercase">Del</span>
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                       <div className="space-y-1">
                         <span className="font-mono text-[8px] text-[#B2A490] uppercase tracking-widest block font-bold">Lifestyle Atmospheric Image</span>
                         <div className="flex gap-2">
-                          <input 
-                            type="text" 
-                            className="flex-1 border border-ink/15 p-2 bg-bg-base font-sans text-xs outline-none"
-                            value={formState.lifestyleImage}
-                            onChange={e => setFormState({ ...formState, lifestyleImage: e.target.value })}
-                            placeholder="Paste image URL or browse..."
-                          />
+                          
                           <label className="cursor-pointer font-mono text-[9px] bg-ink text-white hover:bg-ink/80 px-3 py-2 uppercase tracking-wider flex items-center justify-center transition-colors">
-                            {isUploadingLifestyle ? "Uploading..." : "Browse"}
+                            {isUploadingLifestyle ? "Uploading..." : "Upload Image"}
                             <input 
                               type="file" 
                               accept="image/*" 

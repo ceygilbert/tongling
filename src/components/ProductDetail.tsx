@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { ArrowLeft, Minus, Plus, ShoppingBag, Heart, Globe } from "lucide-react";
+import { ArrowLeft, Minus, Plus, ShoppingBag, Heart, Globe, ChevronDown, Sofa } from "lucide-react";
 import { Product } from "../types";
 import { PRODUCTS } from "../data";
 
@@ -15,10 +15,13 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
   const relatedProducts = PRODUCTS.filter(p => p.id !== id).slice(0, 4);
 
   // High-fidelity luxury state
-  const [activeImageTab, setActiveImageTab] = useState<"detail" | "lifestyle">("detail");
+  const [activeImageIdx, setActiveImageIdx] = useState(0);
+  const allImages = [product.productImage, product.lifestyleImage, ...(product.galleryImages || [])].filter(Boolean);
+  const currentImage = allImages[activeImageIdx] || product.productImage;
   const [quantity, setQuantity] = useState(1);
   const [includeSwatch, setIncludeSwatch] = useState(false);
   const [wishlisted, setWishlisted] = useState(false);
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"specs" | "origin" | "shipping">("specs");
 
   if (!product) {
@@ -29,10 +32,8 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
     );
   }
 
-  const currentImage = activeImageTab === "detail" ? product.productImage : product.lifestyleImage;
-  const currentCaption = activeImageTab === "detail"
-    ? "Technical shot — Pure filament density & weft resolution"
-    : "Atmospheric in situ — Natural drape, color saturation & weave response";
+  
+  
 
   const handleAddToBag = () => {
     onAddToCart(product);
@@ -70,12 +71,12 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
             {/* Main Stage */}
             <div className="relative aspect-[3/4] bg-white overflow-hidden border border-ink/5 shadow-sm group">
               <div className="absolute top-4 left-4 z-10 bg-[#FBFBFA]/90 border border-ink/5 px-2.5 py-1 text-[8px] font-mono tracking-[0.2em] text-ink/75 font-bold">
-                perspective {activeImageTab === "detail" ? "01" : "02"}
+                perspective {activeImageIdx < 9 ? "0" + (activeImageIdx + 1) : activeImageIdx + 1}
               </div>
               
               <AnimatePresence mode="wait">
                 <motion.img 
-                  key={activeImageTab}
+                  key={activeImageIdx}
                   src={currentImage} 
                   alt={product.title} 
                   initial={{ opacity: 0, scale: 1.02 }}
@@ -92,34 +93,28 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
             </div>
 
             {/* Captions and Toggle Row */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-2">
-              <span className="font-mono text-[8px] md:text-[9px] tracking-[0.2em] text-[#B2A490] font-bold leading-none">
-                {currentCaption}
-              </span>
+            <div className="flex flex-col md:flex-row md:items-center gap-6 pt-2">
+              
 
               {/* Toggle controls */}
-              <div className="flex gap-2.5">
-                <button
-                  onClick={() => setActiveImageTab("detail")}
-                  className={`px-4 py-2 text-[9px] font-mono tracking-widest border transition-all duration-300 rounded-[1px] ${
-                    activeImageTab === "detail"
-                      ? "bg-ink text-bg-base border-ink"
-                      : "bg-transparent border-ink/10 text-ink/40 hover:border-ink/35 hover:text-ink"
-                  }`}
-                >
-                  01 / Filament Detailed
-                </button>
-                <button
-                  onClick={() => setActiveImageTab("lifestyle")}
-                  className={`px-4 py-2 text-[9px] font-mono tracking-widest border transition-all duration-300 rounded-[1px] ${
-                    activeImageTab === "lifestyle"
-                      ? "bg-ink text-bg-base border-ink"
-                      : "bg-transparent border-ink/10 text-ink/40 hover:border-ink/35 hover:text-ink"
-                  }`}
-                >
-                  02 / In Situ Coupling
-                </button>
+              
+              {/* Toggle controls - Thumbnails */}
+              <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-hide">
+                {allImages.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveImageIdx(idx)}
+                    className={`relative w-16 h-16 flex-shrink-0 overflow-hidden border transition-all duration-300 rounded-[1px] ${
+                      activeImageIdx === idx
+                        ? "border-ink opacity-100"
+                        : "border-ink/10 opacity-50 hover:opacity-100 hover:border-ink/35"
+                    }`}
+                  >
+                    <img src={img} alt="" className="w-full h-full object-cover grayscale" />
+                  </button>
+                ))}
               </div>
+
             </div>
           </div>
 
@@ -233,103 +228,122 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
               </div>
             </div>
 
-            {/* Editorial Accordion */}
-            <div className="border-t border-ink/10 pt-4 space-y-4">
-              {/* Tab Selector */}
-              <div className="flex justify-between border-b border-ink/5 pb-2 font-mono text-xs md:text-[13px] tracking-widest">
-                <button 
-                  onClick={() => setActiveTab("specs")} 
-                  className={`pb-2 transition-all relative ${activeTab === "specs" ? "font-bold text-ink" : "text-ink/40 hover:text-ink"}`}
-                >
-                  01 / Material Specs
-                  {activeTab === "specs" && <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-[#B2A490]" />}
-                </button>
-                <button 
-                  onClick={() => setActiveTab("origin")} 
-                  className={`pb-2 transition-all relative ${activeTab === "origin" ? "font-bold text-ink" : "text-ink/40 hover:text-ink"}`}
-                >
-                  02 / Weave & Harvest
-                  {activeTab === "origin" && <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-[#B2A490]" />}
-                </button>
-                <button 
-                  onClick={() => setActiveTab("shipping")} 
-                  className={`pb-2 transition-all relative ${activeTab === "shipping" ? "font-bold text-ink" : "text-ink/40 hover:text-ink"}`}
-                >
-                  03 / Packaging & Delivery
-                  {activeTab === "shipping" && <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-[#B2A490]" />}
-                </button>
-              </div>
+                        {/* Specifications Section */}
+            <div className="border-t border-ink/10 pt-8 mt-12">
+              <h2 className="font-serif text-3xl md:text-4xl font-black tracking-tighter text-ink mb-8">Specifications</h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8">
+                {/* Left Column */}
+                <div className="space-y-0">
+                  <div className="flex justify-between py-3 border-b border-ink/10">
+                    <span className="font-mono text-xs md:text-sm tracking-widest font-bold text-ink/70 uppercase">Product</span>
+                    <span className="font-mono text-xs md:text-[13px] tracking-wider text-ink font-bold w-1/2">{product.title}</span>
+                  </div>
+                  <div className="flex justify-between py-3 border-b border-ink/10">
+                    <span className="font-mono text-xs md:text-sm tracking-widest font-bold text-ink/70 uppercase">Colour</span>
+                    <span className="font-mono text-xs md:text-[13px] tracking-wider text-ink font-bold w-1/2">{product.category || "03"}</span>
+                  </div>
+                  <div className="flex justify-between py-3 border-b border-ink/10">
+                    <span className="font-mono text-xs md:text-sm tracking-widest font-bold text-ink/70 uppercase">Collection</span>
+                    <span className="font-mono text-xs md:text-[13px] tracking-wider text-ink font-bold w-1/2">{product.status || "Core Collection"}</span>
+                  </div>
+                  <div className="flex justify-between py-3 border-b border-ink/10">
+                    <span className="font-mono text-xs md:text-sm tracking-widest font-bold text-ink/70 uppercase">Code</span>
+                    <span className="font-mono text-xs md:text-[13px] tracking-wider text-ink font-bold w-1/2">TL-{product.id}0A</span>
+                  </div>
+                  <div className="flex justify-between py-3 border-b border-ink/10">
+                    <span className="font-mono text-xs md:text-sm tracking-widest font-bold text-ink/70 uppercase">Composition</span>
+                    <span className="font-mono text-xs md:text-[13px] tracking-wider text-ink font-bold w-1/2">{product.composition || product.material}</span>
+                  </div>
+                  <div className="flex justify-between py-3 border-b border-ink/10">
+                    <span className="font-mono text-xs md:text-sm tracking-widest font-bold text-ink/70 uppercase">Width</span>
+                    <span className="font-mono text-xs md:text-[13px] tracking-wider text-ink font-bold w-1/2">{product.dimensions}</span>
+                  </div>
+                  <div className="flex justify-between py-3 border-b border-ink/10">
+                    <span className="font-mono text-xs md:text-sm tracking-widest font-bold text-ink/70 uppercase">Weight</span>
+                    <span className="font-mono text-xs md:text-[13px] tracking-wider text-ink font-bold w-1/2">{"826.0g/m"}</span>
+                  </div>
+                  <div className="flex justify-between py-3 border-b border-ink/10">
+                    <span className="font-mono text-xs md:text-sm tracking-widest font-bold text-ink/70 uppercase">Origin</span>
+                    <span className="font-mono text-xs md:text-[13px] tracking-wider text-ink font-bold w-1/2">{product.weaveHarvestOrigin || "Italy"}</span>
+                  </div>
+                </div>
 
-              {/* Tab Content Box */}
-              <div className="min-h-[140px] pt-4">
-                <AnimatePresence mode="wait">
-                  {activeTab === "specs" && (
-                    <motion.div 
-                      key="specs"
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-4 font-mono text-[13px] md:text-sm tracking-widest text-[#1A1A1A]/70 font-bold"
+                {/* Right Column */}
+                <div className="space-y-6">
+                  <div className="border-b border-ink/10">
+                    <button 
+                      onClick={() => setOpenAccordion(openAccordion === 'care' ? null : 'care')}
+                      className="flex justify-between items-center w-full py-3 font-mono text-xs md:text-sm tracking-widest font-bold text-ink"
                     >
-                      <div className="flex justify-between items-center border-b border-ink/5 pb-2.5">
-                        <span>Fiber Type</span>
-                        <span className="text-ink font-extrabold">{product.material}</span>
-                      </div>
-                      <div className="flex justify-between items-center border-b border-ink/5 pb-2.5">
-                        <span>Bolt Usable Width</span>
-                        <span className="text-ink font-extrabold">{product.dimensions}</span>
-                      </div>
-                      <div className="flex justify-between items-center border-b border-ink/5 pb-2.5">
-                        <span>Finishing Technique</span>
-                        <span className="text-ink font-extrabold">{product.technique}</span>
-                      </div>
-                      <div className="flex justify-between items-center pb-1">
-                        <span>Atelier Weft Code</span>
-                        <span className="text-ink font-extrabold">TL-{product.category}-{product.process}</span>
-                      </div>
-                    </motion.div>
-                  )}
+                      <span>Care</span>
+                      <ChevronDown size={16} className={`transition-transform ${openAccordion === 'care' ? 'rotate-180' : ''}`} />
+                    </button>
+                    <AnimatePresence>
+                      {openAccordion === 'care' && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pb-3 text-sm text-ink/70 font-serif">
+                            Dry clean only. Do not bleach. Iron on low heat if necessary.
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
 
-                  {activeTab === "origin" && (
-                    <motion.div 
-                      key="origin"
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-3 font-serif text-sm md:text-base text-ink/70 leading-relaxed"
+                  <div className="border-b border-ink/10">
+                    <button 
+                      onClick={() => setOpenAccordion(openAccordion === 'env' ? null : 'env')}
+                      className="flex justify-between items-center w-full py-3 font-mono text-xs md:text-sm tracking-widest font-bold text-ink"
                     >
-                      <p>
-                        {product.weaveHarvest || "Our pure linen flax fibers are harvested from cooperative agricultural farms of Normandy, Northern France. These delicate crops are organic-grade spun under stringent water-conserving wet conditions to maximize filament tensile strength."}
-                      </p>
-                      <p className="font-mono text-xs md:text-[13px] tracking-wider text-[#B2A490] font-bold">
-                        Origin directory: {product.weaveHarvestOrigin || "Regional intellectual property — France"}
-                      </p>
-                    </motion.div>
-                  )}
+                      <span>Environmental Certifications</span>
+                      <ChevronDown size={16} className={`transition-transform ${openAccordion === 'env' ? 'rotate-180' : ''}`} />
+                    </button>
+                    <AnimatePresence>
+                      {openAccordion === 'env' && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pb-3 text-sm text-ink/70 font-serif">
+                            European Flax® certified. OEKO-TEX® Standard 100.
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
 
-                  {activeTab === "shipping" && (
-                    <motion.div 
-                      key="shipping"
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-3 font-serif text-sm md:text-base text-ink/70 leading-relaxed"
-                    >
-                      <p>
-                        {product.packagingDelivery || "Every fabric piece is hand-rolled around our custom lignin-free conservation cores and enclosed in luxury linen protective sleeves. Delivered globally via carbon-neutral white-glove couriers in pristine condition."}
-                      </p>
-                      <p className="font-mono text-xs md:text-[13px] tracking-wider text-[#B2A490] font-bold">
-                        {product.packagingDeliveryCourier || "Free tracked courier worldwide — Shipped within 24 hours"}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                  <div className="space-y-2 pb-4 border-b border-ink/10">
+                    <span className="font-mono text-xs md:text-sm tracking-widest font-bold text-ink block">Usage</span>
+                    <div className="flex items-center gap-2 text-ink/80">
+                      <Sofa size={18} />
+                      <span className="font-mono text-xs md:text-sm tracking-widest font-bold">{(product.category === 'GARMENT' || product.category === 'SHIRTING' || product.category === 'SUIT') ? 'Garment & Apparel' : 'Upholstery'}</span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3 font-mono text-xs tracking-widest font-bold text-ink/90 leading-relaxed">
+                    <p className="font-bold text-sm">Greige Availability Yes/ No (两个选项)</p>
+                    <p className="font-bold">Running Stock - Yes, this is one of our running stock qualities. As it is widely used for everyday garments, we keep several core colours in stock for faster delivery</p>
+                    <p>- No, please see Made to Order Instruction</p>
+
+                    <p className="font-bold mt-4">Made to Order Instruction -</p>
+                    <p>Please provide one of the following:</p>
+                    <div className="pl-4 space-y-1">
+                      <p>A Pantone® TPX or TPG colour code</p>
+                      <p>Your own fabric swatch for colour matching</p>
+                      <p>Your pattern or design for custom development</p>
+                    </div>
+
+                    <p className="font-bold mt-4">Lead time: Approximately 15–45 days, depending on the product and order requirements.</p>
+                  </div>
+                </div>
               </div>
             </div>
-
             {/* Direct Line to the Atelier */}
             <div className="border border-[#B2A490]/25 bg-[#B2A490]/5 p-5 flex items-start gap-4 rounded-[1px]">
               <div className="p-2.5 bg-white border border-[#B2A490]/15 rounded-full flex-shrink-0">
@@ -338,7 +352,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
               <div className="space-y-1">
                 <span className="font-mono text-xs md:text-[13px] tracking-[0.2em] text-[#B2A490] font-extrabold block">Atelier Consultation desk</span>
                 <p className="font-serif text-xs md:text-sm text-ink/65 leading-snug">
-                  Unsure about appropriate drape, weight, or custom weaving bolts for your interior project? Speak directly to our master weavers at <a href="mailto:info@tonglingsinceritylinen.com" className="underline hover:text-[#B2A490] font-sans font-medium">info@tonglingsinceritylinen.com</a>.
+                  Unsure about appropriate drape, weight, or custom weaving bolts for your interior project? Speak directly to our master weavers at <a href="mailto:info@tonglingsinceritylinen.com" className="underline hover:text-[#B2A490] font-serif font-medium">info@tonglingsinceritylinen.com</a>.
                 </p>
               </div>
             </div>

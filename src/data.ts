@@ -4,7 +4,7 @@ const DEFAULT_PRODUCTS: Product[] = [
   {
     id: "1",
     title: "European Flax Linen",
-    description: "Our premium 100% European Flax Linen is sourced from the finest fields in Europe. This fabric is celebrated for its exceptional breathability, natural strength, and a signature crisp texture that softens beautifully over time.",
+    description: "Our European Flax® linen is woven from long flax fibres grown in Western Europe. Naturally breathable, durable and biodegradable, it offers a crisp handle that gradually softens with wear and washing while maintaining its distinctive character.",
     dimensions: "150 CM WIDTH",
     material: "100% EUROPEAN FLAX",
     technique: "PLAIN WEAVE",
@@ -43,14 +43,14 @@ const DEFAULT_PRODUCTS: Product[] = [
   },
   {
     id: "3",
-    title: "Jacquard Woven Linen",
-    description: "Intricate patterns woven directly into the fabric. Our Jacquard series combines traditional craftsmanship with modern design, creating a rich, textured surface that adds depth and sophistication to any interior.",
+    title: "Special Weaves",
+    description: "Our special weave collection explores a variety of decorative constructions and surface techniques, including dobbies, jacquards, embroidery and topdyed fabrics. Combined with optional functional finishes, these fabrics offer greater texture, dimension and design flexibility for apparel and home textiles.",
     dimensions: "140 CM WIDTH",
     material: "LINEN BLEND",
     technique: "JACQUARD WEAVE",
     status: "ARTISAN SERIES",
-    lifestyleImage: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80",
-    productImage: "https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=1200&q=80",
+    lifestyleImage: "Specialweave.jpg?auto=format&fit=crop&w=1200&q=80",
+    productImage: "Specialweave.jpg?auto=format&fit=crop&w=1200&q=80",
     price: 45.00,
     category: 'TEXTURE',
     process: 'SPECIAL_FINISH',
@@ -83,14 +83,14 @@ const DEFAULT_PRODUCTS: Product[] = [
   },
   {
     id: "5",
-    title: "YARN-DYED STRIPES",
-    description: "Classic elegance through yarn-dyed precision. The colors are integrated into the fibers before weaving, resulting in vibrant, long-lasting patterns and a superior depth of color that piece-dyeing cannot match.",
+    title: "YARN-DYED FABRICS",
+    description: "Create depth and structure with yarn-dyed linen. From chambrays, stripes and checks to custom developments, our yarn-dyed collections offer lasting colour definition and distinctive woven character. Choose from our pattern library or develop exclusive designs with our team.",
     dimensions: "150 CM WIDTH",
     material: "100% LINEN",
     technique: "YARN-DYED",
     status: "PREMIUM FINISH",
-    lifestyleImage: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=1200&q=80",
-    productImage: "https://images.unsplash.com/photo-1554188248-986adbb73be4?auto=format&fit=crop&w=1200&q=80",
+    lifestyleImage: "Yarndyed.jpg?auto=format&fit=crop&w=1200&q=80",
+    productImage: "Yarndyed.jpg?auto=format&fit=crop&w=1200&q=80",
     price: 35.00,
     category: 'SUIT',
     process: 'YARN_DYED',
@@ -123,14 +123,14 @@ const DEFAULT_PRODUCTS: Product[] = [
   },
   {
     id: "7",
-    title: "DIGITAL PRINTED LINEN",
-    description: "Unleashing creative possibilities with high-definition digital printing. Our linen serves as a canvas for intricate designs and vibrant colors, perfect for statement fashion and bespoke home decor.",
+    title: "DIGITAL PRINTED",
+    description: "High-definition digital printing enables detailed patterns, precise colour reproduction and flexible production. Suitable for both apparel and home textiles, our collection can be selected from existing designs or developed as bespoke prints.",
     dimensions: "145 CM WIDTH",
     material: "LINEN / COTTON",
     technique: "DIGITAL PRINT",
     status: "CREATIVE LINE",
-    lifestyleImage: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1200&q=80",
-    productImage: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=1200&q=80",
+    lifestyleImage: "digital.jpg?auto=format&fit=crop&w=1200&q=80",
+    productImage: "digital.jpg?auto=format&fit=crop&w=1200&q=80",
     price: 42.00,
     category: 'TEXTURE',
     process: 'PRINTING',
@@ -143,45 +143,7 @@ const DEFAULT_PRODUCTS: Product[] = [
   }
 ];
 
-const getStoredProducts = (): Product[] => {
-  if (typeof window === "undefined") return DEFAULT_PRODUCTS;
-  const local = localStorage.getItem("sincerity_products");
-  if (local) {
-    try {
-      return JSON.parse(local);
-    } catch (e) {
-      return DEFAULT_PRODUCTS;
-    }
-  }
-  // Initialize with DEFAULT_PRODUCTS on first clean run
-  try {
-    localStorage.setItem("sincerity_products", JSON.stringify(DEFAULT_PRODUCTS));
-  } catch(e) {}
-  return DEFAULT_PRODUCTS;
-};
-
-export const PRODUCTS = new Proxy([], {
-  get(target, prop) {
-    const list = getStoredProducts();
-    const val = (list as any)[prop];
-    if (typeof val === "function") {
-      return val.bind(list);
-    }
-    return val;
-  },
-  getOwnPropertyDescriptor(target, prop) {
-    const list = getStoredProducts();
-    return Reflect.getOwnPropertyDescriptor(list, prop);
-  },
-  ownKeys(target) {
-    const list = getStoredProducts();
-    return Reflect.ownKeys(list);
-  },
-  has(target, prop) {
-    const list = getStoredProducts();
-    return Reflect.has(list, prop);
-  }
-}) as unknown as Product[];
+export const PRODUCTS = DEFAULT_PRODUCTS;
 
 export const LOGO_URL = "https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/generals/tongling_logo.png";
 
