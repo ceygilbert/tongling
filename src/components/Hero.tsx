@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
+import { getStoredHomeContent } from "../data";
 
-export const Hero: React.FC = () => (
+export const Hero: React.FC = () => {
+  const [content, setContent] = useState(getStoredHomeContent());
+  
+  useEffect(() => {
+    const handleStorage = () => {
+      setContent(getStoredHomeContent());
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
+
+  return (
   <section className="pt-24 min-h-[92vh] flex flex-col justify-between px-4 md:px-12 relative bg-bg-base border-b border-ink/10">
     {/* Clean, high-end backdrop */}
     <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[70vw] h-[40vh] bg-[#f4ebd9]/30 rounded-full blur-3xl -z-0 pointer-events-none" />
@@ -29,9 +41,9 @@ export const Hero: React.FC = () => (
             transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="text-3xl sm:text-4xl md:text-[5.5vw] font-formal font-bold uppercase leading-[1.2] tracking-[0.08em] md:tracking-[0.1em] text-ink"
           >
-            The Art Of <br />
-            <span className="text-collision md:ml-16">Crafted</span> <br />
-            <span className="md:ml-32">Textures</span>
+            {content.hero.titleLine1} <br />
+            <span className="text-collision md:ml-16">{content.hero.titleLine2}</span> <br />
+            <span className="md:ml-32">{content.hero.titleLine3}</span>
           </motion.h1>
         </div>
 
@@ -42,8 +54,9 @@ export const Hero: React.FC = () => (
           className="max-w-xl md:ml-24 relative pl-8 border-l border-ink/10 space-y-8"
         >
           <p className="font-serif text-lg md:text-xl lg:text-2xl leading-relaxed text-ink/75">
-            "Tongling Sincerity Linen Group offers a vertically integrated linen supply chain, covering yarn spinning, weaving, dyeing, printing, and finishing. Every yarn we use is fully traceable, ensuring transparency, quality assurance and responsibility across all stages of production."
+            {content.hero.description}
           </p>
+
           <div className="flex flex-wrap gap-8 items-center pt-4">
             <Link 
               to="/shop" 
@@ -72,14 +85,12 @@ export const Hero: React.FC = () => (
         >
           {/* Main cover image */}
           <img 
-            src="HeroSectionTL.jpg?auto=format&fit=crop&w=1200&q=80" 
+            src={content.hero.image} 
             alt="Premium Linen" 
             className="w-full h-full object-cover brightness-[0.92] hover:scale-105 duration-[3s] transition-transform ease-out"
             referrerPolicy="no-referrer"
           />
         </motion.div>
-
-
       </div>
     </div>
 
@@ -93,4 +104,5 @@ export const Hero: React.FC = () => (
       <div className="hidden md:block">GOTS certificated </div>
     </div>
   </section>
-);
+  );
+};

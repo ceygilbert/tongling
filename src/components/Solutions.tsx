@@ -1,95 +1,20 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
+import { getStoredSolutionsContent } from "../data";
 import { ArrowRight, Sparkles, Wind, Palette, Layers, Globe, Sliders, Check } from "lucide-react";
 
 export const Solutions: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("apparel");
 
-  const colorFeatures = [
-    { num: "01", name: "Laboratory colour matching", desc: "Precision custom lab dips matched under multiple calibrated standard light sources." },
-    { num: "02", name: "Instrumental colour measurement", desc: "Spectrophotometric shade analysis to monitor chromatic accuracy down to absolute delta values." },
-    { num: "03", name: "Digital recipe generation", desc: "Automated colorant formulation balancing color performance with eco-sustainable input parameters." },
-    { num: "04", name: "Computer-controlled dye dosing", desc: "Precise computerized dosing ensures consistent distribution across small and large dye batches." }
-  ];
+  const [content, setContent] = React.useState(getStoredSolutionsContent());
+  React.useEffect(() => {
+    const handleStorage = () => setContent(getStoredSolutionsContent());
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
 
-  const supportingServices = [
-    { name: "Complimentary Lab Dips", note: "Standard 3-5 days turnaround" },
-    { name: "Handloom & Strike-Offs", note: "Bespoke structural pre-runs" },
-    { name: "Digital Print Sampling", note: "Rapid physical print prototypes" },
-    { name: "Technical Consultation", note: "Direct access to yarn engineers" }
-  ];
-
-  const finishingTechniques = [
-    {
-      name: "Basic Wash",
-      desc: "Provides a relaxed natural appearance while improving softness and reducing residual shrinkage. Perfect for everyday home essentials."
-    },
-    {
-      name: "Sand Wash",
-      desc: "A premium finishing treatment that creates a smoother micro-shaved surface and significantly softer hand feel, delivering a relaxed and luxurious appearance."
-    },
-    {
-      name: "Enzyme Wash",
-      desc: "Uses bio-organic agents to gently refine the fabric surface, improving drapery, glide, softness, and skin comfort while preserving core physical durability."
-    },
-    {
-      name: "Low-Tension Rope Processing",
-      desc: "Designed specifically for waffle, weave-pucker, and dobby textures, helping preserve the natural three-dimensional structure and surface depth."
-    }
-  ];
-
-  const applications = [
-    "Bedding", "Cushion Covers", "Table Linen", "Curtains", "Decorative Textiles", "Hospitality & Hotel Programs"
-  ];
-
-  const yarnSpecs = [
-    "Precision wet-spun pure flax fibers",
-    "Suitable for high-speed industrial weaving & knitting",
-    "High tensile strength with minimal natural yarn slubs",
-    "Available for custom sampling up to container quantity"
-  ];
-
-  const pfdSpecs = [
-    "Controlled pre-treatment for supreme affinity and absorbency",
-    "Perfect base for piece dyeing, garment dyeing & digital printing",
-    "Clean structural alignment protecting selvedges",
-    "Continuous stock-supported qualities for rapid launch"
-  ];
-
-  // Map of capabilities with corresponding high-quality curated unsplash images
-  const capabilities = [
-    {
-      title: "Piece Dyeing",
-      desc: "Flexible colour development with excellent shade consistency and high colorfastness over large bulk volumes.",
-      img: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      title: "Yarn Dyeing",
-      desc: "Rich complex colour depth and sophisticated premium woven designs for checks, stripes, and customized jaquards.",
-      img: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      title: "Digital Printing",
-      desc: "Advanced high-definition digital inkjet technology enabling unlimited color gradients and short development cycles.",
-      img: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      title: "Placement Printing",
-      desc: "Extremely precise motif and pattern alignment designed specifically for structured apparel patterns and home panels.",
-      img: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      title: "Embroidery",
-      desc: "Decorative custom structural embroidery elements combining traditional artisan techniques with technical precision.",
-      img: "https://images.unsplash.com/photo-1554188248-986adbb73be4?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      title: "Dobby Weaving",
-      desc: "Beautifully textured, geometric and decorative structures that give linen fabrics deep visual and structural character.",
-      img: "https://images.unsplash.com/photo-1501183007986-d0d080b147f9?auto=format&fit=crop&w=800&q=80"
-    }
-  ];
+  const { colorFeatures, supportingServices, finishingTechniques, applications, yarnSpecs, pfdSpecs, capabilities, bespokeSolutions, heritage } = content;
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -468,12 +393,7 @@ export const Solutions: React.FC = () => {
                   </p>
                 </div>
                 <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  {[
-                    "Bespoke Constructions",
-                    "Custom Colours",
-                    "Specialty Finishes",
-                    "Sustainable Solutions"
-                  ].map((sol, index) => (
+                  {bespokeSolutions.map((sol, index) => (
                     <div id={`bespoke-sol-${index}`} key={sol} className="p-4 bg-bg-base/60 border border-ink/5 rounded-sm text-center">
                       <span className="font-mono text-xs text-collision font-black block mb-1">✓</span>
                       <p className="font-mono text-[10px] uppercase font-bold text-ink leading-tight tracking-[0.05em]">{sol}</p>
@@ -487,22 +407,22 @@ export const Solutions: React.FC = () => {
         </section>
 
 
-        {/* OUR HERITAGE SECTION */}
+        {/* {heritage.title} SECTION */}
         <section id="heritage" className="py-20 md:py-32 scroll-mt-24 text-center space-y-10 relative overflow-hidden bg-[#1A1A1A] text-bg-base rounded-sm px-6 md:px-12">
           <div className="absolute inset-0 bg-radial-gradient from-transparent to-black/40 pointer-events-none"></div>
           
           <div className="max-w-2xl mx-auto space-y-6 relative z-10">
-            <span className="font-mono text-[11px] tracking-[0.5em] text-collision uppercase font-bold">The Heritage Of Flax</span>
+            <span className="font-mono text-[11px] tracking-[0.5em] text-collision uppercase font-bold">{heritage.titleLine1}</span>
             <h2 className="text-3xl md:text-5xl font-formal font-bold uppercase tracking-widest leading-normal">
-              OUR HERITAGE
+              {heritage.title}
             </h2>
             <div className="w-16 h-px bg-collision mx-auto my-4"></div>
             
             <p className="font-serif text-lg leading-relaxed text-bg-base/80">
-              Founded in Tongling, China, Sincerity Linen has spent more than 30 years dedicated to the manufacturing of linen textiles. Throughout this time, we have remained focused on one material — flax.
+              {heritage.desc1}
             </p>
             <p className="font-mono text-xs leading-relaxed text-bg-base/60 max-w-xl mx-auto pt-2">
-              By combining carefully sourced European raw materials, experienced craftsmanship and continuous investment in production technology, we continue to serve customers around the world with premium linen fabrics designed for modern applications. From yarn to finished fabric, every stage is guided by a commitment to quality, consistency and long-term partnership.
+              {heritage.desc2}
             </p>
 
             <div className="pt-8">

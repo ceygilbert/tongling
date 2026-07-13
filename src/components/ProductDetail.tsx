@@ -328,10 +328,8 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
 
                   <div className="space-y-3 font-mono text-xs tracking-widest font-bold text-ink/90 leading-relaxed">
                     <p className="font-bold text-sm">Greige Availability</p>
-                    {product.availability === 'YES' ? (
+                    {product.availability === 'YES' && (
                       <p>Running Stock - Yes, this is one of our running stock qualities. As it is widely used for everyday garments, we keep several core colours in stock for faster delivery</p>
-                    ) : (
-                      <p>Running Stock - No, please see Made to Order Instruction</p>
                     )}
 
                     <p className="font-bold mt-4">Made to Order Instruction -</p>

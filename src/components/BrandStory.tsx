@@ -1,9 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
-import { BRANDS } from "../data";
+import { BRANDS, getStoredStoryContent } from "../data";
 
-export const BrandStory: React.FC = () => (
+export const BrandStory: React.FC = () => {
+  const [content, setContent] = React.useState(getStoredStoryContent());
+  React.useEffect(() => {
+    const handleStorage = () => setContent(getStoredStoryContent());
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
+  return (
+
   <div className="bg-bg-base overflow-x-hidden">
     {/* Luxury Hero Section */}
     <section className="relative h-[90vh] flex items-center justify-center overflow-hidden border-b border-ink/5">
@@ -20,7 +28,7 @@ export const BrandStory: React.FC = () => (
           playsInline
           className="w-full h-full object-cover grayscale brightness-75 contrast-125"
         >
-          <source src="https://joqedqcltiyvzgenbmsu.supabase.co/storage/v1/object/public/TongLing/linen_brandstory.mp4" type="video/mp4" />
+          <source src={content.hero.videoUrl} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-ink/20" />
       </motion.div>
@@ -32,7 +40,7 @@ export const BrandStory: React.FC = () => (
           transition={{ delay: 0.5, duration: 0.8 }}
           className="font-mono text-[10px] md:text-[12px] tracking-[0.6em] text-bg-base/60 block mb-6"
         >
-          Maison De Textile — Est. 2005
+          {content.hero.subtitle}
         </motion.span>
         <motion.h1 
           initial={{ opacity: 0, y: 30 }}
@@ -40,7 +48,7 @@ export const BrandStory: React.FC = () => (
           transition={{ delay: 0.8, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           className="text-6xl md:text-[12vw] font-serif text-bg-base leading-[0.8] tracking-[-0.04em] font-black"
         >
-          The Living <br />Fabric
+          {content.hero.titleLine1} <br />{content.hero.titleLine2}
         </motion.h1>
       </div>
     </section>
@@ -56,15 +64,15 @@ export const BrandStory: React.FC = () => (
           className="lg:w-1/2 space-y-12"
         >
           <div className="space-y-4">
-            <span className="font-mono text-[10px] tracking-[0.4em] text-collision font-bold">Chapter I</span>
-            <h2 className="text-5xl md:text-7xl font-serif tracking-tight text-ink font-black">A Legacy of <br />Sincerity</h2>
+            <span className="font-mono text-[10px] tracking-[0.4em] text-collision font-bold">{content.chapter1.label}</span>
+            <h2 className="text-5xl md:text-7xl font-serif tracking-tight text-ink font-black">{content.chapter1.titleLine1} <br />{content.chapter1.titleLine2}</h2>
           </div>
           <div className="space-y-8 border-l border-ink/10 pl-8">
             <p className="font-serif text-xl md:text-2xl leading-relaxed text-ink/80">
-              Founded in 2005, Tongling Sincerity Linen Group was built upon a singular philosophy: that the most extraordinary textiles are born from an honest dialogue between human hands and nature's raw fiber.
+              {content.chapter1.desc1}
             </p>
             <p className="font-mono text-[12px] md:text-[14px] leading-relaxed tracking-[0.1em] text-ink/50 max-w-md">
-              What began as a specialized dyeing house in Tongling has evolved into a global benchmark for luxury linen production, serving as a silent architect behind the world's most prestigious fashion houses.
+              {content.chapter1.desc2}
             </p>
           </div>
         </motion.div>
@@ -79,7 +87,7 @@ export const BrandStory: React.FC = () => (
           <div className="aspect-[4/5] overflow-hidden bg-gray-50 shadow-2xl skew-x-1" 
                style={{ clipPath: "polygon(0% 0%, 100% 0%, 100% 95%, 0% 100%)" }}>
             <img 
-              src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&w=1200&q=80" 
+              src={content.chapter1.imageUrl} 
               alt="Tongling Workshop" 
               className="w-full h-full object-cover grayscale brightness-90 hover:grayscale-0 transition-all duration-1000"
               referrerPolicy="no-referrer"
@@ -87,7 +95,7 @@ export const BrandStory: React.FC = () => (
           </div>
           <div className="absolute -bottom-12 -right-12 hidden md:block w-48 h-48 border border-ink/5 p-4 bg-bg-base/80 backdrop-blur-sm">
             <div className="w-full h-full border border-ink/10 flex items-center justify-center text-center p-4">
-              <span className="font-serif text-xs tracking-widest text-ink/40 leading-relaxed">Crafted with <br />Uncompromising <br />Standard</span>
+              <span className="font-serif text-xs tracking-widest text-ink/40 leading-relaxed">{content.chapter1.imageBadge.split("\n").map((line, i) => <React.Fragment key={i}>{line}<br/></React.Fragment>)}</span>
             </div>
           </div>
         </motion.div>
@@ -104,7 +112,7 @@ export const BrandStory: React.FC = () => (
               style={{ clipPath: "polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%)" }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80" 
+                src={content.chapter2.imageUrl} 
                 alt="Production Detail" 
                 className="w-full h-full object-cover grayscale brightness-75"
                 referrerPolicy="no-referrer"
@@ -113,20 +121,20 @@ export const BrandStory: React.FC = () => (
           </div>
           <div className="md:col-span-2 space-y-16">
             <div className="max-w-2xl">
-              <span className="font-mono text-[10px] tracking-[0.4em] text-ink/30 block mb-6">Chapter II</span>
-              <h2 className="text-4xl md:text-6xl font-serif text-ink leading-none mb-12 font-black">The Sensitivity <br />of Touch</h2>
+              <span className="font-mono text-[10px] tracking-[0.4em] text-ink/30 block mb-6">{content.chapter1.label}I</span>
+              <h2 className="text-4xl md:text-6xl font-serif text-ink leading-none mb-12 font-black">{content.chapter2.titleLine1} <br />{content.chapter2.titleLine2}</h2>
               <p className="font-mono text-[13px] md:text-[15px] leading-loose tracking-[0.1em] text-ink/70 font-bold">
-                Linen is a living organism. It breathes, reacts to humidity, and holds the memory of the hands that guide it. Our master weavers spend decades mastering the tension required to transform flax into a fabric that feels cooling to the skin and weightless to the spirit.
+                {content.chapter2.desc}
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 border-t border-ink/5 pt-12">
                <div>
-                 <h4 className="font-mono text-[10px] font-bold tracking-widest mb-4">Vertical Control</h4>
-                 <p className="font-mono text-[11px] text-ink/40 leading-relaxed">Total yarn traceability. We oversee every stage from spinning to the final finish.</p>
+                 <h4 className="font-mono text-[10px] font-bold tracking-widest mb-4">{content.chapter2.point1Title}</h4>
+                 <p className="font-mono text-[11px] text-ink/40 leading-relaxed">{content.chapter2.point1Desc}</p>
                </div>
                <div>
-                 <h4 className="font-mono text-[10px] font-bold tracking-widest mb-4">Artisanal Scale</h4>
-                 <p className="font-mono text-[11px] text-ink/40 leading-relaxed">Production volume balanced with meticulous individual inspection protocols.</p>
+                 <h4 className="font-mono text-[10px] font-bold tracking-widest mb-4">{content.chapter2.point2Title}</h4>
+                 <p className="font-mono text-[11px] text-ink/40 leading-relaxed">{content.chapter2.point2Desc}</p>
                </div>
             </div>
           </div>
@@ -143,53 +151,53 @@ export const BrandStory: React.FC = () => (
             className="w-full h-full"
           >
             <img 
-              src="https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=2000&q=80" 
+              src={content.chapter3.imageUrl} 
               alt="Lab Research" 
               className="w-full h-full object-cover grayscale brightness-75 group-hover:scale-105 transition-all duration-[2s]"
               referrerPolicy="no-referrer"
             />
           </motion.div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full px-4">
-             <span className="font-mono text-[10px] tracking-[0.6em] text-bg-base/40 mb-8 block font-bold">Chapter III</span>
+             <span className="font-mono text-[10px] tracking-[0.6em] text-bg-base/40 mb-8 block font-bold">{content.chapter1.label}II</span>
              <h2 className="text-5xl md:text-[8vw] font-serif text-bg-base tracking-tight leading-none pointer-events-none font-black">
-               Quiet <br />Innovation
+               {content.chapter3.titleLine1} <br />{content.chapter3.titleLine2}
              </h2>
           </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-12 gap-16">
           <div className="md:col-span-4">
-            <h3 className="text-3xl font-serif text-ink mb-8 font-black">R&D Laboratory</h3>
+            <h3 className="text-3xl font-serif text-ink mb-8 font-black">{content.chapter3.header}</h3>
           </div>
           <div className="md:col-span-8">
             <p className="font-mono text-[14px] md:text-[18px] leading-relaxed text-ink/80 mb-12 font-bold">
-              Beyond the loom, our laboratory focuses on the molecular future of linen. Through proprietary technical developments, we have enhanced the natural properties of flax—increasing wrinkle resistance while maintaining breathability.
+              {content.chapter3.desc}
             </p>
             <div className="h-px bg-ink/10 w-full mb-12"></div>
             <div className="flex flex-wrap gap-x-20 gap-y-8">
               <div className="space-y-2">
-                <span className="block font-mono text-[10px] text-ink/30 tracking-widest border-b border-ink/5 pb-1 font-bold">Efficiency</span>
-                <span className="text-3xl font-serif text-ink font-bold">98.4%</span>
+                <span className="block font-mono text-[10px] text-ink/30 tracking-widest border-b border-ink/5 pb-1 font-bold">{content.chapter3.stat1Label}</span>
+                <span className="text-3xl font-serif text-ink font-bold">{content.chapter3.stat1Value}</span>
               </div>
               <div className="space-y-2">
-                <span className="block font-mono text-[10px] text-ink/30 tracking-widest border-b border-ink/5 pb-1 font-bold">Sustainability</span>
-                <span className="text-3xl font-serif text-ink font-bold">Zero Waste</span>
+                <span className="block font-mono text-[10px] text-ink/30 tracking-widest border-b border-ink/5 pb-1 font-bold">{content.chapter3.stat2Label}</span>
+                <span className="text-3xl font-serif text-ink font-bold">{content.chapter3.stat2Value}</span>
               </div>
               <div className="space-y-2">
-                <span className="block font-mono text-[10px] text-ink/30 tracking-widest border-b border-ink/5 pb-1 font-bold">Partners</span>
-                <span className="text-3xl font-serif text-ink font-bold">Global Reach</span>
+                <span className="block font-mono text-[10px] text-ink/30 tracking-widest border-b border-ink/5 pb-1 font-bold">{content.chapter3.stat3Label}</span>
+                <span className="text-3xl font-serif text-ink font-bold">{content.chapter3.stat3Value}</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Partners Marquee Section */}
+      {/* {content.chapter3.stat3Label} Marquee Section */}
       <section className="py-16 md:py-20 border-t border-ink/5 -mx-4 md:-mx-12 overflow-hidden bg-[#f9f8f4]">
         <div className="px-4 md:px-12 mb-12 flex justify-between items-end">
           <div>
             <span className="font-mono text-[10px] tracking-[0.4em] text-ink/30 block mb-2 font-bold">Global Trust</span>
-            <h3 className="text-2xl font-serif text-ink font-black">Selected Partners</h3>
+            <h3 className="text-2xl font-serif text-ink font-black">Selected {content.chapter3.stat3Label}</h3>
           </div>
           <p className="hidden md:block font-mono text-[10px] text-ink/40 tracking-widest font-bold">Established Relations Since 2005</p>
         </div>
@@ -220,15 +228,17 @@ export const BrandStory: React.FC = () => (
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <img src="https://images.unsplash.com/photo-1558051815-0f18e64e6280?auto=format&fit=crop&w=400&q=80" alt="Detail" className="w-24 h-24 rounded-full object-cover mx-auto mb-16 grayscale" referrerPolicy="no-referrer" />
+          <img src={content.finalQuote.imageUrl} alt="Detail" className="w-24 h-24 rounded-full object-cover mx-auto mb-16 grayscale" referrerPolicy="no-referrer" />
           <p className="text-2xl md:text-4xl font-serif text-ink/65 leading-relaxed max-w-4xl mx-auto mb-12">
-            "We do not merely sell fabric; we provide the catalyst for creation. Every bolt that leaves our facility carries the legacy of Tongling and the future of sustainable luxury."
+            {content.finalQuote.quote}
           </p>
           <div className="w-12 h-[1px] bg-collision mx-auto mb-6"></div>
-          <span className="font-mono text-[10px] tracking-[0.4em] text-ink font-bold">Authenticity Guaranteed</span>
+          <span className="font-mono text-[10px] tracking-[0.4em] text-ink font-bold">{content.finalQuote.author}</span>
         </motion.div>
       </section>
     </div>
   </div>
 );
+};
+
 export default BrandStory;

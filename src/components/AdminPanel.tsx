@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Link, useNavigate, useLocation } from "react-router-dom";
+import { HomeEditor } from "./HomeEditor";
+import { SolutionsEditor } from "./SolutionsEditor";
+import { StoryEditor } from "./StoryEditor";
 import { LogOut, Package, ListTree, Settings, Layers, Plus, Trash2, Edit2, Check, X, Eye, Image, RefreshCw } from "lucide-react";
 
 const fetchApi = async (url: string, options: any = {}) => {
@@ -1291,6 +1294,9 @@ export const AdminPanel: React.FC = () => {
 
   const navItems = [
     { name: "Products", path: "/admin", icon: Package },
+    { name: "Home Page", path: "/admin/home", icon: Edit2 },
+    { name: "Solutions Page", path: "/admin/solutions", icon: Layers },
+    { name: "Story Page", path: "/admin/story", icon: Layers },
     { name: "Categories", path: "/admin/categories", icon: ListTree },
     { name: "Processes", path: "/admin/processes", icon: Settings },
     { name: "Compositions", path: "/admin/compositions", icon: Layers },
@@ -1341,6 +1347,9 @@ export const AdminPanel: React.FC = () => {
         <div className="max-w-6xl mx-auto">
           <Routes>
             <Route path="/" element={<ProductCrud />} />
+            <Route path="/home" element={<HomeEditor />} />
+            <Route path="/solutions" element={<SolutionsEditor />} />
+            <Route path="/story" element={<StoryEditor />} />
             <Route path="/categories" element={
               <BaseCrud 
                 title="Categories"

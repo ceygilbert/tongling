@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Hero } from "./Hero";
 import { ProductSlider } from "./ProductSlider";
 import { InteractiveChain } from "./InteractiveChain";
 import { AboutSection } from "./AboutSection";
 import { SustainabilitySection } from "./SustainabilitySection";
 import { ContactSection } from "./ContactSection";
+import { getStoredHomeContent } from "../data";
 
-export const Home: React.FC = () => (
+export const Home: React.FC = () => {
+  const [content, setContent] = useState(getStoredHomeContent());
+  
+  useEffect(() => {
+    const handleStorage = () => {
+      setContent(getStoredHomeContent());
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
+
+  return (
   <main className="bg-bg-base overflow-x-hidden pt-20">
     <Hero />
 
@@ -15,26 +27,16 @@ export const Home: React.FC = () => (
       
       <div className="max-w-4xl mx-auto space-y-12">
         <h2 className="text-2xl md:text-[2.2vw] font-serif font-light leading-relaxed text-ink/85">
-          "One thread at a time. It’s a craft we’ve been learning, refining, and passing down for generations. Specializing in linen and linen-blend fabric production for over 30 years, our team has spent a lifetime growing in the same craft."
+          {content.philosophy.quote}
         </h2>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 max-w-4xl mx-auto">
-          <div className="space-y-2 text-center">
-            <span className="font-mono text-xs md:text-[13px] tracking-widest text-ink font-bold block uppercase">Aunt Sun</span>
-            <span className="font-serif text-xs md:text-sm text-ink/70 block leading-tight">Linen storage management for 33 years</span>
+          {content.philosophy.team.map((member, index) => (
+          <div key={index} className="space-y-2 text-center">
+            <span className="font-mono text-xs md:text-[13px] tracking-widest text-ink font-bold block uppercase">{member.name}</span>
+            <span className="font-serif text-xs md:text-sm text-ink/70 block leading-tight">{member.role}</span>
           </div>
-          <div className="space-y-2 text-center">
-            <span className="font-mono text-xs md:text-[13px] tracking-widest text-ink font-bold block uppercase">Aunt Cui</span>
-            <span className="font-serif text-xs md:text-sm text-ink/70 block leading-tight">Linen production manager for 28 years</span>
-          </div>
-          <div className="space-y-2 text-center">
-            <span className="font-mono text-xs md:text-[13px] tracking-widest text-ink font-bold block uppercase">Uncle Lu</span>
-            <span className="font-serif text-xs md:text-sm text-ink/70 block leading-tight">Linen Production Coordinator for 28 years</span>
-          </div>
-          <div className="space-y-2 text-center">
-            <span className="font-mono text-xs md:text-[13px] tracking-widest text-ink font-bold block uppercase">Peter Hu</span>
-            <span className="font-serif text-xs md:text-sm text-ink/70 block leading-tight">Founded and led our team over 30 years</span>
-          </div>
+          ))}
         </div>
       </div>
 
@@ -59,4 +61,5 @@ export const Home: React.FC = () => (
     
     <ContactSection />
   </main>
-);
+  );
+};

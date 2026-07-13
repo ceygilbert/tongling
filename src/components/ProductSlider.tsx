@@ -1,24 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
-import { PRODUCTS } from "../data";
+import { PRODUCTS, getStoredHomeContent } from "../data";
 
 export const ProductSlider: React.FC = () => {
+  const [content, setContent] = useState(getStoredHomeContent());
+  
+  useEffect(() => {
+    const handleStorage = () => setContent(getStoredHomeContent());
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
+
+  const featuredProducts = PRODUCTS.filter(p => content.mainCollection?.productIds?.includes(p.id));
+  const displayProducts = featuredProducts.length > 0 ? featuredProducts : PRODUCTS.slice(0, 3);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
+  useEffect(() => {
+    if (currentIndex >= displayProducts.length) {
+      setCurrentIndex(0);
+    }
+  }, [displayProducts.length, currentIndex]);
+
   const nextSlide = () => {
     setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % PRODUCTS.length);
+    setCurrentIndex((prev) => (prev + 1) % displayProducts.length);
   };
 
   const prevSlide = () => {
     setDirection(-1);
-    setCurrentIndex((prev) => (prev - 1 + PRODUCTS.length) % PRODUCTS.length);
+    setCurrentIndex((prev) => (prev - 1 + displayProducts.length) % displayProducts.length);
   };
 
-  const product = PRODUCTS[currentIndex];
+  const product = displayProducts[currentIndex];
+
+  if (!product) return null;
 
   const variants = {
     enter: (direction: number) => ({
