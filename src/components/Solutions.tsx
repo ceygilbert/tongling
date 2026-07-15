@@ -7,12 +7,30 @@ import { ArrowRight, Sparkles, Wind, Palette, Layers, Globe, Sliders, Check } fr
 export const Solutions: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("apparel");
 
-  const [content, setContent] = React.useState(getStoredSolutionsContent());
+  const [content, setContent] = React.useState<import("../types").SolutionsContent | null>(null);
+
+  React.useEffect(() => {
+    fetch('/api/public/content/solutions')
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          setContent(getStoredSolutionsContent());
+        } else {
+          setContent(data);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        setContent(getStoredSolutionsContent());
+      });
+  }, []);
   React.useEffect(() => {
     const handleStorage = () => setContent(getStoredSolutionsContent());
     window.addEventListener("storage", handleStorage);
     return () => window.removeEventListener("storage", handleStorage);
   }, []);
+
+  if (!content) return <div className="pt-32 text-center text-ink/70">Loading...</div>;
 
   const { colorFeatures, supportingServices, finishingTechniques, applications, yarnSpecs, pfdSpecs, capabilities, bespokeSolutions, heritage } = content;
 

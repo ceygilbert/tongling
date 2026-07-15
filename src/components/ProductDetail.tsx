@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowLeft, Minus, Plus, ShoppingBag, Heart, Globe, ChevronDown, Sofa } from "lucide-react";
 import { Product } from "../types";
-import { PRODUCTS } from "../data";
+
 
 interface ProductDetailProps {
   onAddToCart: (product: Product) => void;
@@ -11,18 +11,36 @@ interface ProductDetailProps {
 
 export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => {
   const { id } = useParams<{ id: string }>();
-  const product = PRODUCTS.find(p => p.id === id);
-  const relatedProducts = PRODUCTS.filter(p => p.id !== id).slice(0, 4);
+  const [product, setProduct] = useState<any>(null);
+  const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  React.useEffect(() => {
+    fetch('/api/public/products')
+      .then(res => res.json())
+      .then(data => {
+        const p = data.find((item: any) => item.id === id);
+        setProduct(p);
+        setRelatedProducts(data.filter((item: any) => item.id !== id).slice(0, 4));
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, [id]);
 
   // High-fidelity luxury state
   const [activeImageIdx, setActiveImageIdx] = useState(0);
-  const allImages = [product.productImage, product.lifestyleImage, ...(product.galleryImages || [])].filter(Boolean);
-  const currentImage = allImages[activeImageIdx] || product.productImage;
+  const allImages = product ? [product.productImage, product.lifestyleImage, ...(product.galleryImages || [])].filter(Boolean) : [];
+  const currentImage = product ? (allImages[activeImageIdx] || product.productImage) : '';
   const [quantity, setQuantity] = useState(1);
   const [includeSwatch, setIncludeSwatch] = useState(false);
   const [wishlisted, setWishlisted] = useState(false);
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"specs" | "origin" | "shipping">("specs");
+
+  if (loading) return <div className="pt-32 text-center text-ink/70">Loading...</div>;
 
   if (!product) {
     return (

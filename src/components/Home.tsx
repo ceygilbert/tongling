@@ -8,7 +8,23 @@ import { ContactSection } from "./ContactSection";
 import { getStoredHomeContent } from "../data";
 
 export const Home: React.FC = () => {
-  const [content, setContent] = useState(getStoredHomeContent());
+  const [content, setContent] = useState<import("../types").HomeContent | null>(null);
+
+  useEffect(() => {
+    fetch('/api/public/content/home')
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          setContent(getStoredHomeContent());
+        } else {
+          setContent(data);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        setContent(getStoredHomeContent()); // fallback
+      });
+  }, []);
   
   useEffect(() => {
     const handleStorage = () => {
@@ -17,6 +33,8 @@ export const Home: React.FC = () => {
     window.addEventListener("storage", handleStorage);
     return () => window.removeEventListener("storage", handleStorage);
   }, []);
+
+  if (!content) return <div className="pt-32 text-center text-ink/70">Loading...</div>;
 
   return (
   <main className="bg-bg-base overflow-x-hidden pt-20">

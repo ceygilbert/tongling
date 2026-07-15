@@ -5,16 +5,34 @@ import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { PRODUCTS, getStoredHomeContent } from "../data";
 
 export const ProductSlider: React.FC = () => {
-  const [content, setContent] = useState(getStoredHomeContent());
-  
-  useEffect(() => {
-    const handleStorage = () => setContent(getStoredHomeContent());
-    window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
-  }, []);
+  const [content, setContent] = useState<any>(null);
+  const [products, setProducts] = useState<any[]>([]);
 
-  const featuredProducts = PRODUCTS.filter(p => content.mainCollection?.productIds?.includes(p.id));
-  const displayProducts = featuredProducts.length > 0 ? featuredProducts : PRODUCTS.slice(0, 3);
+  useEffect(() => {
+    fetch('/api/public/content/home')
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          setContent(getStoredHomeContent());
+        } else {
+          setContent(data);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        setContent(getStoredHomeContent());
+      });
+      
+    fetch('/api/public/products')
+      .then(res => res.json())
+      .then(data => setProducts(data))
+      .catch(err => console.error(err));
+  }, []);
+  
+  
+
+  const featuredProducts = products.filter(p => content?.mainCollection?.productIds?.includes(p.id));
+  const displayProducts = featuredProducts.length > 0 ? featuredProducts : products.slice(0, 3);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
@@ -55,6 +73,8 @@ export const ProductSlider: React.FC = () => {
       opacity: 0,
     })
   };
+
+  if (!content || products.length === 0) return <div className="text-center py-20">Loading...</div>;
 
   return (
     <section className="px-4 md:px-12 mb-32 md:mb-64 overflow-hidden relative min-h-[80vh] flex items-center">

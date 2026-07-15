@@ -1,13 +1,11 @@
-import "dotenv/config";
+const fs = require('fs');
+
+const content = `import "dotenv/config";
 import { createClient } from "@supabase/supabase-js";
 import fs from "fs";
-import { DEFAULT_HOME_CONTENT, DEFAULT_SOLUTIONS_CONTENT, DEFAULT_STORY_CONTENT } from "../src/data.js";
 import * as path from "path";
 
-export const inMemoryDB: any = {
-  homeContent: DEFAULT_HOME_CONTENT,
-  solutionsContent: DEFAULT_SOLUTIONS_CONTENT,
-  storyContent: DEFAULT_STORY_CONTENT,
+export const inMemoryDB = {
   products: [
     {
       id: "1",
@@ -159,46 +157,29 @@ export async function initializeDatabase() {
   // Try to seed data if tables exist but are empty
   try {
     // Categories
-    const { count: catCount, error: catErr } = await supabase.from('categories').select('*', { count: 'exact', head: true });
-    if (!catErr && catCount === 0) {
+    const { data: catData, error: catErr } = await supabase.from('categories').select('count', { count: 'exact', head: true });
+    if (!catErr && catData !== null && catData.length === 0) {
       console.log("Seeding categories...");
       await supabase.from('categories').insert(inMemoryDB.categories.map(c => ({ name: c.name })));
     }
 
     // Processes
-    const { count: procCount, error: procErr } = await supabase.from('processes').select('*', { count: 'exact', head: true });
-    if (!procErr && procCount === 0) {
+    const { data: procData, error: procErr } = await supabase.from('processes').select('count', { count: 'exact', head: true });
+    if (!procErr && procData !== null && procData.length === 0) {
       console.log("Seeding processes...");
       await supabase.from('processes').insert(inMemoryDB.processes.map(p => ({ name: p.name })));
     }
 
     // Compositions
-    const { count: compCount, error: compErr } = await supabase.from('compositions').select('*', { count: 'exact', head: true });
-    if (!compErr && compCount === 0) {
+    const { data: compData, error: compErr } = await supabase.from('compositions').select('count', { count: 'exact', head: true });
+    if (!compErr && compData !== null && compData.length === 0) {
       console.log("Seeding compositions...");
       await supabase.from('compositions').insert(inMemoryDB.compositions.map(c => ({ name: c.name })));
     }
 
-    // Site settings
-    const { data: settingsData, error: settingsErr } = await supabase.from('site_settings').select('id');
-    if (!settingsErr && settingsData !== null) {
-      if (!settingsData.find(s => s.id === 'home')) {
-        console.log("Seeding home site_settings...");
-        await supabase.from('site_settings').insert({ id: 'home', data: DEFAULT_HOME_CONTENT });
-      }
-      if (!settingsData.find(s => s.id === 'solutions')) {
-        console.log("Seeding solutions site_settings...");
-        await supabase.from('site_settings').insert({ id: 'solutions', data: DEFAULT_SOLUTIONS_CONTENT });
-      }
-      if (!settingsData.find(s => s.id === 'story')) {
-        console.log("Seeding story site_settings...");
-        await supabase.from('site_settings').insert({ id: 'story', data: DEFAULT_STORY_CONTENT });
-      }
-    }
-
     // Products
-    const { count: prodCount, error: prodErr } = await supabase.from('products').select('*', { count: 'exact', head: true });
-    if (!prodErr && prodCount === 0) {
+    const { data: prodData, error: prodErr } = await supabase.from('products').select('count', { count: 'exact', head: true });
+    if (!prodErr && prodData !== null && prodData.length === 0) {
       console.log("Seeding products...");
       const mappedProducts = inMemoryDB.products.map(p => {
         const productData: any = { ...p };
@@ -221,49 +202,6 @@ export async function initializeDatabase() {
 }
 
 export const dbService = {
-
-  // Page Content
-  async getPageContent(page: string) {
-    if (supabase) {
-      try {
-        const { data, error } = await supabase.from('site_settings').select('data').eq('id', page).single();
-        if (error) {
-          if (error.code === 'PGRST116') {
-            // Row not found, fall back to memory
-          } else {
-             console.warn("Supabase query for page content failed:", error);
-          }
-        } else if (data) {
-          return data.data;
-        }
-      } catch (err) {
-        console.warn("Supabase query for page content failed:", err);
-      }
-    }
-    return (inMemoryDB as any)[page + 'Content'] || null;
-  },
-
-  async updatePageContent(page: string, contentData: any) {
-    if (supabase) {
-      try {
-        const { data, error } = await supabase
-          .from('site_settings')
-          .upsert({ id: page, data: contentData })
-          .select()
-          .single();
-          
-        if (error) throw error;
-        return data.data;
-      } catch (err) {
-        console.warn("Supabase upsert page content failed:", err);
-      }
-    }
-    
-    (inMemoryDB as any)[page + 'Content'] = contentData;
-    saveFallbackDB();
-    return contentData;
-  },
-
   // Products
   async getProducts() {
     if (supabase) {
@@ -629,3 +567,5 @@ export const dbService = {
     }
   }
 };
+`
+fs.writeFileSync('server/db.ts', content);

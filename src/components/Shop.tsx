@@ -3,13 +3,29 @@ import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import { Heart } from "lucide-react";
 import { Product } from "../types";
-import { PRODUCTS } from "../data";
+
 
 interface ShopProps {
   onAddToCart: (product: Product) => void;
 }
 
 export const Shop: React.FC<ShopProps> = ({ onAddToCart }) => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  React.useEffect(() => {
+    fetch('/api/public/products')
+      .then(res => res.json())
+      .then(data => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
+
   const [activeFilters, setActiveFilters] = useState({
     category: "ALL",
     process: "ALL",
@@ -38,8 +54,8 @@ export const Shop: React.FC<ShopProps> = ({ onAddToCart }) => {
     MAKE_TO_ORDER: "Make to Order",
   };
 
-  const filteredProducts = PRODUCTS.filter(p => {
-    return (activeFilters.category === "ALL" || p.category === activeFilters.category) &&
+  const filteredProducts = products.filter(p => {
+  return (activeFilters.category === "ALL" || p.category === activeFilters.category) &&
            (activeFilters.process === "ALL" || p.process === activeFilters.process) &&
            (activeFilters.availability === "ALL" || p.availability === activeFilters.availability) &&
            (activeFilters.composition === "ALL" || p.composition === activeFilters.composition);
@@ -52,6 +68,8 @@ export const Shop: React.FC<ShopProps> = ({ onAddToCart }) => {
   const capitalizeFirstLetter = (string: string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
+
+  if (loading) return <div className="pt-32 text-center text-ink/70">Loading...</div>;
 
   return (
     <div className="pt-24 md:pt-32 pb-32 px-4 md:px-12 relative bg-bg-base min-h-screen">

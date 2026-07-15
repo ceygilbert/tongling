@@ -3,14 +3,50 @@ import { getStoredHomeContent, DEFAULT_HOME_CONTENT, PRODUCTS } from "../data";
 import { Save } from "lucide-react";
 
 export const HomeEditor = () => {
-  const [content, setContent] = useState(getStoredHomeContent());
+  const [content, setContent] = useState<any>(null);
+  const [products, setProducts] = useState<any[]>([]);
+  
+  React.useEffect(() => {
+    fetch('/api/public/content/home')
+      .then(res => res.json())
+      .then(data => {
+        if (data && !data.error) {
+          setContent(data);
+        } else {
+          setContent(getStoredHomeContent());
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        setContent(getStoredHomeContent());
+      });
+      
+    fetch('/api/public/products')
+      .then(res => res.json())
+      .then(data => setProducts(data))
+      .catch(err => console.error(err));
+  }, []);
   const [isSaving, setIsSaving] = useState(false);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     setIsSaving(true);
-    localStorage.setItem("sincerity_home_content", JSON.stringify(content));
-    window.dispatchEvent(new Event("storage"));
-    setTimeout(() => setIsSaving(false), 500);
+    try {
+      const token = localStorage.getItem("admin_token");
+      await fetch('/api/admin/content/home', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(content)
+      });
+      // Fallback update local storage just in case
+      localStorage.setItem("sincerity_home_content", JSON.stringify(content));
+      window.dispatchEvent(new Event("storage"));
+    } catch (e) {
+      console.error(e);
+    }
+    setIsSaving(false);
   };
 
   const handleTeamChange = (index: number, field: string, value: string) => {
@@ -32,6 +68,8 @@ export const HomeEditor = () => {
       mainCollection: { ...content.mainCollection, productIds: newIds }
     });
   };
+
+  if (!content) return <div>Loading...</div>;
 
   return (
     <div className="bg-white p-6 md:p-8 shadow-xl border border-ink/5 space-y-12">
@@ -145,7 +183,7 @@ export const HomeEditor = () => {
         <div className="space-y-6">
           <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Select Products to Feature</label>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {PRODUCTS.map(product => (
+            {products.map(product => (
               <label key={product.id} className="flex items-start gap-3 p-4 border border-ink/10 hover:border-ink/30 cursor-pointer transition-colors bg-ink/[0.02]">
                 <input
                   type="checkbox"

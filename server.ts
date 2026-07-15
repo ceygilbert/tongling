@@ -7,12 +7,10 @@ import fs from "fs";
 import multer from "multer";
 import { dbService, initializeDatabase } from "./server/db.js";
 
-// Get _dirname dynamically (works for both TSX in ESM mode and ESBuild in CJS mode)
-const _filename = typeof __filename !== 'undefined' ? __filename : fileURLToPath(import.meta.url);
-const _dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(_filename);
 
 async function startServer() {
   const app = express();
+  
   
   // Use port 3000 inside the AI Studio container.
   // In other environments (like Hostinger), bind to process.env.PORT if available.
@@ -108,11 +106,49 @@ async function startServer() {
     }
   });
 
+  
+  // Page content endpoints
+  app.get("/api/public/content/:page", async (req, res) => {
+    try {
+      const data = await dbService.getPageContent(req.params.page);
+      if (data) {
+        res.json(data);
+      } else {
+        res.status(404).json({ error: "Content not found" });
+      }
+    } catch (err: any) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
+  app.post("/api/admin/content/:page", authMiddleware, async (req, res) => {
+    try {
+      const updated = await dbService.updatePageContent(req.params.page, req.body);
+      res.json(updated);
+    } catch (err: any) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
   // Public read endpoints for dynamic content delivery
   app.get("/api/public/products", async (req, res) => {
     try {
       const data = await dbService.getProducts();
       res.json(data);
+    } catch (err: any) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
+  
+  app.get("/api/public/products/:id", async (req, res) => {
+    try {
+      const data = await dbService.getProduct(req.params.id);
+      if (data) {
+        res.json(data);
+      } else {
+        res.status(404).json({ error: "Product not found" });
+      }
     } catch (err: any) {
       res.status(500).json({ error: err.message });
     }

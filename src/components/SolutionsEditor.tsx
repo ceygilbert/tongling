@@ -7,11 +7,36 @@ export const SolutionsEditor = () => {
   const [content, setContent] = useState<SolutionsContent>(getStoredSolutionsContent());
   const [isSaving, setIsSaving] = useState(false);
 
-  const handleSave = () => {
+  React.useEffect(() => {
+    fetch('/api/public/content/solutions')
+      .then(res => res.json())
+      .then(data => {
+        if (data && !data.error) {
+          setContent(data);
+        }
+      })
+      .catch(err => console.error(err));
+  }, []);
+
+  const handleSave = async () => {
     setIsSaving(true);
-    localStorage.setItem("sincerity_solutions_content", JSON.stringify(content));
-    window.dispatchEvent(new Event("storage"));
-    setTimeout(() => setIsSaving(false), 500);
+    try {
+      const token = localStorage.getItem("admin_token");
+      await fetch('/api/admin/content/solutions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(content)
+      });
+      // Fallback update local storage just in case
+      localStorage.setItem("sincerity_solutions_content", JSON.stringify(content));
+      window.dispatchEvent(new Event("storage"));
+    } catch (e) {
+      console.error(e);
+    }
+    setIsSaving(false);
   };
 
   const updateField = (section: keyof SolutionsContent, field: string, value: string) => {
@@ -46,6 +71,8 @@ export const SolutionsEditor = () => {
     newArray[index] = { ...newArray[index], [field]: value };
     setContent({ ...content, [section]: newArray });
   };
+
+  if (!content) return <div>Loading...</div>;
 
   return (
     <div className="bg-white p-6 md:p-8 shadow-xl border border-ink/5 space-y-12">

@@ -4,12 +4,30 @@ import { motion } from "motion/react";
 import { BRANDS, getStoredStoryContent } from "../data";
 
 export const BrandStory: React.FC = () => {
-  const [content, setContent] = React.useState(getStoredStoryContent());
+  const [content, setContent] = React.useState<import("../types").StoryContent | null>(null);
+
+  React.useEffect(() => {
+    fetch('/api/public/content/story')
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          setContent(getStoredStoryContent());
+        } else {
+          setContent(data);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        setContent(getStoredStoryContent());
+      });
+  }, []);
   React.useEffect(() => {
     const handleStorage = () => setContent(getStoredStoryContent());
     window.addEventListener("storage", handleStorage);
     return () => window.removeEventListener("storage", handleStorage);
   }, []);
+
+  if (!content) return <div className="pt-32 text-center text-ink/70">Loading...</div>;
   return (
 
   <div className="bg-bg-base overflow-x-hidden">
