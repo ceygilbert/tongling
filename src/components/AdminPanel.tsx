@@ -757,7 +757,7 @@ const ProductCrud = () => {
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2 hidden">
+                    <div className="space-y-2">
                       <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Price</label>
                       <input 
                         type="number" 
@@ -781,7 +781,7 @@ const ProductCrud = () => {
                         </label>
                       </div>
                     </div>
-                    <div className="space-y-2 col-span-2">
+                    <div className="space-y-2">
                       <label className="font-mono text-[10px] uppercase tracking-widest text-[#B2A490] font-black block">Greige Availability</label>
                       <select 
                         className="w-full border border-ink/20 p-2.5 bg-white font-sans text-sm outline-none focus:border-ink transition-colors"

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import { Heart } from "lucide-react";
 import { Product } from "../types";
+import { getStoredProducts } from "../data";
 
 
 interface ShopProps {
@@ -15,13 +16,21 @@ export const Shop: React.FC<ShopProps> = ({ onAddToCart }) => {
 
   React.useEffect(() => {
     fetch('/api/public/products')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("API error");
+        return res.json();
+      })
       .then(data => {
-        setProducts(data);
+        if (data && !data.error && Array.isArray(data)) {
+          setProducts(data);
+        } else {
+          setProducts(getStoredProducts());
+        }
         setLoading(false);
       })
       .catch(err => {
         console.error(err);
+        setProducts(getStoredProducts());
         setLoading(false);
       });
   }, []);

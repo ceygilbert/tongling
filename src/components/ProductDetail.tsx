@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowLeft, Minus, Plus, ShoppingBag, Heart, Globe, ChevronDown, Sofa } from "lucide-react";
 import { Product } from "../types";
+import { getStoredProducts } from "../data";
 
 
 interface ProductDetailProps {
@@ -17,15 +18,23 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
 
   React.useEffect(() => {
     fetch('/api/public/products')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("API error");
+        return res.json();
+      })
       .then(data => {
-        const p = data.find((item: any) => item.id === id);
+        const prodList = (data && !data.error && Array.isArray(data)) ? data : getStoredProducts();
+        const p = prodList.find((item: any) => item.id === id);
         setProduct(p);
-        setRelatedProducts(data.filter((item: any) => item.id !== id).slice(0, 4));
+        setRelatedProducts(prodList.filter((item: any) => item.id !== id).slice(0, 4));
         setLoading(false);
       })
       .catch(err => {
         console.error(err);
+        const prodList = getStoredProducts();
+        const p = prodList.find((item: any) => item.id === id);
+        setProduct(p);
+        setRelatedProducts(prodList.filter((item: any) => item.id !== id).slice(0, 4));
         setLoading(false);
       });
   }, [id]);

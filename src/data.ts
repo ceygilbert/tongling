@@ -145,6 +145,22 @@ const DEFAULT_PRODUCTS: Product[] = [
 
 export const PRODUCTS = DEFAULT_PRODUCTS;
 
+export const getStoredProducts = (): Product[] => {
+  if (typeof window === "undefined") return DEFAULT_PRODUCTS;
+  const local = localStorage.getItem("sincerity_products");
+  if (local) {
+    try {
+      const parsed = JSON.parse(local);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    } catch (e) {
+      return DEFAULT_PRODUCTS;
+    }
+  }
+  return DEFAULT_PRODUCTS;
+};
+
 export const LOGO_URL = "https://hxfftpvzumcvtnzbpegb.supabase.co/storage/v1/object/public/generals/tongling_logo.png";
 
 export const BRANDS = [

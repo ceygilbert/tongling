@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
-import { PRODUCTS, getStoredHomeContent } from "../data";
+import { PRODUCTS, getStoredHomeContent, getStoredProducts } from "../data";
 
 export const ProductSlider: React.FC = () => {
   const [content, setContent] = useState<any>(null);
@@ -24,9 +24,21 @@ export const ProductSlider: React.FC = () => {
       });
       
     fetch('/api/public/products')
-      .then(res => res.json())
-      .then(data => setProducts(data))
-      .catch(err => console.error(err));
+      .then(res => {
+        if (!res.ok) throw new Error("API error");
+        return res.json();
+      })
+      .then(data => {
+        if (data && !data.error && Array.isArray(data)) {
+          setProducts(data);
+        } else {
+          setProducts(getStoredProducts());
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        setProducts(getStoredProducts());
+      });
   }, []);
   
   
