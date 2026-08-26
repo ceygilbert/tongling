@@ -462,51 +462,91 @@ const ProductCrud = () => {
   const [isUploadingGallery, setIsUploadingGallery] = useState(false);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: "productImage" | "lifestyleImage" | "galleryImages") => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
 
     if (field === "productImage") {
       setIsUploadingProduct(true);
-    } else {
+    } else if (field === "lifestyleImage") {
       setIsUploadingLifestyle(true);
+    } else {
+      setIsUploadingGallery(true);
     }
 
     try {
       const token = localStorage.getItem("admin-token");
-      const formData = new FormData();
-      formData.append("image", file);
 
-      const res = await fetch("/api/admin/upload", {
-        method: "POST",
-        headers: {
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-        body: formData,
-      });
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        let uploadedUrl = "";
 
-      if (!res.ok) {
-        throw new Error("Upload failed on server");
-      }
+        try {
+          const formData = new FormData();
+          formData.append("image", file);
 
-      const data = await res.json();
-      if (data.url) {
-        setFormState((prev: any) => ({ ...prev, [field]: data.url }));
+          const res = await fetch("/api/admin/upload", {
+            method: "POST",
+            headers: {
+              ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            },
+            body: formData,
+          });
+
+          if (res.ok) {
+            const data = await res.json();
+            if (data.url) uploadedUrl = data.url;
+          }
+        } catch (err) {
+          console.warn("Express backend file upload offline/unreachable. Encoding locally as Base64 data URL fallback instead.");
+        }
+
+        if (!uploadedUrl) {
+          uploadedUrl = await new Promise<string>((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              resolve(typeof reader.result === "string" ? reader.result : "");
+            };
+            reader.readAsDataURL(file);
+          });
+        }
+
+        if (uploadedUrl) {
+          if (field === "galleryImages") {
+            setFormState((prev: any) => {
+              const currentGallery: string[] = Array.isArray(prev.galleryImages)
+                ? [...prev.galleryImages]
+                : (typeof prev.galleryImages === "string" && prev.galleryImages
+                    ? (() => {
+                        try {
+                          const parsed = JSON.parse(prev.galleryImages);
+                          return Array.isArray(parsed) ? parsed : [prev.galleryImages];
+                        } catch {
+                          return [prev.galleryImages];
+                        }
+                      })()
+                    : []);
+              if (currentGallery.length >= 10) return prev;
+              return {
+                ...prev,
+                galleryImages: [...currentGallery, uploadedUrl],
+              };
+            });
+          } else {
+            setFormState((prev: any) => ({ ...prev, [field]: uploadedUrl }));
+          }
+        }
       }
     } catch (err) {
-      console.warn("Express backend file upload offline/unreachable. Encoding locally as Base64 data URL fallback instead.");
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (typeof reader.result === "string") {
-          setFormState((prev: any) => ({ ...prev, [field]: reader.result }));
-        }
-      };
-      reader.readAsDataURL(file);
+      console.error("Upload error:", err);
     } finally {
       if (field === "productImage") {
         setIsUploadingProduct(false);
-      } else {
+      } else if (field === "lifestyleImage") {
         setIsUploadingLifestyle(false);
+      } else {
+        setIsUploadingGallery(false);
       }
+      e.target.value = "";
     }
   };
 
@@ -523,6 +563,7 @@ const ProductCrud = () => {
     status: "",
     lifestyleImage: "",
     productImage: "",
+    galleryImages: [],
     category: "",
     process: "",
     composition: "",
@@ -563,6 +604,17 @@ const ProductCrud = () => {
 
   const handleEdit = (product: any) => {
     setEditingId(product.id);
+    let parsedGallery: string[] = [];
+    if (Array.isArray(product.galleryImages)) {
+      parsedGallery = product.galleryImages;
+    } else if (typeof product.galleryImages === "string" && product.galleryImages) {
+      try {
+        const p = JSON.parse(product.galleryImages);
+        parsedGallery = Array.isArray(p) ? p : [product.galleryImages];
+      } catch {
+        parsedGallery = [product.galleryImages];
+      }
+    }
     setFormState({
       title: product.title || "",
       price: product.price || 0,
@@ -574,6 +626,7 @@ const ProductCrud = () => {
       status: product.status || "",
       lifestyleImage: product.lifestyleImage || "",
       productImage: product.productImage || "",
+      galleryImages: parsedGallery,
       category: product.category || "",
       process: product.process || "",
       composition: product.composition || "",
@@ -599,6 +652,7 @@ const ProductCrud = () => {
       status: "CORE COLLECTION",
       lifestyleImage: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80",
       productImage: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=1200&q=80",
+      galleryImages: [],
       category: categories[0]?.name || "SHIRTING",
       process: processes[0]?.name || "PIECE_DYED",
       composition: compositions[0]?.name || "Pure linen",
@@ -946,31 +1000,39 @@ const ProductCrud = () => {
                       </div>
 
                       <div className="space-y-1">
-                        <span className="font-mono text-[8px] text-[#B2A490] uppercase tracking-widest block font-bold">Gallery Images (Max 10)</span>
+                        <div className="flex items-center justify-between">
+                          <span className="font-mono text-[8px] text-[#B2A490] uppercase tracking-widest block font-bold">
+                            Gallery Images ({Array.isArray(formState.galleryImages) ? formState.galleryImages.length : 0}/10)
+                          </span>
+                        </div>
                         <div className="flex gap-2">
-                          
-                          <label className="cursor-pointer font-mono text-[9px] bg-ink text-white hover:bg-ink/80 px-3 py-2 uppercase tracking-wider flex items-center justify-center transition-colors">
-                            {isUploadingGallery ? "Uploading..." : "Upload Image"}
+                          <label className={`cursor-pointer font-mono text-[9px] px-3 py-2 uppercase tracking-wider flex items-center justify-center transition-colors ${
+                            (Array.isArray(formState.galleryImages) && formState.galleryImages.length >= 10)
+                              ? "bg-[#D8D2C5] text-ink/40 cursor-not-allowed"
+                              : "bg-ink text-white hover:bg-ink/80"
+                          }`}>
+                            {isUploadingGallery ? "Uploading..." : "Upload Image(s)"}
                             <input 
                               type="file" 
                               accept="image/*" 
-                              className="hidden"
+                              multiple
+                              className="hidden" 
                               onChange={e => handleImageUpload(e, "galleryImages")}
-                              disabled={isUploadingGallery || (formState.galleryImages || []).length >= 10}
+                              disabled={isUploadingGallery || (Array.isArray(formState.galleryImages) && formState.galleryImages.length >= 10)}
                             />
                           </label>
                         </div>
                         <div className="grid grid-cols-5 gap-2 pt-2">
-                          {(formState.galleryImages || []).map((imgUrl: string, idx: number) => (
+                          {(Array.isArray(formState.galleryImages) ? formState.galleryImages : []).map((imgUrl: string, idx: number) => (
                             <div key={idx} className="relative group h-16 border border-ink/5 bg-[#FBF9F5] overflow-hidden">
                               <img src={imgUrl} className="w-full h-full object-cover" alt="" />
                               <button
                                 type="button"
                                 className="absolute inset-0 bg-red-500/80 text-white opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity"
                                 onClick={() => {
-                                  const newGallery = [...(formState.galleryImages || [])];
-                                  newGallery.splice(idx, 1);
-                                  setFormState(prev => ({ ...prev, galleryImages: newGallery }));
+                                  const current = Array.isArray(formState.galleryImages) ? [...formState.galleryImages] : [];
+                                  current.splice(idx, 1);
+                                  setFormState((prev: any) => ({ ...prev, galleryImages: current }));
                                 }}
                               >
                                 <span className="font-mono text-[10px] font-bold uppercase">Del</span>

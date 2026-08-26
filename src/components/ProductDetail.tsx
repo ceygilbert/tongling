@@ -41,7 +41,20 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ onAddToCart }) => 
 
   // High-fidelity luxury state
   const [activeImageIdx, setActiveImageIdx] = useState(0);
-  const allImages = product ? [product.productImage, product.lifestyleImage, ...(product.galleryImages || [])].filter(Boolean) : [];
+  const rawGallery = product?.galleryImages;
+  const parsedGallery: string[] = Array.isArray(rawGallery)
+    ? rawGallery
+    : (typeof rawGallery === "string" && rawGallery
+        ? (() => {
+            try {
+              const parsed = JSON.parse(rawGallery);
+              return Array.isArray(parsed) ? parsed : [rawGallery];
+            } catch {
+              return [rawGallery];
+            }
+          })()
+        : []);
+  const allImages = product ? [product.productImage, product.lifestyleImage, ...parsedGallery].filter(Boolean) : [];
   const currentImage = product ? (allImages[activeImageIdx] || product.productImage) : '';
   const [quantity, setQuantity] = useState(1);
   const [includeSwatch, setIncludeSwatch] = useState(false);
